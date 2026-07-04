@@ -532,5 +532,59 @@
     "kategorie": "Unregelmäßige Verben",
     "it": "morire",
     "de": "sterben"
+  },
+  {
+    "id": 90,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "andare",
+    "de": "gehen"
+  },
+  {
+    "id": 91,
+    "kategorie": "Personalpronomen",
+    "it": "vostro/vostra",
+    "de": "Euer/ Eure"
+  },
+  {
+    "id": 92,
+    "kategorie": "Personalpronomen",
+    "it": "nostro",
+    "de": "unser/unsere"
+  },
+  {
+    "id": 93,
+    "kategorie": "Personalpronomen",
+    "it": "nostro/ nostra",
+    "de": "Unser/unsere"
+  },
+  {
+    "id": 94,
+    "kategorie": "Zeit",
+    "it": "doppodomani",
+    "de": "Übermorgen"
+  },
+  {
+    "id": 95,
+    "kategorie": "Zeit",
+    "it": "l‘altro ieri",
+    "de": "Vorgestern"
+  },
+  {
+    "id": 96,
+    "kategorie": "Zahlen",
+    "it": "undici",
+    "de": "Elf"
+  },
+  {
+    "id": 97,
+    "kategorie": "Zeit",
+    "it": "dodici",
+    "de": "Zwölf"
+  },
+  {
+    "id": 98,
+    "kategorie": "Zahlen",
+    "it": "tredici",
+    "de": "Dreizehn"
   }
 ]

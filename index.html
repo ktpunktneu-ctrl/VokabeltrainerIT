@@ -140,6 +140,7 @@ nav button.active{background:var(--green);color:#fff}
 #toast-container{position:fixed;top:calc(env(safe-area-inset-top) + 10px);left:50%;transform:translateX(-50%);z-index:9999}
 .toast{padding:10px 18px;border-radius:20px;color:#fff;font-size:13px;font-weight:600;box-shadow:0 4px 12px rgba(0,0,0,0.2);margin-bottom:6px;background:var(--danger)}
 .toast.ok{background:var(--success)}
+.app-version{font-size:11px;font-weight:400;color:var(--text-light);vertical-align:middle;margin-left:4px}
 </style>
 </head>
 <body>
@@ -148,7 +149,7 @@ nav button.active{background:var(--green);color:#fff}
 <div id="app">
 
   <header>
-    <h1><span class="flag"></span>Vokabeltrainer</h1>
+    <h1><span class="flag"></span>Vokabeltrainer <span id="app-version" class="app-version"></span></h1>
     <div>
       <button class="icon-btn" onclick="gotoPage('liste')" title="Lernliste">&#128214;</button>
       <button class="icon-btn" onclick="gotoPage('verwaltung')" title="Verwaltung">&#9881;</button>
@@ -227,8 +228,7 @@ nav button.active{background:var(--green);color:#fff}
   <div class="page" id="page-verwaltung">
     <div class="page-hdr"><button class="back-btn" onclick="gotoPage('start')" title="Zurück">&#8249;</button><h2>Verwaltung</h2></div>
     <button class="btn btn-primary" onclick="openAddModal()" style="margin-bottom:10px">&#43; Neue Vokabel hinzufügen</button>
-    <button class="btn btn-secondary" id="btn-sync" onclick="syncMitPC()" style="margin-bottom:10px">&#8646; Mit PC abgleichen</button>
-    <button class="btn btn-secondary" id="btn-anki-export" onclick="exportFuerAnki()" style="margin-bottom:14px">&#8595; Export f&uuml;r Anki / AnkiWeb</button>
+    <button class="btn btn-secondary" id="btn-sync" onclick="syncMitPC()" style="margin-bottom:14px">&#8646; Mit PC abgleichen</button>
     <div class="card" style="margin-bottom:14px">
       <div class="card-title">Kategorien</div>
       <div id="kat-list"></div>
@@ -351,19 +351,31 @@ const SEED_VOKABELN = [
   {"id":89,"kategorie":"Unregelmäßige Verben","it":"morire","de":"sterben","formen":{"io":"muoio","tu":"muori","lui":"muore","noi":"moriamo","voi":"morite","loro":"muoiono"}}
 ];
 
+const APP_VERSION = '1.1';
 const LS_KEY = 'vokabeltrainer_it_vokabeln';
 
 const S = { vokabeln: [], kategorien: [], selectedKat: new Set(), richtung: 'it-de', anzahl: 15,
             quizList: [], quizIndex: 0, richtig: 0, falscheListe: [], llTab: 'vokabeln' };
 
 // ── Lokale Speicherung (funktioniert komplett offline, keine Serverabhängigkeit) ──
+function lsRepairFormen(list) {
+  const seedByKey = new Map(SEED_VOKABELN.filter(v => v.formen).map(v => [vokabelKey(v), v.formen]));
+  let geaendert = false;
+  const repariert = list.map(v => {
+    if (!v.formen && seedByKey.has(vokabelKey(v))) { geaendert = true; return { ...v, formen: seedByKey.get(vokabelKey(v)) }; }
+    return v;
+  });
+  if (geaendert) lsSave(repariert);
+  return repariert;
+}
+
 function lsLoad() {
   const raw = localStorage.getItem(LS_KEY);
   if (!raw) {
     localStorage.setItem(LS_KEY, JSON.stringify(SEED_VOKABELN));
     return JSON.parse(JSON.stringify(SEED_VOKABELN));
   }
-  try { return JSON.parse(raw); } catch(e) { return JSON.parse(JSON.stringify(SEED_VOKABELN)); }
+  try { return lsRepairFormen(JSON.parse(raw)); } catch(e) { return JSON.parse(JSON.stringify(SEED_VOKABELN)); }
 }
 function lsSave(list) { localStorage.setItem(LS_KEY, JSON.stringify(list)); }
 
@@ -437,6 +449,7 @@ function gotoPage(name) {
 }
 
 async function appInit() {
+  document.getElementById('app-version').textContent = 'v' + APP_VERSION;
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js').catch(()=>{});
   }
@@ -503,8 +516,19 @@ function renderStart() {
   wrap.querySelectorAll('.chip').forEach(el => {
     el.addEventListener('click', () => {
       const k = el.dataset.kat;
-      if (S.selectedKat.has(k)) S.selectedKat.delete(k); else S.selectedKat.add(k);
-      el.classList.toggle('active');
+      const alleAusgewaehlt = S.selectedKat.size === S.kategorien.length;
+      if (alleAusgewaehlt) {
+        // Filter: aus "alle ausgewählt" isoliert ein Klick genau diese eine Kategorie
+        S.selectedKat = new Set([k]);
+      } else if (S.selectedKat.size === 1 && S.selectedKat.has(k)) {
+        // Erneuter Klick auf die einzige aktive Kategorie -> zurück zu "alle"
+        S.selectedKat = new Set(S.kategorien);
+      } else if (S.selectedKat.has(k)) {
+        S.selectedKat.delete(k);
+      } else {
+        S.selectedKat.add(k);
+      }
+      renderStart();
     });
   });
 }
@@ -701,23 +725,27 @@ function renderKategorienListe() {
     <div class="kat-row">
       <span class="kat-name">${k}</span>
       <span class="kat-count">${anzahl} Vokabel(n)</span>
-      <button class="vk-del ${anzahl > 0 ? 'disabled' : ''}" onclick="deleteKategorie('${k}', ${anzahl})" title="Kategorie löschen">&#128465;</button>
+      <button class="vk-del" onclick="deleteKategorie('${k}', ${anzahl})" title="Kategorie löschen">&#128465;</button>
     </div>`;
   }).join('') || '<p style="color:var(--text-light);font-size:13px;padding:10px 0">Keine Kategorien</p>';
 }
 
 function deleteKategorie(kat, anzahl) {
+  const frage = anzahl > 0
+    ? `Kategorie "${kat}" UND alle ${anzahl} enthaltenen Vokabel(n) unwiderruflich löschen?`
+    : `Kategorie "${kat}" löschen?`;
+  if (!confirm(frage)) return;
   if (anzahl > 0) {
-    toast(`Kategorie "${kat}" enthält noch ${anzahl} Vokabel(n) — erst verschieben oder löschen`);
-    return;
+    const rest = lsLoad().filter(v => v.kategorie !== kat);
+    lsSave(rest);
+    S.vokabeln = rest;
   }
-  if (!confirm(`Kategorie "${kat}" löschen?`)) return;
   const extra = lsKategorienExtraLoad().filter(k => k !== kat);
   localStorage.setItem(LS_KAT_EXTRA_KEY, JSON.stringify(extra));
   S.kategorien = lsKategorien(S.vokabeln);
   S.selectedKat.delete(kat);
   renderVerwaltung();
-  toast(`Kategorie "${kat}" gelöscht`, 'ok');
+  toast(anzahl > 0 ? `Kategorie "${kat}" und ${anzahl} Vokabel(n) gelöscht` : `Kategorie "${kat}" gelöscht`, 'ok');
 }
 
 function changeVokabelKategorie(id, neueKategorie) {
@@ -834,9 +862,14 @@ async function syncMitPC() {
     }
 
     const merged = await fetch('/api/vokabeln', { cache: 'no-store' }).then(r => r.json());
-    lsSave(merged);
-    S.vokabeln = merged;
-    S.kategorien = lsKategorien(merged);
+    const formenByKey = new Map(localListe.filter(v => v.formen).map(v => [vokabelKey(v), v.formen]));
+    const mergedMitFormen = merged.map(v => {
+      const formen = formenByKey.get(vokabelKey(v));
+      return formen ? { ...v, formen } : v;
+    });
+    lsSave(mergedMitFormen);
+    S.vokabeln = mergedMitFormen;
+    S.kategorien = lsKategorien(mergedMitFormen);
     S.selectedKat = new Set(S.kategorien);
 
     const anzahlNeu = nurLokal.length + nurServer.length;
@@ -856,41 +889,6 @@ function deleteVokabel(id) {
   S.vokabeln = lsLoad();
   S.kategorien = lsKategorien(S.vokabeln);
   renderVerwaltung();
-}
-
-// ── EXPORT FÜR ANKI / ANKIWEB ────────────────────────────────────────────────
-// Erzeugt eine .txt-Datei im Anki-Textimport-Format (Tab-getrennt, mit
-// Header-Zeilen, die Anki beim Import automatisch erkennt: Trennzeichen,
-// HTML erlaubt, Tags-Spalte). Import in Anki Desktop über Datei > Importieren,
-// danach synct Anki die neue(n) Karte(n) automatisch zu AnkiWeb (Strg+Umschalt+Y
-// bzw. Klick auf "Sync"). Über AnkiWeb/die Anki-Apps dann im Browser lernbar.
-function exportFuerAnki() {
-  const zeilen = [
-    '#separator:tab',
-    '#html:true',
-    '#tags column:3'
-  ];
-  const sorted = [...S.vokabeln].sort((a, b) => a.kategorie.localeCompare(b.kategorie) || a.it.localeCompare(b.it));
-  sorted.forEach(v => {
-    let back = v.de;
-    if (v.formen) {
-      back += '<br>' + PERSONEN.map(p => `<b>${PERSON_LABEL[p]}</b> ${v.formen[p]}`).join(', ');
-    }
-    const tag = 'Italienisch::' + v.kategorie.replace(/\s+/g, '_');
-    const front = v.it.replace(/\t/g, ' ');
-    const backClean = back.replace(/\t/g, ' ');
-    zeilen.push(`${front}\t${backClean}\t${tag}`);
-  });
-  const blob = new Blob([zeilen.join('\n')], { type: 'text/plain;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'vokabeltrainer_it_anki.txt';
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-  toast(`${sorted.length} Vokabel(n) exportiert — in Anki Desktop importieren, dann mit AnkiWeb synchronisieren`, 'ok');
 }
 
 appInit().catch(e => console.error(e));
