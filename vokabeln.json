@@ -1,0 +1,536 @@
+[
+  {
+    "id": 1,
+    "kategorie": "Grundlagen",
+    "it": "ciao",
+    "de": "Hallo / Tschüss"
+  },
+  {
+    "id": 2,
+    "kategorie": "Grundlagen",
+    "it": "arrivederci",
+    "de": "Auf Wiedersehen"
+  },
+  {
+    "id": 3,
+    "kategorie": "Grundlagen",
+    "it": "per favore",
+    "de": "bitte"
+  },
+  {
+    "id": 4,
+    "kategorie": "Grundlagen",
+    "it": "grazie",
+    "de": "danke"
+  },
+  {
+    "id": 5,
+    "kategorie": "Grundlagen",
+    "it": "prego",
+    "de": "bitte (Antwort)"
+  },
+  {
+    "id": 6,
+    "kategorie": "Grundlagen",
+    "it": "sì",
+    "de": "ja"
+  },
+  {
+    "id": 7,
+    "kategorie": "Grundlagen",
+    "it": "no",
+    "de": "nein"
+  },
+  {
+    "id": 8,
+    "kategorie": "Grundlagen",
+    "it": "scusa",
+    "de": "Entschuldigung"
+  },
+  {
+    "id": 9,
+    "kategorie": "Grundlagen",
+    "it": "buongiorno",
+    "de": "Guten Morgen/Tag"
+  },
+  {
+    "id": 10,
+    "kategorie": "Grundlagen",
+    "it": "buonasera",
+    "de": "Guten Abend"
+  },
+  {
+    "id": 11,
+    "kategorie": "Zahlen",
+    "it": "uno",
+    "de": "eins"
+  },
+  {
+    "id": 12,
+    "kategorie": "Zahlen",
+    "it": "due",
+    "de": "zwei"
+  },
+  {
+    "id": 13,
+    "kategorie": "Zahlen",
+    "it": "tre",
+    "de": "drei"
+  },
+  {
+    "id": 14,
+    "kategorie": "Zahlen",
+    "it": "quattro",
+    "de": "vier"
+  },
+  {
+    "id": 15,
+    "kategorie": "Zahlen",
+    "it": "cinque",
+    "de": "fünf"
+  },
+  {
+    "id": 16,
+    "kategorie": "Zahlen",
+    "it": "sei",
+    "de": "sechs"
+  },
+  {
+    "id": 17,
+    "kategorie": "Zahlen",
+    "it": "sette",
+    "de": "sieben"
+  },
+  {
+    "id": 18,
+    "kategorie": "Zahlen",
+    "it": "otto",
+    "de": "acht"
+  },
+  {
+    "id": 19,
+    "kategorie": "Zahlen",
+    "it": "nove",
+    "de": "neun"
+  },
+  {
+    "id": 20,
+    "kategorie": "Zahlen",
+    "it": "dieci",
+    "de": "zehn"
+  },
+  {
+    "id": 21,
+    "kategorie": "Farben",
+    "it": "rosso",
+    "de": "rot"
+  },
+  {
+    "id": 22,
+    "kategorie": "Farben",
+    "it": "blu",
+    "de": "blau"
+  },
+  {
+    "id": 23,
+    "kategorie": "Farben",
+    "it": "verde",
+    "de": "grün"
+  },
+  {
+    "id": 24,
+    "kategorie": "Farben",
+    "it": "giallo",
+    "de": "gelb"
+  },
+  {
+    "id": 25,
+    "kategorie": "Farben",
+    "it": "nero",
+    "de": "schwarz"
+  },
+  {
+    "id": 26,
+    "kategorie": "Farben",
+    "it": "bianco",
+    "de": "weiß"
+  },
+  {
+    "id": 27,
+    "kategorie": "Farben",
+    "it": "marrone",
+    "de": "braun"
+  },
+  {
+    "id": 28,
+    "kategorie": "Farben",
+    "it": "viola",
+    "de": "lila"
+  },
+  {
+    "id": 29,
+    "kategorie": "Farben",
+    "it": "arancione",
+    "de": "orange"
+  },
+  {
+    "id": 30,
+    "kategorie": "Farben",
+    "it": "rosa",
+    "de": "rosa"
+  },
+  {
+    "id": 31,
+    "kategorie": "Familie",
+    "it": "madre",
+    "de": "Mutter"
+  },
+  {
+    "id": 32,
+    "kategorie": "Familie",
+    "it": "padre",
+    "de": "Vater"
+  },
+  {
+    "id": 33,
+    "kategorie": "Familie",
+    "it": "fratello",
+    "de": "Bruder"
+  },
+  {
+    "id": 34,
+    "kategorie": "Familie",
+    "it": "sorella",
+    "de": "Schwester"
+  },
+  {
+    "id": 35,
+    "kategorie": "Familie",
+    "it": "figlio",
+    "de": "Sohn"
+  },
+  {
+    "id": 36,
+    "kategorie": "Familie",
+    "it": "figlia",
+    "de": "Tochter"
+  },
+  {
+    "id": 37,
+    "kategorie": "Familie",
+    "it": "nonno",
+    "de": "Großvater"
+  },
+  {
+    "id": 38,
+    "kategorie": "Familie",
+    "it": "nonna",
+    "de": "Großmutter"
+  },
+  {
+    "id": 39,
+    "kategorie": "Familie",
+    "it": "marito",
+    "de": "Ehemann"
+  },
+  {
+    "id": 40,
+    "kategorie": "Familie",
+    "it": "moglie",
+    "de": "Ehefrau"
+  },
+  {
+    "id": 41,
+    "kategorie": "Essen",
+    "it": "pane",
+    "de": "Brot"
+  },
+  {
+    "id": 42,
+    "kategorie": "Essen",
+    "it": "acqua",
+    "de": "Wasser"
+  },
+  {
+    "id": 43,
+    "kategorie": "Essen",
+    "it": "vino",
+    "de": "Wein"
+  },
+  {
+    "id": 44,
+    "kategorie": "Essen",
+    "it": "pasta",
+    "de": "Nudeln"
+  },
+  {
+    "id": 45,
+    "kategorie": "Essen",
+    "it": "pesce",
+    "de": "Fisch"
+  },
+  {
+    "id": 46,
+    "kategorie": "Essen",
+    "it": "carne",
+    "de": "Fleisch"
+  },
+  {
+    "id": 47,
+    "kategorie": "Essen",
+    "it": "formaggio",
+    "de": "Käse"
+  },
+  {
+    "id": 48,
+    "kategorie": "Essen",
+    "it": "frutta",
+    "de": "Obst"
+  },
+  {
+    "id": 49,
+    "kategorie": "Essen",
+    "it": "verdura",
+    "de": "Gemüse"
+  },
+  {
+    "id": 50,
+    "kategorie": "Essen",
+    "it": "dolce",
+    "de": "Nachspeise / süß / nett / lieb"
+  },
+  {
+    "id": 51,
+    "kategorie": "Zeit",
+    "it": "oggi",
+    "de": "heute"
+  },
+  {
+    "id": 52,
+    "kategorie": "Zeit",
+    "it": "domani",
+    "de": "morgen"
+  },
+  {
+    "id": 53,
+    "kategorie": "Zeit",
+    "it": "ieri",
+    "de": "gestern"
+  },
+  {
+    "id": 54,
+    "kategorie": "Zeit",
+    "it": "settimana",
+    "de": "Woche"
+  },
+  {
+    "id": 55,
+    "kategorie": "Zeit",
+    "it": "mese",
+    "de": "Monat"
+  },
+  {
+    "id": 56,
+    "kategorie": "Zeit",
+    "it": "anno",
+    "de": "Jahr"
+  },
+  {
+    "id": 57,
+    "kategorie": "Zeit",
+    "it": "ora",
+    "de": "Stunde / jetzt"
+  },
+  {
+    "id": 58,
+    "kategorie": "Zeit",
+    "it": "minuto",
+    "de": "Minute"
+  },
+  {
+    "id": 59,
+    "kategorie": "Verben",
+    "it": "essere",
+    "de": "sein"
+  },
+  {
+    "id": 60,
+    "kategorie": "Verben",
+    "it": "avere",
+    "de": "haben"
+  },
+  {
+    "id": 61,
+    "kategorie": "Verben",
+    "it": "andare",
+    "de": "gehen"
+  },
+  {
+    "id": 62,
+    "kategorie": "Verben",
+    "it": "fare",
+    "de": "machen/tun"
+  },
+  {
+    "id": 63,
+    "kategorie": "Verben",
+    "it": "potere",
+    "de": "können"
+  },
+  {
+    "id": 64,
+    "kategorie": "Verben",
+    "it": "volere",
+    "de": "wollen"
+  },
+  {
+    "id": 65,
+    "kategorie": "Verben",
+    "it": "dovere",
+    "de": "müssen"
+  },
+  {
+    "id": 66,
+    "kategorie": "Verben",
+    "it": "mangiare",
+    "de": "essen"
+  },
+  {
+    "id": 67,
+    "kategorie": "Verben",
+    "it": "bere",
+    "de": "trinken"
+  },
+  {
+    "id": 68,
+    "kategorie": "Verben",
+    "it": "parlare",
+    "de": "sprechen"
+  },
+  {
+    "id": 69,
+    "kategorie": "Verben",
+    "it": "capire",
+    "de": "verstehen"
+  },
+  {
+    "id": 70,
+    "kategorie": "Verben",
+    "it": "vedere",
+    "de": "sehen"
+  },
+  {
+    "id": 71,
+    "kategorie": "Verben",
+    "it": "sapere",
+    "de": "wissen"
+  },
+  {
+    "id": 72,
+    "kategorie": "Verben",
+    "it": "venire",
+    "de": "kommen"
+  },
+  {
+    "id": 73,
+    "kategorie": "Personalpronomen",
+    "it": "io",
+    "de": "ich"
+  },
+  {
+    "id": 74,
+    "kategorie": "Personalpronomen",
+    "it": "tu",
+    "de": "du"
+  },
+  {
+    "id": 75,
+    "kategorie": "Personalpronomen",
+    "it": "lui",
+    "de": "er"
+  },
+  {
+    "id": 76,
+    "kategorie": "Personalpronomen",
+    "it": "lei",
+    "de": "sie"
+  },
+  {
+    "id": 77,
+    "kategorie": "Personalpronomen",
+    "it": "noi",
+    "de": "wir"
+  },
+  {
+    "id": 78,
+    "kategorie": "Personalpronomen",
+    "it": "voi",
+    "de": "ihr"
+  },
+  {
+    "id": 79,
+    "kategorie": "Personalpronomen",
+    "it": "loro",
+    "de": "sie (Plural)"
+  },
+  {
+    "id": 80,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "dire",
+    "de": "sagen"
+  },
+  {
+    "id": 81,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "uscire",
+    "de": "ausgehen"
+  },
+  {
+    "id": 82,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "rimanere",
+    "de": "bleiben"
+  },
+  {
+    "id": 83,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "tenere",
+    "de": "halten"
+  },
+  {
+    "id": 84,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "scegliere",
+    "de": "wählen"
+  },
+  {
+    "id": 85,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "salire",
+    "de": "steigen / einsteigen"
+  },
+  {
+    "id": 86,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "spegnere",
+    "de": "ausschalten"
+  },
+  {
+    "id": 87,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "piacere",
+    "de": "gefallen"
+  },
+  {
+    "id": 88,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "sedere",
+    "de": "sitzen"
+  },
+  {
+    "id": 89,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "morire",
+    "de": "sterben"
+  }
+]

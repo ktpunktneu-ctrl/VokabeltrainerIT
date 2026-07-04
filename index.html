@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+<title>Vokabeltrainer Italienisch</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/static/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="VokabelIT">
+<meta name="theme-color" content="#008C45">
+<style>
+:root {
+  --green:#008C45; --white:#fff; --red:#CD212A;
+  --bg:#f0f2f6; --card:#fff; --text:#1e293b; --text-light:#64748b;
+  --border:#e2e8f0; --success:#16a34a; --danger:#dc2626;
+  --radius:14px; --shadow:0 2px 10px rgba(0,0,0,0.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:-apple-system,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);
+  min-height:100vh; padding-top:env(safe-area-inset-top); padding-bottom:env(safe-area-inset-bottom);
+}
+#app{max-width:480px;margin:0 auto;padding:16px;min-height:100vh;display:flex;flex-direction:column}
+.page{display:none;flex:1;flex-direction:column}
+.page.active{display:flex}
+
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+header h1{font-size:19px;font-weight:800;color:var(--green)}
+header .flag{display:inline-block;width:22px;height:16px;background:linear-gradient(90deg,var(--green) 33%,var(--white) 33% 66%,var(--red) 66%);border-radius:2px;border:1px solid #ddd;vertical-align:middle;margin-right:6px}
+.icon-btn{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-light);padding:6px}
+
+.card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin-bottom:14px}
+.card-title{font-size:12px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+
+.chip-grid{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:8px 14px;border-radius:20px;border:1.5px solid var(--border);background:#fff;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-light);transition:.15s}
+.chip.active{background:var(--green);border-color:var(--green);color:#fff}
+
+.radio-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.radio-opt{padding:12px;border-radius:10px;border:1.5px solid var(--border);text-align:center;font-size:13px;font-weight:600;cursor:pointer;color:var(--text-light)}
+.radio-opt.active{background:var(--green);border-color:var(--green);color:#fff}
+.radio-opt.disabled{opacity:.4;cursor:not-allowed}
+
+.btn{padding:14px;border-radius:12px;border:none;cursor:pointer;font-size:16px;font-weight:700;width:100%;transition:.15s}
+.btn-primary{background:var(--green);color:#fff}
+.btn-primary:active{background:#00722f}
+.btn-secondary{background:#fff;color:var(--text);border:1.5px solid var(--border)}
+.btn-danger{background:var(--danger);color:#fff}
+.btn-sm{padding:8px 14px;font-size:13px;width:auto}
+
+.slider-row{display:flex;align-items:center;gap:12px}
+.slider-row input[type=range]{flex:1}
+.slider-val{font-weight:800;color:var(--green);min-width:28px;text-align:center}
+
+/* Quiz */
+#quiz-progress{font-size:12px;color:var(--text-light);text-align:center;margin-bottom:8px}
+#quiz-progress-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:24px}
+#quiz-progress-fill{height:100%;background:var(--green);transition:width .2s}
+.quiz-card{background:#fff;border-radius:20px;box-shadow:var(--shadow);padding:40px 24px;text-align:center;flex:1;display:flex;flex-direction:column;justify-content:center;gap:20px}
+.quiz-lang-badge{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-light);background:var(--bg);padding:4px 10px;border-radius:10px;align-self:center}
+.quiz-word-row{display:flex;align-items:center;justify-content:center;gap:8px}
+.quiz-word{font-size:32px;font-weight:800;color:var(--text)}
+.speak-btn{background:none;border:none;font-size:22px;cursor:pointer;color:var(--green);padding:4px;line-height:1;flex-shrink:0}
+.speak-btn:disabled{opacity:.35;cursor:default}
+.ll-speak-btn{background:none;border:none;font-size:15px;cursor:pointer;color:var(--green);padding:0 0 0 6px;line-height:1;flex-shrink:0}
+.quiz-input{padding:14px;font-size:18px;border:2px solid var(--border);border-radius:12px;text-align:center;outline:none;font-family:inherit;width:100%}
+.quiz-input:focus{border-color:var(--green)}
+.quiz-input.correct{border-color:var(--success);background:#f0fdf4}
+.quiz-input.wrong{border-color:var(--danger);background:#fef2f2}
+.quiz-feedback{font-size:14px;font-weight:600;min-height:20px}
+.quiz-feedback.correct{color:var(--success)}
+.quiz-feedback.wrong{color:var(--danger)}
+.quiz-forms{display:none;flex-wrap:wrap;justify-content:center;gap:6px;font-size:12px}
+.quiz-forms.show{display:flex}
+.quiz-forms span{background:var(--bg);padding:4px 9px;border-radius:8px;color:var(--text-light)}
+.quiz-forms span b{color:var(--text)}
+.quiz-actions{display:flex;gap:10px}
+
+/* Ergebnis */
+.result-score{font-size:52px;font-weight:800;text-align:center;color:var(--green);margin:20px 0 6px}
+.result-sub{text-align:center;color:var(--text-light);font-size:14px;margin-bottom:20px}
+.result-list{max-height:240px;overflow-y:auto;margin-bottom:16px}
+.result-item{display:flex;justify-content:space-between;padding:8px 10px;border-bottom:1px solid var(--border);font-size:13px}
+.result-item.wrong{color:var(--danger)}
+
+/* Verwaltung */
+.vk-item{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--border);font-size:13px}
+.vk-item .vk-kat{font-size:10px;font-weight:700;color:#fff;background:var(--green);padding:2px 7px;border-radius:8px;white-space:nowrap}
+.vk-kat-select{font-size:10px;font-weight:700;color:#fff;background:var(--green);padding:2px 4px;border-radius:8px;border:none;white-space:nowrap;cursor:pointer;max-width:110px}
+.kat-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px}
+.kat-row:last-child{border-bottom:none}
+.kat-row .kat-name{flex:1;font-weight:600}
+.kat-row .kat-count{font-size:11px;color:var(--text-light)}
+.kat-row .vk-del{opacity:1}
+.kat-row .vk-del.disabled{opacity:.3;cursor:not-allowed}
+.vk-item .vk-it{font-weight:700;flex:1}
+.vk-item .vk-de{color:var(--text-light);flex:1}
+.vk-del{background:none;border:none;color:var(--danger);font-size:16px;cursor:pointer}
+.form-row{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+.form-row input,.form-row select{padding:10px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;outline:none;font-family:inherit;background:#fff;width:100%}
+.form-row input:focus,.form-row select:focus{border-color:var(--green)}
+
+/* FAB */
+.fab{position:fixed;bottom:calc(env(safe-area-inset-bottom) + 20px);right:calc(50% - 240px + 20px);width:56px;height:56px;border-radius:50%;background:var(--green);color:#fff;font-size:28px;border:none;box-shadow:0 4px 14px rgba(0,140,69,0.4);cursor:pointer;z-index:500;display:flex;align-items:center;justify-content:center}
+@media (max-width:520px){.fab{right:20px}}
+
+/* Add-Modal */
+dialog{border:none;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.25);padding:0;width:340px;max-width:90vw}
+dialog::backdrop{background:rgba(0,0,0,0.4)}
+.modal-body{padding:20px}
+.modal-title{font-size:15px;font-weight:800;margin-bottom:14px;color:var(--text)}
+.modal-actions{display:flex;gap:8px;margin-top:6px}
+
+.page-hdr{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.page-hdr .back-btn{background:none;border:none;font-size:24px;cursor:pointer;color:var(--text);padding:0 4px 0 0;line-height:1}
+.page-hdr h2{font-size:18px;font-weight:800;color:var(--text)}
+
+nav{display:flex;gap:6px;margin-top:14px}
+nav button{flex:1;padding:10px;border-radius:10px;border:none;background:#fff;box-shadow:var(--shadow);font-size:12px;font-weight:700;color:var(--text-light);cursor:pointer}
+nav button.active{background:var(--green);color:#fff}
+
+/* Lernliste */
+.ll-tabs{display:flex;gap:8px;margin-bottom:14px}
+.ll-tab{flex:1;padding:10px;border-radius:10px;border:1.5px solid var(--border);text-align:center;font-size:13px;font-weight:700;cursor:pointer;color:var(--text-light);background:#fff}
+.ll-tab.active{background:var(--green);border-color:var(--green);color:#fff}
+.ll-kat-title{font-size:11px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.5px;margin:0 0 6px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.ll-row{display:flex;justify-content:space-between;gap:10px;padding:5px 0;font-size:13px}
+.ll-row .ll-it{font-weight:700;flex:1}
+.ll-row .ll-de{color:var(--text-light);flex:1;text-align:right}
+.ll-verb-card{border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:10px}
+.ll-verb-hdr{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.ll-verb-hdr .ll-inf{font-size:16px;font-weight:800;color:var(--text)}
+.ll-verb-hdr .ll-mean{font-size:12px;color:var(--text-light);font-style:italic}
+.ll-forms{display:flex;flex-wrap:wrap;gap:6px}
+.ll-forms span{background:var(--bg);padding:4px 9px;border-radius:8px;font-size:12px;color:var(--text-light)}
+.ll-forms span b{color:var(--text)}
+
+#toast-container{position:fixed;top:calc(env(safe-area-inset-top) + 10px);left:50%;transform:translateX(-50%);z-index:9999}
+.toast{padding:10px 18px;border-radius:20px;color:#fff;font-size:13px;font-weight:600;box-shadow:0 4px 12px rgba(0,0,0,0.2);margin-bottom:6px;background:var(--danger)}
+.toast.ok{background:var(--success)}
+</style>
+</head>
+<body>
+
+<div id="toast-container"></div>
+<div id="app">
+
+  <header>
+    <h1><span class="flag"></span>Vokabeltrainer</h1>
+    <div>
+      <button class="icon-btn" onclick="gotoPage('liste')" title="Lernliste">&#128214;</button>
+      <button class="icon-btn" onclick="gotoPage('verwaltung')" title="Verwaltung">&#9881;</button>
+    </div>
+  </header>
+
+  <!-- STARTSEITE -->
+  <div class="page active" id="page-start">
+    <div class="card">
+      <div class="card-title">Kategorien</div>
+      <div class="chip-grid" id="start-kategorien"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Richtung</div>
+      <div class="radio-row" id="start-richtung">
+        <div class="radio-opt active" data-dir="it-de">IT &#8594; DE</div>
+        <div class="radio-opt" data-dir="de-it">DE &#8594; IT</div>
+        <div class="radio-opt" data-dir="mix">Gemischt</div>
+        <div class="radio-opt" data-dir="konjugation">Konjugation</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Anzahl Fragen</div>
+      <div class="slider-row">
+        <input type="range" id="start-anzahl" min="5" max="50" step="5" value="15">
+        <div class="slider-val" id="start-anzahl-val">15</div>
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="startQuiz()">Training starten</button>
+  </div>
+
+  <button class="fab" id="fab-add" onclick="openAddModal()" title="Vokabel hinzufügen">&#43;</button>
+
+  <!-- QUIZ -->
+  <div class="page" id="page-quiz">
+    <div id="quiz-progress">Frage 1 / 15 &middot; Richtig: 0</div>
+    <div id="quiz-progress-bar"><div id="quiz-progress-fill" style="width:0%"></div></div>
+    <div class="quiz-card">
+      <div class="quiz-lang-badge" id="quiz-badge">Italienisch</div>
+      <div class="quiz-word-row"><div class="quiz-word" id="quiz-word">–</div><button class="speak-btn" id="quiz-speak-btn" onclick="speakQuizWord()" title="Aussprache anhören">&#128266;</button></div>
+      <input type="text" class="quiz-input" id="quiz-input" placeholder="Übersetzung eingeben …" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+      <div class="quiz-feedback" id="quiz-feedback"></div>
+      <div class="quiz-forms" id="quiz-forms"></div>
+      <div class="quiz-actions">
+        <button class="btn btn-secondary" onclick="quizAbbrechen()">Abbrechen</button>
+        <button class="btn btn-primary" id="quiz-check-btn" onclick="quizCheck()">Prüfen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ERGEBNIS -->
+  <div class="page" id="page-ergebnis">
+    <div class="page-hdr"><button class="back-btn" onclick="gotoPage('start')" title="Zurück">&#8249;</button><h2>Ergebnis</h2></div>
+    <div class="card" style="text-align:center">
+      <div class="result-score" id="result-score">0/0</div>
+      <div class="result-sub" id="result-sub">0% richtig</div>
+    </div>
+    <div class="card" id="result-list-card" style="display:none">
+      <div class="card-title">Falsch beantwortet</div>
+      <div class="result-list" id="result-list"></div>
+    </div>
+    <button class="btn btn-primary" onclick="wiederholeFalsche()" id="btn-wiederholen" style="display:none">Falsche nochmal üben</button>
+  </div>
+
+  <!-- LERNLISTE -->
+  <div class="page" id="page-liste">
+    <div class="page-hdr"><button class="back-btn" onclick="gotoPage('start')" title="Zurück">&#8249;</button><h2>Lernliste</h2></div>
+    <div class="ll-tabs">
+      <div class="ll-tab active" data-lltab="vokabeln">Vokabeln</div>
+      <div class="ll-tab" data-lltab="konjugation">Konjugation</div>
+    </div>
+    <div class="card" style="flex:1;overflow-y:auto" id="ll-content"></div>
+  </div>
+
+  <!-- VERWALTUNG -->
+  <div class="page" id="page-verwaltung">
+    <div class="page-hdr"><button class="back-btn" onclick="gotoPage('start')" title="Zurück">&#8249;</button><h2>Verwaltung</h2></div>
+    <button class="btn btn-primary" onclick="openAddModal()" style="margin-bottom:10px">&#43; Neue Vokabel hinzufügen</button>
+    <button class="btn btn-secondary" id="btn-sync" onclick="syncMitPC()" style="margin-bottom:10px">&#8646; Mit PC abgleichen</button>
+    <button class="btn btn-secondary" id="btn-anki-export" onclick="exportFuerAnki()" style="margin-bottom:14px">&#8595; Export f&uuml;r Anki / AnkiWeb</button>
+    <div class="card" style="margin-bottom:14px">
+      <div class="card-title">Kategorien</div>
+      <div id="kat-list"></div>
+    </div>
+    <div class="card" style="flex:1;overflow-y:auto">
+      <div class="card-title">Alle Vokabeln (<span id="vk-count">0</span>)</div>
+      <div id="vk-list"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ADD-MODAL -->
+<dialog id="add-modal">
+  <div class="modal-body">
+    <div class="modal-title">Neue Vokabel</div>
+    <div class="form-row">
+      <select id="am-kategorie-select" onchange="onKategorieSelectChange()"></select>
+      <input type="text" id="am-kategorie-neu" placeholder="Name der neuen Kategorie" style="display:none">
+      <input type="text" id="am-it" placeholder="Italienisch" autocomplete="off" autocapitalize="off">
+      <input type="text" id="am-de" placeholder="Deutsch" autocomplete="off">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeAddModal()">Abbrechen</button>
+      <button class="btn btn-primary" onclick="submitAddModal()">Speichern</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+const SEED_VOKABELN = [
+  {"id":1,"kategorie":"Grundlagen","it":"ciao","de":"Hallo / Tschüss"},
+  {"id":2,"kategorie":"Grundlagen","it":"arrivederci","de":"Auf Wiedersehen"},
+  {"id":3,"kategorie":"Grundlagen","it":"per favore","de":"bitte"},
+  {"id":4,"kategorie":"Grundlagen","it":"grazie","de":"danke"},
+  {"id":5,"kategorie":"Grundlagen","it":"prego","de":"bitte (Antwort)"},
+  {"id":6,"kategorie":"Grundlagen","it":"sì","de":"ja"},
+  {"id":7,"kategorie":"Grundlagen","it":"no","de":"nein"},
+  {"id":8,"kategorie":"Grundlagen","it":"scusa","de":"Entschuldigung"},
+  {"id":9,"kategorie":"Grundlagen","it":"buongiorno","de":"Guten Morgen/Tag"},
+  {"id":10,"kategorie":"Grundlagen","it":"buonasera","de":"Guten Abend"},
+  {"id":11,"kategorie":"Zahlen","it":"uno","de":"eins"},
+  {"id":12,"kategorie":"Zahlen","it":"due","de":"zwei"},
+  {"id":13,"kategorie":"Zahlen","it":"tre","de":"drei"},
+  {"id":14,"kategorie":"Zahlen","it":"quattro","de":"vier"},
+  {"id":15,"kategorie":"Zahlen","it":"cinque","de":"fünf"},
+  {"id":16,"kategorie":"Zahlen","it":"sei","de":"sechs"},
+  {"id":17,"kategorie":"Zahlen","it":"sette","de":"sieben"},
+  {"id":18,"kategorie":"Zahlen","it":"otto","de":"acht"},
+  {"id":19,"kategorie":"Zahlen","it":"nove","de":"neun"},
+  {"id":20,"kategorie":"Zahlen","it":"dieci","de":"zehn"},
+  {"id":21,"kategorie":"Farben","it":"rosso","de":"rot"},
+  {"id":22,"kategorie":"Farben","it":"blu","de":"blau"},
+  {"id":23,"kategorie":"Farben","it":"verde","de":"grün"},
+  {"id":24,"kategorie":"Farben","it":"giallo","de":"gelb"},
+  {"id":25,"kategorie":"Farben","it":"nero","de":"schwarz"},
+  {"id":26,"kategorie":"Farben","it":"bianco","de":"weiß"},
+  {"id":27,"kategorie":"Farben","it":"marrone","de":"braun"},
+  {"id":28,"kategorie":"Farben","it":"viola","de":"lila"},
+  {"id":29,"kategorie":"Farben","it":"arancione","de":"orange"},
+  {"id":30,"kategorie":"Farben","it":"rosa","de":"rosa"},
+  {"id":31,"kategorie":"Familie","it":"madre","de":"Mutter"},
+  {"id":32,"kategorie":"Familie","it":"padre","de":"Vater"},
+  {"id":33,"kategorie":"Familie","it":"fratello","de":"Bruder"},
+  {"id":34,"kategorie":"Familie","it":"sorella","de":"Schwester"},
+  {"id":35,"kategorie":"Familie","it":"figlio","de":"Sohn"},
+  {"id":36,"kategorie":"Familie","it":"figlia","de":"Tochter"},
+  {"id":37,"kategorie":"Familie","it":"nonno","de":"Großvater"},
+  {"id":38,"kategorie":"Familie","it":"nonna","de":"Großmutter"},
+  {"id":39,"kategorie":"Familie","it":"marito","de":"Ehemann"},
+  {"id":40,"kategorie":"Familie","it":"moglie","de":"Ehefrau"},
+  {"id":41,"kategorie":"Essen","it":"pane","de":"Brot"},
+  {"id":42,"kategorie":"Essen","it":"acqua","de":"Wasser"},
+  {"id":43,"kategorie":"Essen","it":"vino","de":"Wein"},
+  {"id":44,"kategorie":"Essen","it":"pasta","de":"Nudeln"},
+  {"id":45,"kategorie":"Essen","it":"pesce","de":"Fisch"},
+  {"id":46,"kategorie":"Essen","it":"carne","de":"Fleisch"},
+  {"id":47,"kategorie":"Essen","it":"formaggio","de":"Käse"},
+  {"id":48,"kategorie":"Essen","it":"frutta","de":"Obst"},
+  {"id":49,"kategorie":"Essen","it":"verdura","de":"Gemüse"},
+  {"id":50,"kategorie":"Essen","it":"dolce","de":"Nachspeise / süß / nett / lieb"},
+  {"id":51,"kategorie":"Zeit","it":"oggi","de":"heute"},
+  {"id":52,"kategorie":"Zeit","it":"domani","de":"morgen"},
+  {"id":53,"kategorie":"Zeit","it":"ieri","de":"gestern"},
+  {"id":54,"kategorie":"Zeit","it":"settimana","de":"Woche"},
+  {"id":55,"kategorie":"Zeit","it":"mese","de":"Monat"},
+  {"id":56,"kategorie":"Zeit","it":"anno","de":"Jahr"},
+  {"id":57,"kategorie":"Zeit","it":"ora","de":"Stunde / jetzt"},
+  {"id":58,"kategorie":"Zeit","it":"minuto","de":"Minute"},
+  {"id":59,"kategorie":"Verben","it":"essere","de":"sein","formen":{"io":"sono","tu":"sei","lui":"è","noi":"siamo","voi":"siete","loro":"sono"}},
+  {"id":60,"kategorie":"Verben","it":"avere","de":"haben","formen":{"io":"ho","tu":"hai","lui":"ha","noi":"abbiamo","voi":"avete","loro":"hanno"}},
+  {"id":61,"kategorie":"Verben","it":"andare","de":"gehen","formen":{"io":"vado","tu":"vai","lui":"va","noi":"andiamo","voi":"andate","loro":"vanno"}},
+  {"id":62,"kategorie":"Verben","it":"fare","de":"machen/tun","formen":{"io":"faccio","tu":"fai","lui":"fa","noi":"facciamo","voi":"fate","loro":"fanno"}},
+  {"id":63,"kategorie":"Verben","it":"potere","de":"können","formen":{"io":"posso","tu":"puoi","lui":"può","noi":"possiamo","voi":"potete","loro":"possono"}},
+  {"id":64,"kategorie":"Verben","it":"volere","de":"wollen","formen":{"io":"voglio","tu":"vuoi","lui":"vuole","noi":"vogliamo","voi":"volete","loro":"vogliono"}},
+  {"id":65,"kategorie":"Verben","it":"dovere","de":"müssen","formen":{"io":"devo","tu":"devi","lui":"deve","noi":"dobbiamo","voi":"dovete","loro":"devono"}},
+  {"id":66,"kategorie":"Verben","it":"mangiare","de":"essen"},
+  {"id":67,"kategorie":"Verben","it":"bere","de":"trinken","formen":{"io":"bevo","tu":"bevi","lui":"beve","noi":"beviamo","voi":"bevete","loro":"bevono"}},
+  {"id":68,"kategorie":"Verben","it":"parlare","de":"sprechen"},
+  {"id":69,"kategorie":"Verben","it":"capire","de":"verstehen"},
+  {"id":70,"kategorie":"Verben","it":"vedere","de":"sehen"},
+  {"id":71,"kategorie":"Verben","it":"sapere","de":"wissen","formen":{"io":"so","tu":"sai","lui":"sa","noi":"sappiamo","voi":"sapete","loro":"sanno"}},
+  {"id":72,"kategorie":"Verben","it":"venire","de":"kommen","formen":{"io":"vengo","tu":"vieni","lui":"viene","noi":"veniamo","voi":"venite","loro":"vengono"}},
+  {"id":73,"kategorie":"Personalpronomen","it":"io","de":"ich"},
+  {"id":74,"kategorie":"Personalpronomen","it":"tu","de":"du"},
+  {"id":75,"kategorie":"Personalpronomen","it":"lui","de":"er"},
+  {"id":76,"kategorie":"Personalpronomen","it":"lei","de":"sie"},
+  {"id":77,"kategorie":"Personalpronomen","it":"noi","de":"wir"},
+  {"id":78,"kategorie":"Personalpronomen","it":"voi","de":"ihr"},
+  {"id":79,"kategorie":"Personalpronomen","it":"loro","de":"sie (Plural)"},
+  {"id":80,"kategorie":"Unregelmäßige Verben","it":"dire","de":"sagen","formen":{"io":"dico","tu":"dici","lui":"dice","noi":"diciamo","voi":"dite","loro":"dicono"}},
+  {"id":81,"kategorie":"Unregelmäßige Verben","it":"uscire","de":"ausgehen","formen":{"io":"esco","tu":"esci","lui":"esce","noi":"usciamo","voi":"uscite","loro":"escono"}},
+  {"id":82,"kategorie":"Unregelmäßige Verben","it":"rimanere","de":"bleiben","formen":{"io":"rimango","tu":"rimani","lui":"rimane","noi":"rimaniamo","voi":"rimanete","loro":"rimangono"}},
+  {"id":83,"kategorie":"Unregelmäßige Verben","it":"tenere","de":"halten","formen":{"io":"tengo","tu":"tieni","lui":"tiene","noi":"teniamo","voi":"tenete","loro":"tengono"}},
+  {"id":84,"kategorie":"Unregelmäßige Verben","it":"scegliere","de":"wählen","formen":{"io":"scelgo","tu":"scegli","lui":"sceglie","noi":"scegliamo","voi":"scegliete","loro":"scelgono"}},
+  {"id":85,"kategorie":"Unregelmäßige Verben","it":"salire","de":"steigen / einsteigen","formen":{"io":"salgo","tu":"sali","lui":"sale","noi":"saliamo","voi":"salite","loro":"salgono"}},
+  {"id":86,"kategorie":"Unregelmäßige Verben","it":"spegnere","de":"ausschalten","formen":{"io":"spengo","tu":"spegni","lui":"spegne","noi":"spegniamo","voi":"spegnete","loro":"spengono"}},
+  {"id":87,"kategorie":"Unregelmäßige Verben","it":"piacere","de":"gefallen","formen":{"io":"piaccio","tu":"piaci","lui":"piace","noi":"piacciamo","voi":"piacete","loro":"piacciono"}},
+  {"id":88,"kategorie":"Unregelmäßige Verben","it":"sedere","de":"sitzen","formen":{"io":"siedo","tu":"siedi","lui":"siede","noi":"sediamo","voi":"sedete","loro":"siedono"}},
+  {"id":89,"kategorie":"Unregelmäßige Verben","it":"morire","de":"sterben","formen":{"io":"muoio","tu":"muori","lui":"muore","noi":"moriamo","voi":"morite","loro":"muoiono"}}
+];
+
+const LS_KEY = 'vokabeltrainer_it_vokabeln';
+
+const S = { vokabeln: [], kategorien: [], selectedKat: new Set(), richtung: 'it-de', anzahl: 15,
+            quizList: [], quizIndex: 0, richtig: 0, falscheListe: [], llTab: 'vokabeln' };
+
+// ── Lokale Speicherung (funktioniert komplett offline, keine Serverabhängigkeit) ──
+function lsLoad() {
+  const raw = localStorage.getItem(LS_KEY);
+  if (!raw) {
+    localStorage.setItem(LS_KEY, JSON.stringify(SEED_VOKABELN));
+    return JSON.parse(JSON.stringify(SEED_VOKABELN));
+  }
+  try { return JSON.parse(raw); } catch(e) { return JSON.parse(JSON.stringify(SEED_VOKABELN)); }
+}
+function lsSave(list) { localStorage.setItem(LS_KEY, JSON.stringify(list)); }
+
+const LS_KAT_EXTRA_KEY = 'vokabeltrainer_it_kategorien_extra';
+function lsKategorienExtraLoad() {
+  try { return JSON.parse(localStorage.getItem(LS_KAT_EXTRA_KEY) || '[]'); } catch(e) { return []; }
+}
+function lsKategorienExtraAdd(name) {
+  const list = lsKategorienExtraLoad();
+  if (!list.includes(name)) { list.push(name); localStorage.setItem(LS_KAT_EXTRA_KEY, JSON.stringify(list)); }
+}
+function lsKategorien(list) {
+  return [...new Set([...list.map(v => v.kategorie), ...lsKategorienExtraLoad()])].sort();
+}
+function lsUpdateKategorie(id, neueKategorie) {
+  const list = lsLoad();
+  const v = list.find(x => x.id === id);
+  if (v) { v.kategorie = neueKategorie; lsSave(list); }
+}
+
+function lsAdd({kategorie, it, de}) {
+  const list = lsLoad();
+  const neueId = Math.max(0, ...list.map(v => v.id)) + 1;
+  const eintrag = { id: neueId, kategorie, it, de };
+  list.push(eintrag);
+  lsSave(list);
+  return eintrag;
+}
+function lsDelete(id) {
+  const list = lsLoad().filter(v => v.id !== id);
+  lsSave(list);
+}
+
+// ── SPRACHAUSGABE (Web Speech API, kostenlos, funktioniert offline mit Handy-eigenen Stimmen) ──
+// iOS lädt die Stimmenliste asynchron nach — deshalb schon beim Start einmal abrufen
+// und auf 'voiceschanged' warten, damit der erste Tap auf den Lautsprecher nicht leer läuft.
+function initSpeech() {
+  if (!('speechSynthesis' in window)) return;
+  speechSynthesis.getVoices();
+  speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
+}
+function speak(text, lang) {
+  if (!('speechSynthesis' in window) || !text) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang;
+  u.rate = 0.9;
+  speechSynthesis.speak(u);
+}
+function speakQuizWord() {
+  if (S.quizSpeak) speak(S.quizSpeak.text, S.quizSpeak.lang);
+}
+function escJs(s) {
+  return String(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+}
+
+function toast(msg, type='err') {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div');
+  t.className = 'toast' + (type === 'ok' ? ' ok' : ''); t.textContent = msg; c.appendChild(t);
+  setTimeout(() => t.remove(), 2500);
+}
+
+function gotoPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.getElementById('fab-add').style.display = (name === 'start' || name === 'verwaltung') ? 'flex' : 'none';
+  if (name === 'verwaltung') renderVerwaltung();
+  if (name === 'start') renderStart();
+  if (name === 'liste') renderLernliste();
+}
+
+async function appInit() {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js').catch(()=>{});
+  }
+  initSpeech();
+  S.vokabeln = lsLoad();
+  S.kategorien = lsKategorien(S.vokabeln);
+  S.selectedKat = new Set(S.kategorien);
+  renderStart();
+
+  document.getElementById('start-anzahl').addEventListener('input', e => {
+    document.getElementById('start-anzahl-val').textContent = e.target.value;
+  });
+  document.querySelectorAll('#start-richtung .radio-opt').forEach(el => {
+    el.addEventListener('click', () => {
+      document.querySelectorAll('#start-richtung .radio-opt').forEach(x => x.classList.remove('active'));
+      el.classList.add('active');
+      S.richtung = el.dataset.dir;
+    });
+  });
+  document.getElementById('quiz-input').addEventListener('keydown', e => {
+    if (e.key === 'Enter') quizCheck();
+  });
+  document.querySelectorAll('.ll-tab').forEach(el => {
+    el.addEventListener('click', () => {
+      document.querySelectorAll('.ll-tab').forEach(x => x.classList.remove('active'));
+      el.classList.add('active');
+      S.llTab = el.dataset.lltab;
+      renderLernliste();
+    });
+  });
+}
+
+// ── LERNLISTE ─────────────────────────────────────────────────────────────────
+function renderLernliste() {
+  const content = document.getElementById('ll-content');
+  if (S.llTab === 'vokabeln') {
+    const byKat = {};
+    S.vokabeln.forEach(v => { (byKat[v.kategorie] = byKat[v.kategorie] || []).push(v); });
+    const kats = Object.keys(byKat).sort();
+    content.innerHTML = kats.map(k => {
+      const items = [...byKat[k]].sort((a,b) => a.it.localeCompare(b.it));
+      return `<div class="ll-kat-title">${k}</div>` +
+        items.map(v => `<div class="ll-row"><span class="ll-it">${v.it}<button class="ll-speak-btn" onclick="speak('${escJs(v.it)}','it-IT')" title="Aussprache anhören">&#128266;</button></span><span class="ll-de">${v.de}</span></div>`).join('');
+    }).join('');
+  } else {
+    const verben = S.vokabeln.filter(v => v.formen).sort((a,b) => a.it.localeCompare(b.it));
+    if (!verben.length) {
+      content.innerHTML = '<p style="color:var(--text-light);font-size:13px;padding:10px 0">Keine Verben mit Konjugationsformen vorhanden</p>';
+      return;
+    }
+    content.innerHTML = verben.map(v => `
+      <div class="ll-verb-card">
+        <div class="ll-verb-hdr"><span class="ll-inf">${v.it}</span><span class="ll-mean">${v.de}</span></div>
+        <div class="ll-forms">${formenText(v.formen)}</div>
+      </div>`).join('');
+  }
+}
+
+function renderStart() {
+  const wrap = document.getElementById('start-kategorien');
+  wrap.innerHTML = S.kategorien.map(k =>
+    `<div class="chip ${S.selectedKat.has(k)?'active':''}" data-kat="${k}">${k}</div>`
+  ).join('');
+  wrap.querySelectorAll('.chip').forEach(el => {
+    el.addEventListener('click', () => {
+      const k = el.dataset.kat;
+      if (S.selectedKat.has(k)) S.selectedKat.delete(k); else S.selectedKat.add(k);
+      el.classList.toggle('active');
+    });
+  });
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function normalize(s) {
+  return (s || '').toLowerCase().trim()
+    .replace(/[àá]/g,'a').replace(/[èé]/g,'e').replace(/[ìí]/g,'i')
+    .replace(/[òó]/g,'o').replace(/[ùú]/g,'u')
+    .replace(/[^\w\s\/]/g, '').trim();
+}
+
+function antwortRichtig(eingabe, loesung) {
+  const varianten = loesung.split(/[/,]/).map(v => normalize(v));
+  return varianten.includes(normalize(eingabe));
+}
+
+const PERSON_LABEL = { io:'io', tu:'tu', lui:'lui/lei', noi:'noi', voi:'voi', loro:'loro' };
+const PERSONEN = Object.keys(PERSON_LABEL);
+
+function startQuiz(liste = null) {
+  const anzahl = parseInt(document.getElementById('start-anzahl').value);
+  let basisPool = liste || S.vokabeln.filter(v => S.selectedKat.has(v.kategorie));
+
+  if (S.richtung === 'konjugation' && !liste) {
+    basisPool = basisPool.filter(v => v.formen);
+    if (!basisPool.length) { toast('Keine Verben mit Konjugationsformen in dieser Auswahl'); return; }
+    let pool = shuffle(basisPool).slice(0, anzahl);
+    // ggf. mit Wiederholung auffüllen, falls weniger Verben als gewünschte Fragenzahl
+    while (pool.length < anzahl && basisPool.length) {
+      pool.push(basisPool[Math.floor(Math.random() * basisPool.length)]);
+    }
+    S.quizList = pool.map(v => {
+      const person = PERSONEN[Math.floor(Math.random() * PERSONEN.length)];
+      return { ...v, dir: 'konjugation', person, correctForm: v.formen[person] };
+    });
+  } else {
+    let pool = shuffle(basisPool).slice(0, liste ? basisPool.length : anzahl);
+    S.quizList = pool.map(v => {
+      let dir = S.richtung === 'konjugation' ? 'it-de' : S.richtung;
+      if (dir === 'mix') dir = Math.random() < 0.5 ? 'it-de' : 'de-it';
+      return { ...v, dir };
+    });
+  }
+
+  if (!S.quizList.length) { toast('Keine Vokabeln in den gewählten Kategorien'); return; }
+  S.quizIndex = 0;
+  S.richtig = 0;
+  S.falscheListe = [];
+  gotoPage('quiz');
+  zeigeQuizFrage();
+}
+
+function formenText(formen) {
+  return PERSONEN.map(p => `<span><b>${PERSON_LABEL[p]}</b> ${formen[p]}</span>`).join('');
+}
+
+function zeigeQuizFrage() {
+  const item = S.quizList[S.quizIndex];
+  let frage, badge;
+  if (item.dir === 'konjugation') {
+    frage = `${item.it} — ${PERSON_LABEL[item.person]}`;
+    badge = 'Konjugation';
+    S.quizSpeak = { text: item.it, lang: 'it-IT' };
+  } else {
+    frage = item.dir === 'it-de' ? item.it : item.de;
+    badge = item.dir === 'it-de' ? 'Italienisch → Deutsch' : 'Deutsch → Italienisch';
+    S.quizSpeak = item.dir === 'it-de' ? { text: item.it, lang: 'it-IT' } : { text: item.de, lang: 'de-DE' };
+  }
+  document.getElementById('quiz-badge').textContent = badge;
+  document.getElementById('quiz-word').textContent = frage;
+  const inp = document.getElementById('quiz-input');
+  inp.value = ''; inp.className = 'quiz-input'; inp.disabled = false;
+  document.getElementById('quiz-feedback').textContent = '';
+  document.getElementById('quiz-feedback').className = 'quiz-feedback';
+  const formsEl = document.getElementById('quiz-forms');
+  formsEl.className = 'quiz-forms'; formsEl.innerHTML = '';
+  document.getElementById('quiz-check-btn').textContent = 'Prüfen';
+  document.getElementById('quiz-check-btn').onclick = quizCheck;
+
+  const pct = Math.round((S.quizIndex / S.quizList.length) * 100);
+  document.getElementById('quiz-progress-fill').style.width = pct + '%';
+  document.getElementById('quiz-progress').textContent =
+    `Frage ${S.quizIndex+1} / ${S.quizList.length} · Richtig: ${S.richtig}`;
+
+  setTimeout(() => inp.focus(), 50);
+}
+
+function quizCheck() {
+  const item = S.quizList[S.quizIndex];
+  const loesung = item.dir === 'konjugation' ? item.correctForm
+                : item.dir === 'it-de' ? item.de : item.it;
+  const inp = document.getElementById('quiz-input');
+  const eingabe = inp.value;
+  const ok = antwortRichtig(eingabe, loesung);
+
+  inp.disabled = true;
+  inp.className = 'quiz-input ' + (ok ? 'correct' : 'wrong');
+  const fb = document.getElementById('quiz-feedback');
+  if (ok) {
+    S.richtig++;
+    fb.textContent = '✓ Richtig!';
+    fb.className = 'quiz-feedback correct';
+  } else {
+    fb.textContent = `✗ Richtig wäre: ${loesung}`;
+    fb.className = 'quiz-feedback wrong';
+    S.falscheListe.push(item);
+  }
+
+  // Alle Formen als Zusatzinfo zeigen (nicht im Konjugations-Modus, da redundant)
+  if (item.dir !== 'konjugation' && item.formen) {
+    const formsEl = document.getElementById('quiz-forms');
+    formsEl.innerHTML = formenText(item.formen);
+    formsEl.classList.add('show');
+  }
+
+  document.getElementById('quiz-check-btn').textContent =
+    S.quizIndex + 1 < S.quizList.length ? 'Weiter' : 'Ergebnis';
+  document.getElementById('quiz-check-btn').onclick = quizNext;
+}
+
+function quizNext() {
+  S.quizIndex++;
+  if (S.quizIndex >= S.quizList.length) {
+    zeigeErgebnis();
+  } else {
+    zeigeQuizFrage();
+  }
+}
+
+function quizAbbrechen() {
+  if (confirm('Training abbrechen?')) gotoPage('start');
+}
+
+function zeigeErgebnis() {
+  gotoPage('ergebnis');
+  const total = S.quizList.length;
+  const pct = total ? Math.round((S.richtig / total) * 100) : 0;
+  document.getElementById('result-score').textContent = `${S.richtig}/${total}`;
+  document.getElementById('result-sub').textContent = `${pct}% richtig`;
+
+  const listCard = document.getElementById('result-list-card');
+  const btnWied = document.getElementById('btn-wiederholen');
+  if (S.falscheListe.length) {
+    listCard.style.display = 'block';
+    btnWied.style.display = 'block';
+    document.getElementById('result-list').innerHTML = S.falscheListe.map(v =>
+      v.dir === 'konjugation'
+        ? `<div class="result-item wrong"><span>${v.it} (${PERSON_LABEL[v.person]})</span><span>${v.correctForm}</span></div>`
+        : `<div class="result-item wrong"><span>${v.it}</span><span>${v.de}</span></div>`
+    ).join('');
+  } else {
+    listCard.style.display = 'none';
+    btnWied.style.display = 'none';
+  }
+}
+
+function wiederholeFalsche() {
+  startQuiz(S.falscheListe);
+}
+
+// ── VERWALTUNG ──────────────────────────────────────────────────────────────
+function renderVerwaltung() {
+  renderKategorienListe();
+
+  document.getElementById('vk-count').textContent = S.vokabeln.length;
+  const list = document.getElementById('vk-list');
+  const sorted = [...S.vokabeln].sort((a,b) => a.kategorie.localeCompare(b.kategorie) || a.it.localeCompare(b.it));
+  const katOptions = k => S.kategorien.map(x => `<option value="${x}" ${x===k?'selected':''}>${x}</option>`).join('');
+  list.innerHTML = sorted.map(v => `
+    <div class="vk-item">
+      <select class="vk-kat-select" onchange="changeVokabelKategorie(${v.id}, this.value)">${katOptions(v.kategorie)}</select>
+      <span class="vk-it">${v.it}</span>
+      <span class="vk-de">${v.de}</span>
+      <button class="vk-del" onclick="deleteVokabel(${v.id})" title="Löschen">&#128465;</button>
+    </div>`).join('') || '<p style="color:var(--text-light);font-size:13px;padding:10px 0">Noch keine Vokabeln</p>';
+}
+
+function renderKategorienListe() {
+  const wrap = document.getElementById('kat-list');
+  const sorted = [...S.kategorien].sort();
+  wrap.innerHTML = sorted.map(k => {
+    const anzahl = S.vokabeln.filter(v => v.kategorie === k).length;
+    return `
+    <div class="kat-row">
+      <span class="kat-name">${k}</span>
+      <span class="kat-count">${anzahl} Vokabel(n)</span>
+      <button class="vk-del ${anzahl > 0 ? 'disabled' : ''}" onclick="deleteKategorie('${k}', ${anzahl})" title="Kategorie löschen">&#128465;</button>
+    </div>`;
+  }).join('') || '<p style="color:var(--text-light);font-size:13px;padding:10px 0">Keine Kategorien</p>';
+}
+
+function deleteKategorie(kat, anzahl) {
+  if (anzahl > 0) {
+    toast(`Kategorie "${kat}" enthält noch ${anzahl} Vokabel(n) — erst verschieben oder löschen`);
+    return;
+  }
+  if (!confirm(`Kategorie "${kat}" löschen?`)) return;
+  const extra = lsKategorienExtraLoad().filter(k => k !== kat);
+  localStorage.setItem(LS_KAT_EXTRA_KEY, JSON.stringify(extra));
+  S.kategorien = lsKategorien(S.vokabeln);
+  S.selectedKat.delete(kat);
+  renderVerwaltung();
+  toast(`Kategorie "${kat}" gelöscht`, 'ok');
+}
+
+function changeVokabelKategorie(id, neueKategorie) {
+  lsUpdateKategorie(id, neueKategorie);
+  S.vokabeln = lsLoad();
+  S.kategorien = lsKategorien(S.vokabeln);
+  renderVerwaltung();
+  toast(`Kategorie geändert zu "${neueKategorie}"`, 'ok');
+}
+
+// ── ADD-MODAL (Schnellzugriff per FAB oder aus Verwaltung) ───────────────────
+const NEUE_KAT_VALUE = '__neu__';
+
+function openAddModal() {
+  const sel = document.getElementById('am-kategorie-select');
+  sel.innerHTML = S.kategorien.map(k => `<option value="${k}">${k}</option>`).join('')
+    + `<option value="${NEUE_KAT_VALUE}">&#43; Neue Kategorie …</option>`;
+  document.getElementById('am-kategorie-neu').style.display = 'none';
+  document.getElementById('am-kategorie-neu').value = '';
+  document.getElementById('am-it').value = '';
+  document.getElementById('am-de').value = '';
+  document.getElementById('add-modal').showModal();
+  setTimeout(() => document.getElementById('am-it').focus(), 50);
+}
+
+function closeAddModal() {
+  document.getElementById('add-modal').close();
+}
+
+function onKategorieSelectChange() {
+  const sel = document.getElementById('am-kategorie-select');
+  const neuInp = document.getElementById('am-kategorie-neu');
+  if (sel.value === NEUE_KAT_VALUE) {
+    neuInp.style.display = 'block';
+    setTimeout(() => neuInp.focus(), 50);
+  } else {
+    neuInp.style.display = 'none';
+  }
+}
+
+function submitAddModal() {
+  const sel = document.getElementById('am-kategorie-select');
+  const neuInp = document.getElementById('am-kategorie-neu');
+  const istNeueKategorie = sel.value === NEUE_KAT_VALUE;
+  const kategorie = istNeueKategorie ? neuInp.value.trim() : sel.value;
+  const it = document.getElementById('am-it').value.trim();
+  const de = document.getElementById('am-de').value.trim();
+
+  if (!kategorie) { toast('Bitte Kategorie angeben'); return; }
+
+  // Nur neue Kategorie anlegen, ohne Vokabel
+  if (istNeueKategorie && !it && !de) {
+    lsKategorienExtraAdd(kategorie);
+    S.kategorien = lsKategorien(S.vokabeln);
+    S.selectedKat.add(kategorie);
+    closeAddModal();
+    toast(`Kategorie "${kategorie}" angelegt`, 'ok');
+    const p = document.querySelector('.page.active').id;
+    if (p === 'page-verwaltung') renderVerwaltung();
+    if (p === 'page-start') renderStart();
+    return;
+  }
+
+  if (!it || !de) { toast('Bitte Italienisch und Deutsch ausfüllen'); return; }
+
+  const vorhanden = lsLoad().find(v => v.it.trim().toLowerCase() === it.toLowerCase());
+  if (vorhanden) {
+    toast(`"${it}" existiert bereits (${vorhanden.kategorie}: ${vorhanden.de})`);
+    return;
+  }
+
+  lsAdd({ kategorie, it, de });
+  S.vokabeln = lsLoad();
+  S.kategorien = lsKategorien(S.vokabeln);
+  S.selectedKat.add(kategorie);
+  closeAddModal();
+  toast(`"${it}" hinzugefügt`, 'ok');
+
+  const activePage = document.querySelector('.page.active').id;
+  if (activePage === 'page-verwaltung') renderVerwaltung();
+  if (activePage === 'page-start') renderStart();
+}
+
+// ── SYNC MIT PC ───────────────────────────────────────────────────────────────
+// Nutzt die bestehenden /api/vokabeln Endpoints auf dem Flask-Server. Funktioniert
+// nur, wenn das Gerät im selben Netzwerk wie der PC ist (z.B. zuhause im WLAN).
+function vokabelKey(v) {
+  return `${v.kategorie}|${v.it}|${v.de}`.toLowerCase().trim();
+}
+
+async function syncMitPC() {
+  const btn = document.getElementById('btn-sync');
+  const urspruenglich = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Gleiche ab …';
+  try {
+    const serverListe = await fetch('/api/vokabeln', { cache: 'no-store' }).then(r => {
+      if (!r.ok) throw new Error('Serverfehler');
+      return r.json();
+    });
+    const localListe = lsLoad();
+    const serverKeys = new Set(serverListe.map(vokabelKey));
+    const localKeys = new Set(localListe.map(vokabelKey));
+
+    const nurLokal = localListe.filter(v => !serverKeys.has(vokabelKey(v)));
+    const nurServer = serverListe.filter(v => !localKeys.has(vokabelKey(v)));
+
+    for (const v of nurLokal) {
+      await fetch('/api/vokabeln', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ kategorie: v.kategorie, it: v.it, de: v.de })
+      });
+    }
+
+    const merged = await fetch('/api/vokabeln', { cache: 'no-store' }).then(r => r.json());
+    lsSave(merged);
+    S.vokabeln = merged;
+    S.kategorien = lsKategorien(merged);
+    S.selectedKat = new Set(S.kategorien);
+
+    const anzahlNeu = nurLokal.length + nurServer.length;
+    toast(anzahlNeu ? `Abgleich fertig · ${anzahlNeu} neue Vokabel(n)` : 'Bereits aktuell', 'ok');
+    renderVerwaltung();
+  } catch (e) {
+    toast('PC nicht erreichbar — gleiches WLAN nötig');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = urspruenglich;
+  }
+}
+
+function deleteVokabel(id) {
+  if (!confirm('Vokabel löschen?')) return;
+  lsDelete(id);
+  S.vokabeln = lsLoad();
+  S.kategorien = lsKategorien(S.vokabeln);
+  renderVerwaltung();
+}
+
+// ── EXPORT FÜR ANKI / ANKIWEB ────────────────────────────────────────────────
+// Erzeugt eine .txt-Datei im Anki-Textimport-Format (Tab-getrennt, mit
+// Header-Zeilen, die Anki beim Import automatisch erkennt: Trennzeichen,
+// HTML erlaubt, Tags-Spalte). Import in Anki Desktop über Datei > Importieren,
+// danach synct Anki die neue(n) Karte(n) automatisch zu AnkiWeb (Strg+Umschalt+Y
+// bzw. Klick auf "Sync"). Über AnkiWeb/die Anki-Apps dann im Browser lernbar.
+function exportFuerAnki() {
+  const zeilen = [
+    '#separator:tab',
+    '#html:true',
+    '#tags column:3'
+  ];
+  const sorted = [...S.vokabeln].sort((a, b) => a.kategorie.localeCompare(b.kategorie) || a.it.localeCompare(b.it));
+  sorted.forEach(v => {
+    let back = v.de;
+    if (v.formen) {
+      back += '<br>' + PERSONEN.map(p => `<b>${PERSON_LABEL[p]}</b> ${v.formen[p]}`).join(', ');
+    }
+    const tag = 'Italienisch::' + v.kategorie.replace(/\s+/g, '_');
+    const front = v.it.replace(/\t/g, ' ');
+    const backClean = back.replace(/\t/g, ' ');
+    zeilen.push(`${front}\t${backClean}\t${tag}`);
+  });
+  const blob = new Blob([zeilen.join('\n')], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'vokabeltrainer_it_anki.txt';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  toast(`${sorted.length} Vokabel(n) exportiert — in Anki Desktop importieren, dann mit AnkiWeb synchronisieren`, 'ok');
+}
+
+appInit().catch(e => console.error(e));
+</script>
+</body>
+</html>

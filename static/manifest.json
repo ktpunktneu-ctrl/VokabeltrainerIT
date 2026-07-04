@@ -1,0 +1,12 @@
+{
+  "name": "Vokabeltrainer Italienisch",
+  "short_name": "VokabelIT",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f0f2f6",
+  "theme_color": "#008C45",
+  "icons": [
+    { "src": "/static/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/static/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
