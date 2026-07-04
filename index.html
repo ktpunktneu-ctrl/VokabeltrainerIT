@@ -584,6 +584,7 @@ function zeigeQuizFrage() {
   }
   document.getElementById('quiz-badge').textContent = badge;
   document.getElementById('quiz-word').textContent = frage;
+  speak(S.quizSpeak.text, S.quizSpeak.lang);
   const inp = document.getElementById('quiz-input');
   inp.value = ''; inp.className = 'quiz-input'; inp.disabled = false;
   document.getElementById('quiz-feedback').textContent = '';
