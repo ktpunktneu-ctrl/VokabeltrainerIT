@@ -217,6 +217,17 @@ nav button.active{background:var(--green);color:#fff}
   <!-- LERNLISTE -->
   <div class="page" id="page-liste">
     <div class="page-hdr"><button class="back-btn" onclick="gotoPage('start')" title="Zurück">&#8249;</button><h2>Lernliste</h2></div>
+    <div class="card">
+      <div class="card-title">Kategorien</div>
+      <div class="chip-grid" id="ll-kategorien"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Richtung</div>
+      <div class="radio-row" id="ll-richtung">
+        <div class="radio-opt active" data-dir="it-de">IT &#8594; DE</div>
+        <div class="radio-opt" data-dir="de-it">DE &#8594; IT</div>
+      </div>
+    </div>
     <div class="ll-tabs">
       <div class="ll-tab active" data-lltab="vokabeln">Vokabeln</div>
       <div class="ll-tab" data-lltab="konjugation">Konjugation</div>
@@ -801,11 +812,11 @@ const SEED_VOKABELN = [
   {"id":548,"kategorie":"Unregelmäßige Verben","it":"ridurre","de":"reduzieren","formen":{"io":"riduco","tu":"riduci","lui":"riduce","noi":"riduciamo","voi":"riducete","loro":"riducono"}}
 ];
 
-const APP_VERSION = '1.2';
+const APP_VERSION = '1.3';
 const LS_KEY = 'vokabeltrainer_it_vokabeln';
 
 const S = { vokabeln: [], kategorien: [], selectedKat: new Set(), richtung: 'it-de', anzahl: 15,
-            quizList: [], quizIndex: 0, richtig: 0, falscheListe: [], llTab: 'vokabeln' };
+            quizList: [], quizIndex: 0, richtig: 0, falscheListe: [], llTab: 'vokabeln', llRichtung: 'it-de' };
 
 // ── Lokale Speicherung (funktioniert komplett offline, keine Serverabhängigkeit) ──
 function lsRepairFormen(list) {
@@ -930,24 +941,64 @@ async function appInit() {
       renderLernliste();
     });
   });
+  document.querySelectorAll('#ll-richtung .radio-opt').forEach(el => {
+    el.addEventListener('click', () => {
+      document.querySelectorAll('#ll-richtung .radio-opt').forEach(x => x.classList.remove('active'));
+      el.classList.add('active');
+      S.llRichtung = el.dataset.dir;
+      renderLernliste();
+    });
+  });
 }
 
 // ── LERNLISTE ─────────────────────────────────────────────────────────────────
+function renderLernlisteKategorien() {
+  const wrap = document.getElementById('ll-kategorien');
+  wrap.innerHTML = S.kategorien.map(k =>
+    `<div class="chip ${S.selectedKat.has(k)?'active':''}" data-kat="${k}">${k}</div>`
+  ).join('');
+  wrap.querySelectorAll('.chip').forEach(el => {
+    el.addEventListener('click', () => {
+      const k = el.dataset.kat;
+      const alleAusgewaehlt = S.selectedKat.size === S.kategorien.length;
+      if (alleAusgewaehlt) {
+        S.selectedKat = new Set([k]);
+      } else if (S.selectedKat.size === 1 && S.selectedKat.has(k)) {
+        S.selectedKat = new Set(S.kategorien);
+      } else if (S.selectedKat.has(k)) {
+        S.selectedKat.delete(k);
+      } else {
+        S.selectedKat.add(k);
+      }
+      renderLernliste();
+    });
+  });
+}
+
 function renderLernliste() {
+  renderLernlisteKategorien();
   const content = document.getElementById('ll-content');
+  const gefiltert = S.vokabeln.filter(v => S.selectedKat.has(v.kategorie));
   if (S.llTab === 'vokabeln') {
     const byKat = {};
-    S.vokabeln.forEach(v => { (byKat[v.kategorie] = byKat[v.kategorie] || []).push(v); });
+    gefiltert.forEach(v => { (byKat[v.kategorie] = byKat[v.kategorie] || []).push(v); });
     const kats = Object.keys(byKat).sort();
+    if (!kats.length) {
+      content.innerHTML = '<p style="color:var(--text-light);font-size:13px;padding:10px 0">Keine Vokabeln in den gewählten Kategorien</p>';
+      return;
+    }
     content.innerHTML = kats.map(k => {
       const items = [...byKat[k]].sort((a,b) => a.it.localeCompare(b.it));
-      return `<div class="ll-kat-title">${k}</div>` +
-        items.map(v => `<div class="ll-row"><span class="ll-it">${v.it}<button class="ll-speak-btn" onclick="speak('${escJs(v.it)}','it-IT')" title="Aussprache anhören">&#128266;</button></span><span class="ll-de">${v.de}</span></div>`).join('');
+      return `<div class="ll-kat-title">${k}</div>` + items.map(v => {
+        const itSpan = `<span class="ll-it">${v.it}<button class="ll-speak-btn" onclick="speak('${escJs(v.it)}','it-IT')" title="Aussprache anhören">&#128266;</button></span>`;
+        const deSpan = `<span class="ll-de">${v.de}</span>`;
+        return `<div class="ll-row">${S.llRichtung === 'de-it' ? deSpan + itSpan : itSpan + deSpan}</div>`;
+      }).join('');
     }).join('');
   } else {
-    const verben = S.vokabeln.filter(v => v.formen).sort((a,b) => a.it.localeCompare(b.it));
+    const verben = gefiltert.filter(v => v.formen).sort((a,b) => a.it.localeCompare(b.it));
     if (!verben.length) {
-      content.innerHTML = '<p style="color:var(--text-light);font-size:13px;padding:10px 0">Keine Verben mit Konjugationsformen vorhanden</p>';
+      content.innerHTML = '<p style="color:var(--text-light);font-size:13px;padding:10px 0">Keine Verben mit Konjugationsformen in den gewählten Kategorien</p>';
       return;
     }
     content.innerHTML = verben.map(v => `
