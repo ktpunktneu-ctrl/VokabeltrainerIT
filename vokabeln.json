@@ -586,5 +586,2705 @@
     "kategorie": "Zahlen",
     "it": "tredici",
     "de": "Dreizehn"
+  },
+  {
+    "id": 99,
+    "kategorie": "Grundlagen",
+    "it": "buonanotte",
+    "de": "Gute Nacht"
+  },
+  {
+    "id": 100,
+    "kategorie": "Grundlagen",
+    "it": "a presto",
+    "de": "bis bald"
+  },
+  {
+    "id": 101,
+    "kategorie": "Grundlagen",
+    "it": "a dopo",
+    "de": "bis später"
+  },
+  {
+    "id": 102,
+    "kategorie": "Grundlagen",
+    "it": "ci vediamo",
+    "de": "wir sehen uns"
+  },
+  {
+    "id": 103,
+    "kategorie": "Grundlagen",
+    "it": "come stai?",
+    "de": "wie geht es dir?"
+  },
+  {
+    "id": 104,
+    "kategorie": "Grundlagen",
+    "it": "come sta?",
+    "de": "wie geht es Ihnen?"
+  },
+  {
+    "id": 105,
+    "kategorie": "Grundlagen",
+    "it": "sto bene",
+    "de": "mir geht es gut"
+  },
+  {
+    "id": 106,
+    "kategorie": "Grundlagen",
+    "it": "sto male",
+    "de": "mir geht es schlecht"
+  },
+  {
+    "id": 107,
+    "kategorie": "Grundlagen",
+    "it": "così così",
+    "de": "so lala"
+  },
+  {
+    "id": 108,
+    "kategorie": "Grundlagen",
+    "it": "piacere",
+    "de": "freut mich"
+  },
+  {
+    "id": 109,
+    "kategorie": "Grundlagen",
+    "it": "molto piacere",
+    "de": "sehr erfreut"
+  },
+  {
+    "id": 110,
+    "kategorie": "Grundlagen",
+    "it": "come ti chiami?",
+    "de": "wie heißt du?"
+  },
+  {
+    "id": 111,
+    "kategorie": "Grundlagen",
+    "it": "mi chiamo",
+    "de": "ich heiße"
+  },
+  {
+    "id": 112,
+    "kategorie": "Grundlagen",
+    "it": "di dove sei?",
+    "de": "woher kommst du?"
+  },
+  {
+    "id": 113,
+    "kategorie": "Grundlagen",
+    "it": "sono di",
+    "de": "ich komme aus"
+  },
+  {
+    "id": 114,
+    "kategorie": "Grundlagen",
+    "it": "quanti anni hai?",
+    "de": "wie alt bist du?"
+  },
+  {
+    "id": 115,
+    "kategorie": "Grundlagen",
+    "it": "ho... anni",
+    "de": "ich bin ... Jahre alt"
+  },
+  {
+    "id": 116,
+    "kategorie": "Grundlagen",
+    "it": "per piacere",
+    "de": "bitte"
+  },
+  {
+    "id": 117,
+    "kategorie": "Grundlagen",
+    "it": "non c'è di che",
+    "de": "keine Ursache"
+  },
+  {
+    "id": 118,
+    "kategorie": "Grundlagen",
+    "it": "mi dispiace",
+    "de": "es tut mir leid"
+  },
+  {
+    "id": 119,
+    "kategorie": "Grundlagen",
+    "it": "non importa",
+    "de": "macht nichts"
+  },
+  {
+    "id": 120,
+    "kategorie": "Grundlagen",
+    "it": "certo",
+    "de": "sicher"
+  },
+  {
+    "id": 121,
+    "kategorie": "Grundlagen",
+    "it": "va bene",
+    "de": "in Ordnung"
+  },
+  {
+    "id": 122,
+    "kategorie": "Grundlagen",
+    "it": "d'accordo",
+    "de": "einverstanden"
+  },
+  {
+    "id": 123,
+    "kategorie": "Grundlagen",
+    "it": "forse",
+    "de": "vielleicht"
+  },
+  {
+    "id": 124,
+    "kategorie": "Grundlagen",
+    "it": "magari",
+    "de": "hoffentlich"
+  },
+  {
+    "id": 125,
+    "kategorie": "Grundlagen",
+    "it": "aiuto",
+    "de": "Hilfe"
+  },
+  {
+    "id": 126,
+    "kategorie": "Grundlagen",
+    "it": "attenzione",
+    "de": "Achtung"
+  },
+  {
+    "id": 127,
+    "kategorie": "Grundlagen",
+    "it": "permesso",
+    "de": "Entschuldigung (Vorbeigehen)"
+  },
+  {
+    "id": 128,
+    "kategorie": "Grundlagen",
+    "it": "auguri",
+    "de": "Glückwünsche"
+  },
+  {
+    "id": 129,
+    "kategorie": "Grundlagen",
+    "it": "buon compleanno",
+    "de": "alles Gute zum Geburtstag"
+  },
+  {
+    "id": 130,
+    "kategorie": "Grundlagen",
+    "it": "buon appetito",
+    "de": "guten Appetit"
+  },
+  {
+    "id": 131,
+    "kategorie": "Grundlagen",
+    "it": "buon viaggio",
+    "de": "gute Reise"
+  },
+  {
+    "id": 132,
+    "kategorie": "Grundlagen",
+    "it": "buona fortuna",
+    "de": "viel Glück"
+  },
+  {
+    "id": 133,
+    "kategorie": "Grundlagen",
+    "it": "salute",
+    "de": "Gesundheit / Prost"
+  },
+  {
+    "id": 134,
+    "kategorie": "Grundlagen",
+    "it": "cin cin",
+    "de": "Prost"
+  },
+  {
+    "id": 135,
+    "kategorie": "Grundlagen",
+    "it": "benvenuto",
+    "de": "willkommen"
+  },
+  {
+    "id": 136,
+    "kategorie": "Grundlagen",
+    "it": "arrivo subito",
+    "de": "ich komme sofort"
+  },
+  {
+    "id": 137,
+    "kategorie": "Grundlagen",
+    "it": "un momento",
+    "de": "einen Moment"
+  },
+  {
+    "id": 138,
+    "kategorie": "Grundlagen",
+    "it": "non capisco",
+    "de": "ich verstehe nicht"
+  },
+  {
+    "id": 139,
+    "kategorie": "Grundlagen",
+    "it": "può ripetere?",
+    "de": "können Sie das wiederholen?"
+  },
+  {
+    "id": 140,
+    "kategorie": "Grundlagen",
+    "it": "parla inglese?",
+    "de": "sprechen Sie Englisch?"
+  },
+  {
+    "id": 141,
+    "kategorie": "Grundlagen",
+    "it": "non parlo bene l'italiano",
+    "de": "ich spreche nicht gut Italienisch"
+  },
+  {
+    "id": 142,
+    "kategorie": "Grundlagen",
+    "it": "come si dice?",
+    "de": "wie sagt man das?"
+  },
+  {
+    "id": 143,
+    "kategorie": "Grundlagen",
+    "it": "che cosa significa?",
+    "de": "was bedeutet das?"
+  },
+  {
+    "id": 144,
+    "kategorie": "Grundlagen",
+    "it": "sì, certo",
+    "de": "ja, klar"
+  },
+  {
+    "id": 145,
+    "kategorie": "Grundlagen",
+    "it": "no, grazie",
+    "de": "nein, danke"
+  },
+  {
+    "id": 146,
+    "kategorie": "Grundlagen",
+    "it": "aiutami, per favore",
+    "de": "hilf mir bitte"
+  },
+  {
+    "id": 147,
+    "kategorie": "Grundlagen",
+    "it": "buona giornata",
+    "de": "einen schönen Tag"
+  },
+  {
+    "id": 148,
+    "kategorie": "Grundlagen",
+    "it": "buon fine settimana",
+    "de": "schönes Wochenende"
+  },
+  {
+    "id": 149,
+    "kategorie": "Zahlen",
+    "it": "quattordici",
+    "de": "vierzehn"
+  },
+  {
+    "id": 150,
+    "kategorie": "Zahlen",
+    "it": "quindici",
+    "de": "fünfzehn"
+  },
+  {
+    "id": 151,
+    "kategorie": "Zahlen",
+    "it": "sedici",
+    "de": "sechzehn"
+  },
+  {
+    "id": 152,
+    "kategorie": "Zahlen",
+    "it": "diciassette",
+    "de": "siebzehn"
+  },
+  {
+    "id": 153,
+    "kategorie": "Zahlen",
+    "it": "diciotto",
+    "de": "achtzehn"
+  },
+  {
+    "id": 154,
+    "kategorie": "Zahlen",
+    "it": "diciannove",
+    "de": "neunzehn"
+  },
+  {
+    "id": 155,
+    "kategorie": "Zahlen",
+    "it": "venti",
+    "de": "zwanzig"
+  },
+  {
+    "id": 156,
+    "kategorie": "Zahlen",
+    "it": "ventuno",
+    "de": "einundzwanzig"
+  },
+  {
+    "id": 157,
+    "kategorie": "Zahlen",
+    "it": "ventidue",
+    "de": "zweiundzwanzig"
+  },
+  {
+    "id": 158,
+    "kategorie": "Zahlen",
+    "it": "venticinque",
+    "de": "fünfundzwanzig"
+  },
+  {
+    "id": 159,
+    "kategorie": "Zahlen",
+    "it": "trenta",
+    "de": "dreißig"
+  },
+  {
+    "id": 160,
+    "kategorie": "Zahlen",
+    "it": "trentuno",
+    "de": "einunddreißig"
+  },
+  {
+    "id": 161,
+    "kategorie": "Zahlen",
+    "it": "quaranta",
+    "de": "vierzig"
+  },
+  {
+    "id": 162,
+    "kategorie": "Zahlen",
+    "it": "cinquanta",
+    "de": "fünfzig"
+  },
+  {
+    "id": 163,
+    "kategorie": "Zahlen",
+    "it": "sessanta",
+    "de": "sechzig"
+  },
+  {
+    "id": 164,
+    "kategorie": "Zahlen",
+    "it": "settanta",
+    "de": "siebzig"
+  },
+  {
+    "id": 165,
+    "kategorie": "Zahlen",
+    "it": "ottanta",
+    "de": "achtzig"
+  },
+  {
+    "id": 166,
+    "kategorie": "Zahlen",
+    "it": "novanta",
+    "de": "neunzig"
+  },
+  {
+    "id": 167,
+    "kategorie": "Zahlen",
+    "it": "cento",
+    "de": "hundert"
+  },
+  {
+    "id": 168,
+    "kategorie": "Zahlen",
+    "it": "centouno",
+    "de": "hunderteins"
+  },
+  {
+    "id": 169,
+    "kategorie": "Zahlen",
+    "it": "duecento",
+    "de": "zweihundert"
+  },
+  {
+    "id": 170,
+    "kategorie": "Zahlen",
+    "it": "trecento",
+    "de": "dreihundert"
+  },
+  {
+    "id": 171,
+    "kategorie": "Zahlen",
+    "it": "cinquecento",
+    "de": "fünfhundert"
+  },
+  {
+    "id": 172,
+    "kategorie": "Zahlen",
+    "it": "mille",
+    "de": "tausend"
+  },
+  {
+    "id": 173,
+    "kategorie": "Zahlen",
+    "it": "duemila",
+    "de": "zweitausend"
+  },
+  {
+    "id": 174,
+    "kategorie": "Zahlen",
+    "it": "diecimila",
+    "de": "zehntausend"
+  },
+  {
+    "id": 175,
+    "kategorie": "Zahlen",
+    "it": "centomila",
+    "de": "hunderttausend"
+  },
+  {
+    "id": 176,
+    "kategorie": "Zahlen",
+    "it": "un milione",
+    "de": "eine Million"
+  },
+  {
+    "id": 177,
+    "kategorie": "Zahlen",
+    "it": "un miliardo",
+    "de": "eine Milliarde"
+  },
+  {
+    "id": 178,
+    "kategorie": "Zahlen",
+    "it": "primo",
+    "de": "erster"
+  },
+  {
+    "id": 179,
+    "kategorie": "Zahlen",
+    "it": "secondo",
+    "de": "zweiter"
+  },
+  {
+    "id": 180,
+    "kategorie": "Zahlen",
+    "it": "terzo",
+    "de": "dritter"
+  },
+  {
+    "id": 181,
+    "kategorie": "Zahlen",
+    "it": "quarto",
+    "de": "vierter"
+  },
+  {
+    "id": 182,
+    "kategorie": "Zahlen",
+    "it": "quinto",
+    "de": "fünfter"
+  },
+  {
+    "id": 183,
+    "kategorie": "Zahlen",
+    "it": "sesto",
+    "de": "sechster"
+  },
+  {
+    "id": 184,
+    "kategorie": "Zahlen",
+    "it": "settimo",
+    "de": "siebter"
+  },
+  {
+    "id": 185,
+    "kategorie": "Zahlen",
+    "it": "ottavo",
+    "de": "achter"
+  },
+  {
+    "id": 186,
+    "kategorie": "Zahlen",
+    "it": "nono",
+    "de": "neunter"
+  },
+  {
+    "id": 187,
+    "kategorie": "Zahlen",
+    "it": "decimo",
+    "de": "zehnter"
+  },
+  {
+    "id": 188,
+    "kategorie": "Zahlen",
+    "it": "ventesimo",
+    "de": "zwanzigster"
+  },
+  {
+    "id": 189,
+    "kategorie": "Zahlen",
+    "it": "centesimo",
+    "de": "hundertster"
+  },
+  {
+    "id": 190,
+    "kategorie": "Zahlen",
+    "it": "ultimo",
+    "de": "letzter"
+  },
+  {
+    "id": 191,
+    "kategorie": "Zahlen",
+    "it": "zero",
+    "de": "null"
+  },
+  {
+    "id": 192,
+    "kategorie": "Zahlen",
+    "it": "paio",
+    "de": "Paar"
+  },
+  {
+    "id": 193,
+    "kategorie": "Zahlen",
+    "it": "dozzina",
+    "de": "Dutzend"
+  },
+  {
+    "id": 194,
+    "kategorie": "Zahlen",
+    "it": "metà",
+    "de": "Hälfte"
+  },
+  {
+    "id": 195,
+    "kategorie": "Zahlen",
+    "it": "un terzo",
+    "de": "ein Drittel"
+  },
+  {
+    "id": 196,
+    "kategorie": "Zahlen",
+    "it": "un quarto",
+    "de": "ein Viertel"
+  },
+  {
+    "id": 197,
+    "kategorie": "Zahlen",
+    "it": "doppio",
+    "de": "doppelt"
+  },
+  {
+    "id": 198,
+    "kategorie": "Zahlen",
+    "it": "numero",
+    "de": "Zahl"
+  },
+  {
+    "id": 199,
+    "kategorie": "Farben",
+    "it": "grigio",
+    "de": "grau"
+  },
+  {
+    "id": 200,
+    "kategorie": "Farben",
+    "it": "celeste",
+    "de": "hellblau"
+  },
+  {
+    "id": 201,
+    "kategorie": "Farben",
+    "it": "azzurro",
+    "de": "blau (himmelblau)"
+  },
+  {
+    "id": 202,
+    "kategorie": "Farben",
+    "it": "turchese",
+    "de": "türkis"
+  },
+  {
+    "id": 203,
+    "kategorie": "Farben",
+    "it": "indaco",
+    "de": "indigo"
+  },
+  {
+    "id": 204,
+    "kategorie": "Farben",
+    "it": "beige",
+    "de": "beige"
+  },
+  {
+    "id": 205,
+    "kategorie": "Farben",
+    "it": "oro",
+    "de": "gold"
+  },
+  {
+    "id": 206,
+    "kategorie": "Farben",
+    "it": "argento",
+    "de": "silber"
+  },
+  {
+    "id": 207,
+    "kategorie": "Farben",
+    "it": "bronzo",
+    "de": "bronze"
+  },
+  {
+    "id": 208,
+    "kategorie": "Farben",
+    "it": "lilla",
+    "de": "flieder"
+  },
+  {
+    "id": 209,
+    "kategorie": "Farben",
+    "it": "magenta",
+    "de": "magenta"
+  },
+  {
+    "id": 210,
+    "kategorie": "Farben",
+    "it": "ciano",
+    "de": "cyan"
+  },
+  {
+    "id": 211,
+    "kategorie": "Farben",
+    "it": "porpora",
+    "de": "purpur"
+  },
+  {
+    "id": 212,
+    "kategorie": "Farben",
+    "it": "fucsia",
+    "de": "pink / fuchsia"
+  },
+  {
+    "id": 213,
+    "kategorie": "Farben",
+    "it": "crema",
+    "de": "creme"
+  },
+  {
+    "id": 214,
+    "kategorie": "Farben",
+    "it": "avorio",
+    "de": "elfenbein"
+  },
+  {
+    "id": 215,
+    "kategorie": "Farben",
+    "it": "kaki",
+    "de": "khaki"
+  },
+  {
+    "id": 216,
+    "kategorie": "Farben",
+    "it": "bordeaux",
+    "de": "bordeauxrot"
+  },
+  {
+    "id": 217,
+    "kategorie": "Farben",
+    "it": "verde scuro",
+    "de": "dunkelgrün"
+  },
+  {
+    "id": 218,
+    "kategorie": "Farben",
+    "it": "verde chiaro",
+    "de": "hellgrün"
+  },
+  {
+    "id": 219,
+    "kategorie": "Farben",
+    "it": "verde acqua",
+    "de": "meergrün"
+  },
+  {
+    "id": 220,
+    "kategorie": "Farben",
+    "it": "rosso scuro",
+    "de": "dunkelrot"
+  },
+  {
+    "id": 221,
+    "kategorie": "Farben",
+    "it": "rosa chiaro",
+    "de": "hellrosa"
+  },
+  {
+    "id": 222,
+    "kategorie": "Farben",
+    "it": "blu scuro",
+    "de": "dunkelblau"
+  },
+  {
+    "id": 223,
+    "kategorie": "Farben",
+    "it": "blu chiaro",
+    "de": "hellblau"
+  },
+  {
+    "id": 224,
+    "kategorie": "Farben",
+    "it": "grigio scuro",
+    "de": "dunkelgrau"
+  },
+  {
+    "id": 225,
+    "kategorie": "Farben",
+    "it": "grigio chiaro",
+    "de": "hellgrau"
+  },
+  {
+    "id": 226,
+    "kategorie": "Farben",
+    "it": "marrone chiaro",
+    "de": "hellbraun"
+  },
+  {
+    "id": 227,
+    "kategorie": "Farben",
+    "it": "giallo chiaro",
+    "de": "hellgelb"
+  },
+  {
+    "id": 228,
+    "kategorie": "Farben",
+    "it": "nero opaco",
+    "de": "mattschwarz"
+  },
+  {
+    "id": 229,
+    "kategorie": "Farben",
+    "it": "bianco sporco",
+    "de": "schmutzweiß"
+  },
+  {
+    "id": 230,
+    "kategorie": "Farben",
+    "it": "multicolore",
+    "de": "bunt"
+  },
+  {
+    "id": 231,
+    "kategorie": "Farben",
+    "it": "trasparente",
+    "de": "durchsichtig"
+  },
+  {
+    "id": 232,
+    "kategorie": "Farben",
+    "it": "opaco",
+    "de": "matt"
+  },
+  {
+    "id": 233,
+    "kategorie": "Farben",
+    "it": "lucido",
+    "de": "glänzend"
+  },
+  {
+    "id": 234,
+    "kategorie": "Farben",
+    "it": "chiaro",
+    "de": "hell"
+  },
+  {
+    "id": 235,
+    "kategorie": "Farben",
+    "it": "scuro",
+    "de": "dunkel"
+  },
+  {
+    "id": 236,
+    "kategorie": "Farben",
+    "it": "vivace",
+    "de": "leuchtend"
+  },
+  {
+    "id": 237,
+    "kategorie": "Farben",
+    "it": "pastello",
+    "de": "pastellfarben"
+  },
+  {
+    "id": 238,
+    "kategorie": "Farben",
+    "it": "tinta unita",
+    "de": "einfarbig"
+  },
+  {
+    "id": 239,
+    "kategorie": "Farben",
+    "it": "a righe",
+    "de": "gestreift"
+  },
+  {
+    "id": 240,
+    "kategorie": "Farben",
+    "it": "a pois",
+    "de": "gepunktet"
+  },
+  {
+    "id": 241,
+    "kategorie": "Farben",
+    "it": "a quadretti",
+    "de": "kariert"
+  },
+  {
+    "id": 242,
+    "kategorie": "Farben",
+    "it": "colore",
+    "de": "Farbe"
+  },
+  {
+    "id": 243,
+    "kategorie": "Farben",
+    "it": "tonalità",
+    "de": "Farbton"
+  },
+  {
+    "id": 244,
+    "kategorie": "Farben",
+    "it": "sfumatura",
+    "de": "Farbnuance"
+  },
+  {
+    "id": 245,
+    "kategorie": "Farben",
+    "it": "arcobaleno",
+    "de": "Regenbogen"
+  },
+  {
+    "id": 246,
+    "kategorie": "Farben",
+    "it": "tavolozza",
+    "de": "Palette"
+  },
+  {
+    "id": 247,
+    "kategorie": "Farben",
+    "it": "colorato",
+    "de": "farbig"
+  },
+  {
+    "id": 248,
+    "kategorie": "Farben",
+    "it": "scolorito",
+    "de": "verblasst"
+  },
+  {
+    "id": 249,
+    "kategorie": "Familie",
+    "it": "zio",
+    "de": "Onkel"
+  },
+  {
+    "id": 250,
+    "kategorie": "Familie",
+    "it": "zia",
+    "de": "Tante"
+  },
+  {
+    "id": 251,
+    "kategorie": "Familie",
+    "it": "cugino",
+    "de": "Cousin"
+  },
+  {
+    "id": 252,
+    "kategorie": "Familie",
+    "it": "cugina",
+    "de": "Cousine"
+  },
+  {
+    "id": 253,
+    "kategorie": "Familie",
+    "it": "nipote (di zio)",
+    "de": "Neffe / Nichte (des Onkels)"
+  },
+  {
+    "id": 254,
+    "kategorie": "Familie",
+    "it": "nipote (di nonno)",
+    "de": "Enkel / Enkelin"
+  },
+  {
+    "id": 255,
+    "kategorie": "Familie",
+    "it": "suocero",
+    "de": "Schwiegervater"
+  },
+  {
+    "id": 256,
+    "kategorie": "Familie",
+    "it": "suocera",
+    "de": "Schwiegermutter"
+  },
+  {
+    "id": 257,
+    "kategorie": "Familie",
+    "it": "genero",
+    "de": "Schwiegersohn"
+  },
+  {
+    "id": 258,
+    "kategorie": "Familie",
+    "it": "nuora",
+    "de": "Schwiegertochter"
+  },
+  {
+    "id": 259,
+    "kategorie": "Familie",
+    "it": "cognato",
+    "de": "Schwager"
+  },
+  {
+    "id": 260,
+    "kategorie": "Familie",
+    "it": "cognata",
+    "de": "Schwägerin"
+  },
+  {
+    "id": 261,
+    "kategorie": "Familie",
+    "it": "bisnonno",
+    "de": "Urgroßvater"
+  },
+  {
+    "id": 262,
+    "kategorie": "Familie",
+    "it": "bisnonna",
+    "de": "Urgroßmutter"
+  },
+  {
+    "id": 263,
+    "kategorie": "Familie",
+    "it": "pronipote",
+    "de": "Urenkel"
+  },
+  {
+    "id": 264,
+    "kategorie": "Familie",
+    "it": "patrigno",
+    "de": "Stiefvater"
+  },
+  {
+    "id": 265,
+    "kategorie": "Familie",
+    "it": "matrigna",
+    "de": "Stiefmutter"
+  },
+  {
+    "id": 266,
+    "kategorie": "Familie",
+    "it": "fratellastro",
+    "de": "Stiefbruder"
+  },
+  {
+    "id": 267,
+    "kategorie": "Familie",
+    "it": "sorellastra",
+    "de": "Stiefschwester"
+  },
+  {
+    "id": 268,
+    "kategorie": "Familie",
+    "it": "gemello",
+    "de": "Zwilling (m)"
+  },
+  {
+    "id": 269,
+    "kategorie": "Familie",
+    "it": "gemella",
+    "de": "Zwilling (w)"
+  },
+  {
+    "id": 270,
+    "kategorie": "Familie",
+    "it": "famiglia",
+    "de": "Familie"
+  },
+  {
+    "id": 271,
+    "kategorie": "Familie",
+    "it": "parenti",
+    "de": "Verwandte"
+  },
+  {
+    "id": 272,
+    "kategorie": "Familie",
+    "it": "genitori",
+    "de": "Eltern"
+  },
+  {
+    "id": 273,
+    "kategorie": "Familie",
+    "it": "figli",
+    "de": "Kinder"
+  },
+  {
+    "id": 274,
+    "kategorie": "Familie",
+    "it": "fidanzato",
+    "de": "Verlobter / Freund"
+  },
+  {
+    "id": 275,
+    "kategorie": "Familie",
+    "it": "fidanzata",
+    "de": "Verlobte / Freundin"
+  },
+  {
+    "id": 276,
+    "kategorie": "Familie",
+    "it": "compagno",
+    "de": "Partner"
+  },
+  {
+    "id": 277,
+    "kategorie": "Familie",
+    "it": "compagna",
+    "de": "Partnerin"
+  },
+  {
+    "id": 278,
+    "kategorie": "Familie",
+    "it": "vedovo",
+    "de": "Witwer"
+  },
+  {
+    "id": 279,
+    "kategorie": "Familie",
+    "it": "vedova",
+    "de": "Witwe"
+  },
+  {
+    "id": 280,
+    "kategorie": "Familie",
+    "it": "adottivo",
+    "de": "adoptiert"
+  },
+  {
+    "id": 281,
+    "kategorie": "Familie",
+    "it": "maggiore",
+    "de": "älter (Geschwister)"
+  },
+  {
+    "id": 282,
+    "kategorie": "Familie",
+    "it": "minore",
+    "de": "jünger (Geschwister)"
+  },
+  {
+    "id": 283,
+    "kategorie": "Familie",
+    "it": "figlio unico",
+    "de": "Einzelkind"
+  },
+  {
+    "id": 284,
+    "kategorie": "Familie",
+    "it": "neonato",
+    "de": "Neugeborenes"
+  },
+  {
+    "id": 285,
+    "kategorie": "Familie",
+    "it": "bambino",
+    "de": "Kind (m)"
+  },
+  {
+    "id": 286,
+    "kategorie": "Familie",
+    "it": "bambina",
+    "de": "Kind (w)"
+  },
+  {
+    "id": 287,
+    "kategorie": "Familie",
+    "it": "adolescente",
+    "de": "Jugendlicher"
+  },
+  {
+    "id": 288,
+    "kategorie": "Familie",
+    "it": "adulto",
+    "de": "Erwachsener"
+  },
+  {
+    "id": 289,
+    "kategorie": "Familie",
+    "it": "anziano",
+    "de": "alter Mensch"
+  },
+  {
+    "id": 290,
+    "kategorie": "Familie",
+    "it": "famiglia numerosa",
+    "de": "Großfamilie"
+  },
+  {
+    "id": 291,
+    "kategorie": "Familie",
+    "it": "albero genealogico",
+    "de": "Stammbaum"
+  },
+  {
+    "id": 292,
+    "kategorie": "Familie",
+    "it": "antenato",
+    "de": "Vorfahre"
+  },
+  {
+    "id": 293,
+    "kategorie": "Familie",
+    "it": "discendente",
+    "de": "Nachkomme"
+  },
+  {
+    "id": 294,
+    "kategorie": "Familie",
+    "it": "erede",
+    "de": "Erbe"
+  },
+  {
+    "id": 295,
+    "kategorie": "Familie",
+    "it": "madrina",
+    "de": "Patin"
+  },
+  {
+    "id": 296,
+    "kategorie": "Familie",
+    "it": "padrino",
+    "de": "Pate"
+  },
+  {
+    "id": 297,
+    "kategorie": "Familie",
+    "it": "figlioccio",
+    "de": "Patenkind (m)"
+  },
+  {
+    "id": 298,
+    "kategorie": "Familie",
+    "it": "figlioccia",
+    "de": "Patenkind (w)"
+  },
+  {
+    "id": 299,
+    "kategorie": "Essen",
+    "it": "pollo",
+    "de": "Hähnchen"
+  },
+  {
+    "id": 300,
+    "kategorie": "Essen",
+    "it": "manzo",
+    "de": "Rindfleisch"
+  },
+  {
+    "id": 301,
+    "kategorie": "Essen",
+    "it": "maiale",
+    "de": "Schweinefleisch"
+  },
+  {
+    "id": 302,
+    "kategorie": "Essen",
+    "it": "uovo",
+    "de": "Ei"
+  },
+  {
+    "id": 303,
+    "kategorie": "Essen",
+    "it": "latte",
+    "de": "Milch"
+  },
+  {
+    "id": 304,
+    "kategorie": "Essen",
+    "it": "burro",
+    "de": "Butter"
+  },
+  {
+    "id": 305,
+    "kategorie": "Essen",
+    "it": "olio",
+    "de": "Öl"
+  },
+  {
+    "id": 306,
+    "kategorie": "Essen",
+    "it": "sale",
+    "de": "Salz"
+  },
+  {
+    "id": 307,
+    "kategorie": "Essen",
+    "it": "pepe",
+    "de": "Pfeffer"
+  },
+  {
+    "id": 308,
+    "kategorie": "Essen",
+    "it": "zucchero",
+    "de": "Zucker"
+  },
+  {
+    "id": 309,
+    "kategorie": "Essen",
+    "it": "riso",
+    "de": "Reis"
+  },
+  {
+    "id": 310,
+    "kategorie": "Essen",
+    "it": "pizza",
+    "de": "Pizza"
+  },
+  {
+    "id": 311,
+    "kategorie": "Essen",
+    "it": "insalata",
+    "de": "Salat"
+  },
+  {
+    "id": 312,
+    "kategorie": "Essen",
+    "it": "zuppa",
+    "de": "Suppe"
+  },
+  {
+    "id": 313,
+    "kategorie": "Essen",
+    "it": "minestra",
+    "de": "Suppe / Eintopf"
+  },
+  {
+    "id": 314,
+    "kategorie": "Essen",
+    "it": "caffè",
+    "de": "Kaffee"
+  },
+  {
+    "id": 315,
+    "kategorie": "Essen",
+    "it": "tè",
+    "de": "Tee"
+  },
+  {
+    "id": 316,
+    "kategorie": "Essen",
+    "it": "succo",
+    "de": "Saft"
+  },
+  {
+    "id": 317,
+    "kategorie": "Essen",
+    "it": "birra",
+    "de": "Bier"
+  },
+  {
+    "id": 318,
+    "kategorie": "Essen",
+    "it": "pomodoro",
+    "de": "Tomate"
+  },
+  {
+    "id": 319,
+    "kategorie": "Essen",
+    "it": "patata",
+    "de": "Kartoffel"
+  },
+  {
+    "id": 320,
+    "kategorie": "Essen",
+    "it": "cipolla",
+    "de": "Zwiebel"
+  },
+  {
+    "id": 321,
+    "kategorie": "Essen",
+    "it": "aglio",
+    "de": "Knoblauch"
+  },
+  {
+    "id": 322,
+    "kategorie": "Essen",
+    "it": "limone",
+    "de": "Zitrone"
+  },
+  {
+    "id": 323,
+    "kategorie": "Essen",
+    "it": "mela",
+    "de": "Apfel"
+  },
+  {
+    "id": 324,
+    "kategorie": "Essen",
+    "it": "banana",
+    "de": "Banane"
+  },
+  {
+    "id": 325,
+    "kategorie": "Essen",
+    "it": "arancia",
+    "de": "Orange"
+  },
+  {
+    "id": 326,
+    "kategorie": "Essen",
+    "it": "fragola",
+    "de": "Erdbeere"
+  },
+  {
+    "id": 327,
+    "kategorie": "Essen",
+    "it": "uva",
+    "de": "Weintraube"
+  },
+  {
+    "id": 328,
+    "kategorie": "Essen",
+    "it": "pesca",
+    "de": "Pfirsich"
+  },
+  {
+    "id": 329,
+    "kategorie": "Essen",
+    "it": "ciliegia",
+    "de": "Kirsche"
+  },
+  {
+    "id": 330,
+    "kategorie": "Essen",
+    "it": "cioccolato",
+    "de": "Schokolade"
+  },
+  {
+    "id": 331,
+    "kategorie": "Essen",
+    "it": "gelato",
+    "de": "Eis"
+  },
+  {
+    "id": 332,
+    "kategorie": "Essen",
+    "it": "torta",
+    "de": "Kuchen"
+  },
+  {
+    "id": 333,
+    "kategorie": "Essen",
+    "it": "biscotto",
+    "de": "Keks"
+  },
+  {
+    "id": 334,
+    "kategorie": "Essen",
+    "it": "miele",
+    "de": "Honig"
+  },
+  {
+    "id": 335,
+    "kategorie": "Essen",
+    "it": "marmellata",
+    "de": "Marmelade"
+  },
+  {
+    "id": 336,
+    "kategorie": "Essen",
+    "it": "yogurt",
+    "de": "Joghurt"
+  },
+  {
+    "id": 337,
+    "kategorie": "Essen",
+    "it": "prosciutto",
+    "de": "Schinken"
+  },
+  {
+    "id": 338,
+    "kategorie": "Essen",
+    "it": "salame",
+    "de": "Salami"
+  },
+  {
+    "id": 339,
+    "kategorie": "Essen",
+    "it": "tonno",
+    "de": "Thunfisch"
+  },
+  {
+    "id": 340,
+    "kategorie": "Essen",
+    "it": "gamberi",
+    "de": "Garnelen"
+  },
+  {
+    "id": 341,
+    "kategorie": "Essen",
+    "it": "funghi",
+    "de": "Pilze"
+  },
+  {
+    "id": 342,
+    "kategorie": "Essen",
+    "it": "fagioli",
+    "de": "Bohnen"
+  },
+  {
+    "id": 343,
+    "kategorie": "Essen",
+    "it": "piselli",
+    "de": "Erbsen"
+  },
+  {
+    "id": 344,
+    "kategorie": "Essen",
+    "it": "spinaci",
+    "de": "Spinat"
+  },
+  {
+    "id": 345,
+    "kategorie": "Essen",
+    "it": "carota",
+    "de": "Karotte"
+  },
+  {
+    "id": 346,
+    "kategorie": "Essen",
+    "it": "lattuga",
+    "de": "Kopfsalat"
+  },
+  {
+    "id": 347,
+    "kategorie": "Essen",
+    "it": "aceto",
+    "de": "Essig"
+  },
+  {
+    "id": 348,
+    "kategorie": "Essen",
+    "it": "farina",
+    "de": "Mehl"
+  },
+  {
+    "id": 349,
+    "kategorie": "Zeit",
+    "it": "secondo",
+    "de": "Sekunde"
+  },
+  {
+    "id": 350,
+    "kategorie": "Zeit",
+    "it": "giorno",
+    "de": "Tag"
+  },
+  {
+    "id": 351,
+    "kategorie": "Zeit",
+    "it": "notte",
+    "de": "Nacht"
+  },
+  {
+    "id": 352,
+    "kategorie": "Zeit",
+    "it": "mattina",
+    "de": "Morgen (Tageszeit)"
+  },
+  {
+    "id": 353,
+    "kategorie": "Zeit",
+    "it": "pomeriggio",
+    "de": "Nachmittag"
+  },
+  {
+    "id": 354,
+    "kategorie": "Zeit",
+    "it": "sera",
+    "de": "Abend"
+  },
+  {
+    "id": 355,
+    "kategorie": "Zeit",
+    "it": "mezzogiorno",
+    "de": "Mittag"
+  },
+  {
+    "id": 356,
+    "kategorie": "Zeit",
+    "it": "mezzanotte",
+    "de": "Mitternacht"
+  },
+  {
+    "id": 357,
+    "kategorie": "Zeit",
+    "it": "lunedì",
+    "de": "Montag"
+  },
+  {
+    "id": 358,
+    "kategorie": "Zeit",
+    "it": "martedì",
+    "de": "Dienstag"
+  },
+  {
+    "id": 359,
+    "kategorie": "Zeit",
+    "it": "mercoledì",
+    "de": "Mittwoch"
+  },
+  {
+    "id": 360,
+    "kategorie": "Zeit",
+    "it": "giovedì",
+    "de": "Donnerstag"
+  },
+  {
+    "id": 361,
+    "kategorie": "Zeit",
+    "it": "venerdì",
+    "de": "Freitag"
+  },
+  {
+    "id": 362,
+    "kategorie": "Zeit",
+    "it": "sabato",
+    "de": "Samstag"
+  },
+  {
+    "id": 363,
+    "kategorie": "Zeit",
+    "it": "domenica",
+    "de": "Sonntag"
+  },
+  {
+    "id": 364,
+    "kategorie": "Zeit",
+    "it": "gennaio",
+    "de": "Januar"
+  },
+  {
+    "id": 365,
+    "kategorie": "Zeit",
+    "it": "febbraio",
+    "de": "Februar"
+  },
+  {
+    "id": 366,
+    "kategorie": "Zeit",
+    "it": "marzo",
+    "de": "März"
+  },
+  {
+    "id": 367,
+    "kategorie": "Zeit",
+    "it": "aprile",
+    "de": "April"
+  },
+  {
+    "id": 368,
+    "kategorie": "Zeit",
+    "it": "maggio",
+    "de": "Mai"
+  },
+  {
+    "id": 369,
+    "kategorie": "Zeit",
+    "it": "giugno",
+    "de": "Juni"
+  },
+  {
+    "id": 370,
+    "kategorie": "Zeit",
+    "it": "luglio",
+    "de": "Juli"
+  },
+  {
+    "id": 371,
+    "kategorie": "Zeit",
+    "it": "agosto",
+    "de": "August"
+  },
+  {
+    "id": 372,
+    "kategorie": "Zeit",
+    "it": "settembre",
+    "de": "September"
+  },
+  {
+    "id": 373,
+    "kategorie": "Zeit",
+    "it": "ottobre",
+    "de": "Oktober"
+  },
+  {
+    "id": 374,
+    "kategorie": "Zeit",
+    "it": "novembre",
+    "de": "November"
+  },
+  {
+    "id": 375,
+    "kategorie": "Zeit",
+    "it": "dicembre",
+    "de": "Dezember"
+  },
+  {
+    "id": 376,
+    "kategorie": "Zeit",
+    "it": "primavera",
+    "de": "Frühling"
+  },
+  {
+    "id": 377,
+    "kategorie": "Zeit",
+    "it": "estate",
+    "de": "Sommer"
+  },
+  {
+    "id": 378,
+    "kategorie": "Zeit",
+    "it": "autunno",
+    "de": "Herbst"
+  },
+  {
+    "id": 379,
+    "kategorie": "Zeit",
+    "it": "inverno",
+    "de": "Winter"
+  },
+  {
+    "id": 380,
+    "kategorie": "Zeit",
+    "it": "adesso",
+    "de": "jetzt"
+  },
+  {
+    "id": 381,
+    "kategorie": "Zeit",
+    "it": "subito",
+    "de": "sofort"
+  },
+  {
+    "id": 382,
+    "kategorie": "Zeit",
+    "it": "presto",
+    "de": "früh / bald"
+  },
+  {
+    "id": 383,
+    "kategorie": "Zeit",
+    "it": "tardi",
+    "de": "spät"
+  },
+  {
+    "id": 384,
+    "kategorie": "Zeit",
+    "it": "sempre",
+    "de": "immer"
+  },
+  {
+    "id": 385,
+    "kategorie": "Zeit",
+    "it": "mai",
+    "de": "nie"
+  },
+  {
+    "id": 386,
+    "kategorie": "Zeit",
+    "it": "spesso",
+    "de": "oft"
+  },
+  {
+    "id": 387,
+    "kategorie": "Zeit",
+    "it": "raramente",
+    "de": "selten"
+  },
+  {
+    "id": 388,
+    "kategorie": "Zeit",
+    "it": "qualche volta",
+    "de": "manchmal"
+  },
+  {
+    "id": 389,
+    "kategorie": "Zeit",
+    "it": "prima",
+    "de": "vorher"
+  },
+  {
+    "id": 390,
+    "kategorie": "Zeit",
+    "it": "dopo",
+    "de": "danach"
+  },
+  {
+    "id": 391,
+    "kategorie": "Zeit",
+    "it": "durante",
+    "de": "während"
+  },
+  {
+    "id": 392,
+    "kategorie": "Zeit",
+    "it": "ancora",
+    "de": "noch"
+  },
+  {
+    "id": 393,
+    "kategorie": "Zeit",
+    "it": "già",
+    "de": "schon"
+  },
+  {
+    "id": 394,
+    "kategorie": "Zeit",
+    "it": "fine settimana",
+    "de": "Wochenende"
+  },
+  {
+    "id": 395,
+    "kategorie": "Zeit",
+    "it": "orologio",
+    "de": "Uhr"
+  },
+  {
+    "id": 396,
+    "kategorie": "Zeit",
+    "it": "calendario",
+    "de": "Kalender"
+  },
+  {
+    "id": 397,
+    "kategorie": "Zeit",
+    "it": "stagione",
+    "de": "Jahreszeit"
+  },
+  {
+    "id": 398,
+    "kategorie": "Zeit",
+    "it": "secolo",
+    "de": "Jahrhundert"
+  },
+  {
+    "id": 399,
+    "kategorie": "Personalpronomen",
+    "it": "mio",
+    "de": "mein"
+  },
+  {
+    "id": 400,
+    "kategorie": "Personalpronomen",
+    "it": "mia",
+    "de": "meine"
+  },
+  {
+    "id": 401,
+    "kategorie": "Personalpronomen",
+    "it": "tuo",
+    "de": "dein"
+  },
+  {
+    "id": 402,
+    "kategorie": "Personalpronomen",
+    "it": "tua",
+    "de": "deine"
+  },
+  {
+    "id": 403,
+    "kategorie": "Personalpronomen",
+    "it": "suo",
+    "de": "sein / ihr"
+  },
+  {
+    "id": 404,
+    "kategorie": "Personalpronomen",
+    "it": "sua",
+    "de": "seine / ihre"
+  },
+  {
+    "id": 405,
+    "kategorie": "Personalpronomen",
+    "it": "miei",
+    "de": "meine (Pl.)"
+  },
+  {
+    "id": 406,
+    "kategorie": "Personalpronomen",
+    "it": "tuoi",
+    "de": "deine (Pl.)"
+  },
+  {
+    "id": 407,
+    "kategorie": "Personalpronomen",
+    "it": "suoi",
+    "de": "seine (Pl.)"
+  },
+  {
+    "id": 408,
+    "kategorie": "Personalpronomen",
+    "it": "me",
+    "de": "mich / mir"
+  },
+  {
+    "id": 409,
+    "kategorie": "Personalpronomen",
+    "it": "te",
+    "de": "dich / dir"
+  },
+  {
+    "id": 410,
+    "kategorie": "Personalpronomen",
+    "it": "lui (oggetto)",
+    "de": "ihn"
+  },
+  {
+    "id": 411,
+    "kategorie": "Personalpronomen",
+    "it": "lei (oggetto)",
+    "de": "sie (Akk.)"
+  },
+  {
+    "id": 412,
+    "kategorie": "Personalpronomen",
+    "it": "noi (oggetto)",
+    "de": "uns"
+  },
+  {
+    "id": 413,
+    "kategorie": "Personalpronomen",
+    "it": "voi (oggetto)",
+    "de": "euch"
+  },
+  {
+    "id": 414,
+    "kategorie": "Personalpronomen",
+    "it": "loro (oggetto)",
+    "de": "ihnen"
+  },
+  {
+    "id": 415,
+    "kategorie": "Personalpronomen",
+    "it": "mi",
+    "de": "mich / mir (unbetont)"
+  },
+  {
+    "id": 416,
+    "kategorie": "Personalpronomen",
+    "it": "ti",
+    "de": "dich / dir (unbetont)"
+  },
+  {
+    "id": 417,
+    "kategorie": "Personalpronomen",
+    "it": "lo",
+    "de": "ihn / es"
+  },
+  {
+    "id": 418,
+    "kategorie": "Personalpronomen",
+    "it": "la",
+    "de": "sie / es"
+  },
+  {
+    "id": 419,
+    "kategorie": "Personalpronomen",
+    "it": "ci",
+    "de": "uns (unbetont)"
+  },
+  {
+    "id": 420,
+    "kategorie": "Personalpronomen",
+    "it": "vi",
+    "de": "euch (unbetont)"
+  },
+  {
+    "id": 421,
+    "kategorie": "Personalpronomen",
+    "it": "li",
+    "de": "sie (Akk. Pl. m)"
+  },
+  {
+    "id": 422,
+    "kategorie": "Personalpronomen",
+    "it": "le",
+    "de": "sie (Akk. Pl. w)"
+  },
+  {
+    "id": 423,
+    "kategorie": "Personalpronomen",
+    "it": "gli",
+    "de": "ihm"
+  },
+  {
+    "id": 424,
+    "kategorie": "Personalpronomen",
+    "it": "ne",
+    "de": "davon"
+  },
+  {
+    "id": 425,
+    "kategorie": "Personalpronomen",
+    "it": "si",
+    "de": "sich"
+  },
+  {
+    "id": 426,
+    "kategorie": "Personalpronomen",
+    "it": "questo",
+    "de": "dieser"
+  },
+  {
+    "id": 427,
+    "kategorie": "Personalpronomen",
+    "it": "questa",
+    "de": "diese"
+  },
+  {
+    "id": 428,
+    "kategorie": "Personalpronomen",
+    "it": "questi",
+    "de": "diese (Pl. m)"
+  },
+  {
+    "id": 429,
+    "kategorie": "Personalpronomen",
+    "it": "queste",
+    "de": "diese (Pl. w)"
+  },
+  {
+    "id": 430,
+    "kategorie": "Personalpronomen",
+    "it": "quello",
+    "de": "jener"
+  },
+  {
+    "id": 431,
+    "kategorie": "Personalpronomen",
+    "it": "quella",
+    "de": "jene"
+  },
+  {
+    "id": 432,
+    "kategorie": "Personalpronomen",
+    "it": "quelli",
+    "de": "jene (Pl. m)"
+  },
+  {
+    "id": 433,
+    "kategorie": "Personalpronomen",
+    "it": "quelle",
+    "de": "jene (Pl. w)"
+  },
+  {
+    "id": 434,
+    "kategorie": "Personalpronomen",
+    "it": "che",
+    "de": "der / die / das (Relativ)"
+  },
+  {
+    "id": 435,
+    "kategorie": "Personalpronomen",
+    "it": "cui",
+    "de": "dem / dessen"
+  },
+  {
+    "id": 436,
+    "kategorie": "Personalpronomen",
+    "it": "il quale",
+    "de": "welcher"
+  },
+  {
+    "id": 437,
+    "kategorie": "Personalpronomen",
+    "it": "chi",
+    "de": "wer"
+  },
+  {
+    "id": 438,
+    "kategorie": "Personalpronomen",
+    "it": "cosa",
+    "de": "was"
+  },
+  {
+    "id": 439,
+    "kategorie": "Personalpronomen",
+    "it": "quale",
+    "de": "welcher (Frage)"
+  },
+  {
+    "id": 440,
+    "kategorie": "Personalpronomen",
+    "it": "quanto",
+    "de": "wie viel"
+  },
+  {
+    "id": 441,
+    "kategorie": "Personalpronomen",
+    "it": "qualcuno",
+    "de": "jemand"
+  },
+  {
+    "id": 442,
+    "kategorie": "Personalpronomen",
+    "it": "nessuno",
+    "de": "niemand"
+  },
+  {
+    "id": 443,
+    "kategorie": "Personalpronomen",
+    "it": "ognuno",
+    "de": "jeder"
+  },
+  {
+    "id": 444,
+    "kategorie": "Personalpronomen",
+    "it": "ciascuno",
+    "de": "jeder einzelne"
+  },
+  {
+    "id": 445,
+    "kategorie": "Personalpronomen",
+    "it": "qualcosa",
+    "de": "etwas"
+  },
+  {
+    "id": 446,
+    "kategorie": "Personalpronomen",
+    "it": "niente",
+    "de": "nichts"
+  },
+  {
+    "id": 447,
+    "kategorie": "Personalpronomen",
+    "it": "tutto",
+    "de": "alles"
+  },
+  {
+    "id": 448,
+    "kategorie": "Personalpronomen",
+    "it": "altro",
+    "de": "anderer"
+  },
+  {
+    "id": 449,
+    "kategorie": "Verben",
+    "it": "lavorare",
+    "de": "arbeiten"
+  },
+  {
+    "id": 450,
+    "kategorie": "Verben",
+    "it": "studiare",
+    "de": "studieren / lernen"
+  },
+  {
+    "id": 451,
+    "kategorie": "Verben",
+    "it": "abitare",
+    "de": "wohnen"
+  },
+  {
+    "id": 452,
+    "kategorie": "Verben",
+    "it": "comprare",
+    "de": "kaufen"
+  },
+  {
+    "id": 453,
+    "kategorie": "Verben",
+    "it": "vendere",
+    "de": "verkaufen"
+  },
+  {
+    "id": 454,
+    "kategorie": "Verben",
+    "it": "aprire",
+    "de": "öffnen"
+  },
+  {
+    "id": 455,
+    "kategorie": "Verben",
+    "it": "chiudere",
+    "de": "schließen"
+  },
+  {
+    "id": 456,
+    "kategorie": "Verben",
+    "it": "leggere",
+    "de": "lesen"
+  },
+  {
+    "id": 457,
+    "kategorie": "Verben",
+    "it": "scrivere",
+    "de": "schreiben"
+  },
+  {
+    "id": 458,
+    "kategorie": "Verben",
+    "it": "ascoltare",
+    "de": "zuhören"
+  },
+  {
+    "id": 459,
+    "kategorie": "Verben",
+    "it": "guardare",
+    "de": "anschauen"
+  },
+  {
+    "id": 460,
+    "kategorie": "Verben",
+    "it": "cercare",
+    "de": "suchen"
+  },
+  {
+    "id": 461,
+    "kategorie": "Verben",
+    "it": "trovare",
+    "de": "finden"
+  },
+  {
+    "id": 462,
+    "kategorie": "Verben",
+    "it": "pensare",
+    "de": "denken"
+  },
+  {
+    "id": 463,
+    "kategorie": "Verben",
+    "it": "credere",
+    "de": "glauben"
+  },
+  {
+    "id": 464,
+    "kategorie": "Verben",
+    "it": "aiutare",
+    "de": "helfen"
+  },
+  {
+    "id": 465,
+    "kategorie": "Verben",
+    "it": "giocare",
+    "de": "spielen"
+  },
+  {
+    "id": 466,
+    "kategorie": "Verben",
+    "it": "camminare",
+    "de": "laufen / gehen"
+  },
+  {
+    "id": 467,
+    "kategorie": "Verben",
+    "it": "correre",
+    "de": "rennen"
+  },
+  {
+    "id": 468,
+    "kategorie": "Verben",
+    "it": "nuotare",
+    "de": "schwimmen"
+  },
+  {
+    "id": 469,
+    "kategorie": "Verben",
+    "it": "ballare",
+    "de": "tanzen"
+  },
+  {
+    "id": 470,
+    "kategorie": "Verben",
+    "it": "cantare",
+    "de": "singen"
+  },
+  {
+    "id": 471,
+    "kategorie": "Verben",
+    "it": "suonare",
+    "de": "musizieren / klingeln"
+  },
+  {
+    "id": 472,
+    "kategorie": "Verben",
+    "it": "cucinare",
+    "de": "kochen"
+  },
+  {
+    "id": 473,
+    "kategorie": "Verben",
+    "it": "lavare",
+    "de": "waschen"
+  },
+  {
+    "id": 474,
+    "kategorie": "Verben",
+    "it": "pulire",
+    "de": "putzen"
+  },
+  {
+    "id": 475,
+    "kategorie": "Verben",
+    "it": "dormire",
+    "de": "schlafen"
+  },
+  {
+    "id": 476,
+    "kategorie": "Verben",
+    "it": "svegliarsi",
+    "de": "aufwachen"
+  },
+  {
+    "id": 477,
+    "kategorie": "Verben",
+    "it": "alzarsi",
+    "de": "aufstehen"
+  },
+  {
+    "id": 478,
+    "kategorie": "Verben",
+    "it": "vestirsi",
+    "de": "sich anziehen"
+  },
+  {
+    "id": 479,
+    "kategorie": "Verben",
+    "it": "guidare",
+    "de": "fahren / steuern"
+  },
+  {
+    "id": 480,
+    "kategorie": "Verben",
+    "it": "viaggiare",
+    "de": "reisen"
+  },
+  {
+    "id": 481,
+    "kategorie": "Verben",
+    "it": "volare",
+    "de": "fliegen"
+  },
+  {
+    "id": 482,
+    "kategorie": "Verben",
+    "it": "partire",
+    "de": "abreisen"
+  },
+  {
+    "id": 483,
+    "kategorie": "Verben",
+    "it": "arrivare",
+    "de": "ankommen"
+  },
+  {
+    "id": 484,
+    "kategorie": "Verben",
+    "it": "tornare",
+    "de": "zurückkehren"
+  },
+  {
+    "id": 485,
+    "kategorie": "Verben",
+    "it": "entrare",
+    "de": "eintreten"
+  },
+  {
+    "id": 486,
+    "kategorie": "Verben",
+    "it": "restare",
+    "de": "bleiben"
+  },
+  {
+    "id": 487,
+    "kategorie": "Verben",
+    "it": "aspettare",
+    "de": "warten"
+  },
+  {
+    "id": 488,
+    "kategorie": "Verben",
+    "it": "incontrare",
+    "de": "treffen"
+  },
+  {
+    "id": 489,
+    "kategorie": "Verben",
+    "it": "chiamare",
+    "de": "rufen / anrufen"
+  },
+  {
+    "id": 490,
+    "kategorie": "Verben",
+    "it": "rispondere",
+    "de": "antworten"
+  },
+  {
+    "id": 491,
+    "kategorie": "Verben",
+    "it": "domandare",
+    "de": "fragen"
+  },
+  {
+    "id": 492,
+    "kategorie": "Verben",
+    "it": "spiegare",
+    "de": "erklären"
+  },
+  {
+    "id": 493,
+    "kategorie": "Verben",
+    "it": "imparare",
+    "de": "lernen"
+  },
+  {
+    "id": 494,
+    "kategorie": "Verben",
+    "it": "insegnare",
+    "de": "unterrichten"
+  },
+  {
+    "id": 495,
+    "kategorie": "Verben",
+    "it": "ricordare",
+    "de": "erinnern"
+  },
+  {
+    "id": 496,
+    "kategorie": "Verben",
+    "it": "dimenticare",
+    "de": "vergessen"
+  },
+  {
+    "id": 497,
+    "kategorie": "Verben",
+    "it": "provare",
+    "de": "versuchen / probieren"
+  },
+  {
+    "id": 498,
+    "kategorie": "Verben",
+    "it": "continuare",
+    "de": "fortsetzen"
+  },
+  {
+    "id": 499,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "dare",
+    "de": "geben"
+  },
+  {
+    "id": 500,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "stare",
+    "de": "sein / bleiben"
+  },
+  {
+    "id": 501,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "porre",
+    "de": "stellen / legen"
+  },
+  {
+    "id": 502,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "tradurre",
+    "de": "übersetzen"
+  },
+  {
+    "id": 503,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "produrre",
+    "de": "produzieren"
+  },
+  {
+    "id": 504,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "condurre",
+    "de": "führen / leiten"
+  },
+  {
+    "id": 505,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "trarre",
+    "de": "ziehen"
+  },
+  {
+    "id": 506,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "apparire",
+    "de": "erscheinen"
+  },
+  {
+    "id": 507,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "scomparire",
+    "de": "verschwinden"
+  },
+  {
+    "id": 508,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "comparire",
+    "de": "auftreten"
+  },
+  {
+    "id": 509,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "riuscire",
+    "de": "gelingen / schaffen"
+  },
+  {
+    "id": 510,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "possedere",
+    "de": "besitzen"
+  },
+  {
+    "id": 511,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "ottenere",
+    "de": "erhalten"
+  },
+  {
+    "id": 512,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "mantenere",
+    "de": "beibehalten"
+  },
+  {
+    "id": 513,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "contenere",
+    "de": "enthalten"
+  },
+  {
+    "id": 514,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "sostenere",
+    "de": "unterstützen"
+  },
+  {
+    "id": 515,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "appartenere",
+    "de": "gehören"
+  },
+  {
+    "id": 516,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "valere",
+    "de": "wert sein"
+  },
+  {
+    "id": 517,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "convenire",
+    "de": "sich lohnen"
+  },
+  {
+    "id": 518,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "divenire",
+    "de": "werden"
+  },
+  {
+    "id": 519,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "svenire",
+    "de": "ohnmächtig werden"
+  },
+  {
+    "id": 520,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "avvenire",
+    "de": "geschehen"
+  },
+  {
+    "id": 521,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "intervenire",
+    "de": "eingreifen"
+  },
+  {
+    "id": 522,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "prevenire",
+    "de": "vorbeugen"
+  },
+  {
+    "id": 523,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "provenire",
+    "de": "stammen"
+  },
+  {
+    "id": 524,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "cogliere",
+    "de": "pflücken / erfassen"
+  },
+  {
+    "id": 525,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "raccogliere",
+    "de": "sammeln"
+  },
+  {
+    "id": 526,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "accogliere",
+    "de": "empfangen"
+  },
+  {
+    "id": 527,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "togliere",
+    "de": "entfernen / wegnehmen"
+  },
+  {
+    "id": 528,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "sciogliere",
+    "de": "auflösen / schmelzen"
+  },
+  {
+    "id": 529,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "supporre",
+    "de": "annehmen / vermuten"
+  },
+  {
+    "id": 530,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "proporre",
+    "de": "vorschlagen"
+  },
+  {
+    "id": 531,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "comporre",
+    "de": "komponieren"
+  },
+  {
+    "id": 532,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "imporre",
+    "de": "auferlegen"
+  },
+  {
+    "id": 533,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "opporre",
+    "de": "entgegensetzen"
+  },
+  {
+    "id": 534,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "esporre",
+    "de": "ausstellen / darlegen"
+  },
+  {
+    "id": 535,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "disporre",
+    "de": "verfügen / anordnen"
+  },
+  {
+    "id": 536,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "giacere",
+    "de": "liegen"
+  },
+  {
+    "id": 537,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "tacere",
+    "de": "schweigen"
+  },
+  {
+    "id": 538,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "nuocere",
+    "de": "schaden"
+  },
+  {
+    "id": 539,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "cuocere",
+    "de": "kochen (garen)"
+  },
+  {
+    "id": 540,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "scuotere",
+    "de": "schütteln"
+  },
+  {
+    "id": 541,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "riscuotere",
+    "de": "kassieren / einlösen"
+  },
+  {
+    "id": 542,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "percuotere",
+    "de": "schlagen"
+  },
+  {
+    "id": 543,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "muovere",
+    "de": "bewegen"
+  },
+  {
+    "id": 544,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "commuovere",
+    "de": "rühren (emotional)"
+  },
+  {
+    "id": 545,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "rimuovere",
+    "de": "entfernen"
+  },
+  {
+    "id": 546,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "promuovere",
+    "de": "fördern / befördern"
+  },
+  {
+    "id": 547,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "sedurre",
+    "de": "verführen"
+  },
+  {
+    "id": 548,
+    "kategorie": "Unregelmäßige Verben",
+    "it": "ridurre",
+    "de": "reduzieren"
   }
 ]

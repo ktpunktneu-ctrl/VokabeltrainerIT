@@ -1,5 +1,5 @@
 const CACHE = 'vokabelit-v15';
-const ASSETS = ['/', '/static/icon-192.png', '/static/icon-512.png', '/manifest.json'];
+const ASSETS = ['./', './index.html', './manifest.json', './static/icon-192.png', './static/icon-512.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
@@ -26,7 +26,7 @@ self.addEventListener('fetch', e => {
         const copy = resp.clone();
         caches.open(CACHE).then(c => c.put(e.request, copy));
         return resp;
-      }).catch(() => caches.match('/'));
+      }).catch(() => caches.match('./'));
     })
   );
 });
