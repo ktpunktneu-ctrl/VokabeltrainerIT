@@ -151,6 +151,7 @@ nav button.active{background:var(--green);color:#fff}
   <header>
     <h1><span class="flag"></span>Vokabeltrainer <span id="app-version" class="app-version"></span></h1>
     <div>
+      <button class="icon-btn" onclick="openHelpModal()" title="Hilfe">&#10067;</button>
       <button class="icon-btn" onclick="gotoPage('liste')" title="Lernliste">&#128214;</button>
       <button class="icon-btn" onclick="gotoPage('verwaltung')" title="Verwaltung">&#9881;</button>
     </div>
@@ -238,8 +239,7 @@ nav button.active{background:var(--green);color:#fff}
   <!-- VERWALTUNG -->
   <div class="page" id="page-verwaltung">
     <div class="page-hdr"><button class="back-btn" onclick="gotoPage('start')" title="Zurück">&#8249;</button><h2>Verwaltung</h2></div>
-    <button class="btn btn-primary" onclick="openAddModal()" style="margin-bottom:10px">&#43; Neue Vokabel hinzufügen</button>
-    <button class="btn btn-secondary" id="btn-sync" onclick="syncMitPC()" style="margin-bottom:14px">&#8646; Mit PC abgleichen</button>
+    <button class="btn btn-primary" onclick="openAddModal()" style="margin-bottom:14px">&#43; Neue Vokabel hinzufügen</button>
     <div class="card" style="margin-bottom:14px">
       <div class="card-title">Kategorien</div>
       <div id="kat-list"></div>
@@ -251,6 +251,31 @@ nav button.active{background:var(--green);color:#fff}
   </div>
 
 </div>
+
+<!-- HILFE-MODAL -->
+<dialog id="help-modal">
+  <div class="modal-body" style="max-height:80vh;overflow-y:auto">
+    <div class="modal-title">👋 So funktioniert's</div>
+    <p style="font-size:14px;line-height:1.6;margin:0 0 12px">
+      <b>🎯 Training starten:</b> Kategorie(n) antippen — ein Tipp zeigt nur diese eine, nochmal tippen zeigt wieder alle. Richtung wählen (Italienisch→Deutsch, Deutsch→Italienisch, Gemischt oder Konjugation), Anzahl der Fragen einstellen, los geht's!
+    </p>
+    <p style="font-size:14px;line-height:1.6;margin:0 0 12px">
+      <b>📖 Lernliste:</b> Alle Vokabeln zum Durchlesen, mit dem gleichen Kategorie-Filter und einem Richtungsumschalter. Praktisch zum Wiederholen vor dem Training.
+    </p>
+    <p style="font-size:14px;line-height:1.6;margin:0 0 12px">
+      <b>🔊 Aussprache:</b> Einfach auf das Lautsprecher-Symbol tippen — funktioniert offline mit den Stimmen deines Handys.
+    </p>
+    <p style="font-size:14px;line-height:1.6;margin:0 0 12px">
+      <b>⚙ Verwaltung:</b> Hier kannst du eigene Vokabeln und Kategorien hinzufügen, bearbeiten oder löschen.
+    </p>
+    <p style="font-size:14px;line-height:1.6;margin:0">
+      <b>📴 Offline nutzen:</b> Wenn du die App zum Home-Bildschirm hinzugefügt hast, läuft sie auch komplett ohne Internet — ideal für unterwegs.
+    </p>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="closeHelpModal()" style="width:100%">Alles klar, los geht's!</button>
+    </div>
+  </div>
+</dialog>
 
 <!-- ADD-MODAL -->
 <dialog id="add-modal">
@@ -1276,6 +1301,14 @@ function closeAddModal() {
   document.getElementById('add-modal').close();
 }
 
+function openHelpModal() {
+  document.getElementById('help-modal').showModal();
+}
+
+function closeHelpModal() {
+  document.getElementById('help-modal').close();
+}
+
 function onKategorieSelectChange() {
   const sel = document.getElementById('am-kategorie-select');
   const neuInp = document.getElementById('am-kategorie-neu');
@@ -1330,58 +1363,8 @@ function submitAddModal() {
   if (activePage === 'page-start') renderStart();
 }
 
-// ── SYNC MIT PC ───────────────────────────────────────────────────────────────
-// Nutzt die bestehenden /api/vokabeln Endpoints auf dem Flask-Server. Funktioniert
-// nur, wenn das Gerät im selben Netzwerk wie der PC ist (z.B. zuhause im WLAN).
 function vokabelKey(v) {
   return `${v.kategorie}|${v.it}|${v.de}`.toLowerCase().trim();
-}
-
-async function syncMitPC() {
-  const btn = document.getElementById('btn-sync');
-  const urspruenglich = btn.textContent;
-  btn.disabled = true;
-  btn.textContent = 'Gleiche ab …';
-  try {
-    const serverListe = await fetch('/api/vokabeln', { cache: 'no-store' }).then(r => {
-      if (!r.ok) throw new Error('Serverfehler');
-      return r.json();
-    });
-    const localListe = lsLoad();
-    const serverKeys = new Set(serverListe.map(vokabelKey));
-    const localKeys = new Set(localListe.map(vokabelKey));
-
-    const nurLokal = localListe.filter(v => !serverKeys.has(vokabelKey(v)));
-    const nurServer = serverListe.filter(v => !localKeys.has(vokabelKey(v)));
-
-    for (const v of nurLokal) {
-      await fetch('/api/vokabeln', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ kategorie: v.kategorie, it: v.it, de: v.de })
-      });
-    }
-
-    const merged = await fetch('/api/vokabeln', { cache: 'no-store' }).then(r => r.json());
-    const formenByKey = new Map(localListe.filter(v => v.formen).map(v => [vokabelKey(v), v.formen]));
-    const mergedMitFormen = merged.map(v => {
-      const formen = formenByKey.get(vokabelKey(v));
-      return formen ? { ...v, formen } : v;
-    });
-    lsSave(mergedMitFormen);
-    S.vokabeln = mergedMitFormen;
-    S.kategorien = lsKategorien(mergedMitFormen);
-    S.selectedKat = new Set(S.kategorien);
-
-    const anzahlNeu = nurLokal.length + nurServer.length;
-    toast(anzahlNeu ? `Abgleich fertig · ${anzahlNeu} neue Vokabel(n)` : 'Bereits aktuell', 'ok');
-    renderVerwaltung();
-  } catch (e) {
-    toast('PC nicht erreichbar — gleiches WLAN nötig');
-  } finally {
-    btn.disabled = false;
-    btn.textContent = urspruenglich;
-  }
 }
 
 function deleteVokabel(id) {
