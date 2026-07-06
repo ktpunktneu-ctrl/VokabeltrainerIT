@@ -39,20 +39,20 @@ Beide Apps sind komplett parallel gepflegt — **jede Code-Änderung muss identi
 - **2026-07-05 mittags:** Bug gefunden & behoben — absolute Pfade (`/manifest.json`, `/sw.js`, `/static/...`) verhinderten die PWA-Installation auf GitHub Pages (404), da die Apps dort im Unterpfad laufen. Auf relative Pfade umgestellt, betraf beide Apps gleichermaßen.
 - **2026-07-05 nachmittags:** Lernliste-Kategoriefilter ebenfalls auf "isolieren statt togglen" umgestellt (war inkonsistent zum Quiz-Filter).
 
-## Vermarktung — Entschieden: Feature-Gating + 14-Tage-Hinweis
+## Vermarktung — Feature-Gating implementiert (2026-07-06)
 
 Zielgruppe: Schüler & Interessierte, "schmaler Kurs" (kleiner, günstiger Zugang statt Vollpreis-Produkt).
 
-**Modell (Stand 2026-07-05, entschieden, noch nicht umgesetzt):**
-- **Feature-Sperre:** Konjugationstraining (und ggf. ein Teil der Kategorien) dauerhaft hinter einem Freischalt-Code gesperrt. Grundwortschatz + normales Training bleiben frei nutzbar.
-- **14-Tage-Hinweis:** Installationsdatum beim ersten Start in `localStorage` merken. Nach 14 Tagen ohne Freischaltung bei **jedem** App-Start ein Hinweis-Modal ("Testphase vorbei — jetzt freischalten") — nicht blockierend, aber nicht dauerhaft wegklickbar (kommt bei jedem Neustart wieder). Kein hartes Sperren der App insgesamt.
-- **Freischaltung:** Verkauf über **Gumroad** (kostenlose License-Verification-API — Käufer bekommt automatisch individuellen Lizenzschlüssel per Mail, App prüft Code per Fetch gegen Gumroads API, kein eigener Server nötig). Robuster als ein einzelner geteilter Code.
-- **Preis:** Einmalzahlung (kein Abo, passt besser zu "schmal") — Empfehlung **4,99 €** einmalig, Impulskauf-Preisregion.
+**Umgesetztes Modell:**
+- **Feature-Sperre:** Konjugation/Verbformen-Training dauerhaft hinter Freischalt-Code gesperrt (🔒-Icon bei "Konjugation"/"Verbformen" in Start-Richtung und Lernliste-Tab). Klick ohne Freischaltung öffnet das Lizenz-Modal statt die Auswahl zu setzen. Grundwortschatz + normales Training bleiben frei.
+- **14-Tage-Hinweis:** Installationsdatum wird beim allerersten Start in `localStorage` (`..._install_datum`) gespeichert. Nach 14 Tagen (`TESTPHASE_TAGE`) ohne Freischaltung öffnet sich bei jedem App-Start automatisch das Lizenz-Modal (nicht dauerhaft wegklickbar, kommt bei jedem Neustart wieder — aber keine harte Sperre der ganzen App).
+- **Bestandsnutzer-Schutz:** `pruefeBestandsnutzer()` prüft beim allerersten Lauf dieses Codes, ob im Browser schon Vokabeldaten existieren (= App wurde schon vor dem Feature-Gating genutzt) → automatische, dauerhafte Freischaltung ohne Zutun. Betrifft die 3 bereits ausgelieferten EN-Testversionen. Neue Installationen ab jetzt starten normal mit 14-Tage-Test.
+- **Freischaltung:** Code-Eingabefeld im Lizenz-Modal, prüft per Fetch gegen Gumroads kostenlose License-Verification-API (`https://api.gumroad.com/v2/licenses/verify`). Mechanismus getestet und funktionsfähig (Fetch/Response-Handling läuft sauber durch).
+- **Preis:** 4,99 € einmalig, Kauf-Link im Modal.
 
-**Noch offen:**
-- Konkrete Umsetzung (Modal, Gumroad-Anbindung, Code-Eingabefeld) — noch nicht gebaut, nur konzeptionell entschieden.
-- Umfang der Sperre genau festlegen (nur Konjugation, oder auch bestimmte Kategorien?).
-- Ob/wie das Modell für IT und EN identisch oder unterschiedlich bepreist wird.
+**Noch offen / ACHTUNG — Klaus muss selbst tun:**
+- **Gumroad-Produkt existiert noch nicht!** `GUMROAD_PERMALINK` in `index.html` (beide Apps) ist aktuell nur ein Platzhalter (`vokabeltrainer-it` / `vokabeltrainer-en`), ebenso der Kauf-Link `https://gumroad.com/l/...` im Lizenz-Modal. Klaus muss bei Gumroad ein Produkt pro App anlegen (Preis 4,99 €, License-Key-Generierung aktivieren), dann den echten Permalink in beide `index.html` eintragen (Stelle ist mit `// TODO Klaus:` markiert).
+- Umfang der Sperre ist aktuell nur Konjugation/Verbformen — falls zusätzlich Kategorien gesperrt werden sollen, noch nicht umgesetzt.
 
 ## Schnellzugriff
 
