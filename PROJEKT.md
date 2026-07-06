@@ -49,11 +49,11 @@ Zielgruppe: Schüler & Interessierte, "schmaler Kurs" (kleiner, günstiger Zugan
 - **14-Tage-Hinweis:** Installationsdatum wird beim allerersten Start in `localStorage` (`..._install_datum`) gespeichert. Nach 14 Tagen (`TESTPHASE_TAGE`) ohne Freischaltung öffnet sich bei jedem App-Start automatisch das Lizenz-Modal (nicht dauerhaft wegklickbar, kommt bei jedem Neustart wieder — aber keine harte Sperre der ganzen App).
 - **Bestandsnutzer-Schutz:** `pruefeBestandsnutzer()` prüft beim allerersten Lauf dieses Codes, ob im Browser schon Vokabeldaten existieren (= App wurde schon vor dem Feature-Gating genutzt) → automatische, dauerhafte Freischaltung ohne Zutun. Betrifft die 3 bereits ausgelieferten EN-Testversionen. Neue Installationen ab jetzt starten normal mit 14-Tage-Test.
 - **Freischaltung:** Code-Eingabefeld im Lizenz-Modal, prüft per Fetch gegen Gumroads kostenlose License-Verification-API (`https://api.gumroad.com/v2/licenses/verify`). Mechanismus getestet und funktionsfähig (Fetch/Response-Handling läuft sauber durch).
-- **Preis:** 4,99 € einmalig, Kauf-Link im Modal.
+- **Preis:** 9,95 € einmalig, Kauf-Link im Modal.
 - **Master-Code für Eigennutzung:** `ktpunkt-master-2026` — im Freischalt-Code-Feld eingeben, schaltet sofort und dauerhaft frei, ganz ohne Gumroad-Prüfung/Internet. Konstante `MASTER_CODE` in `index.html` (beide Apps), nur für Klaus selbst zum Testen gedacht.
 
 **Noch offen / ACHTUNG — Klaus muss selbst tun:**
-- **Gumroad-Produkt existiert noch nicht!** `GUMROAD_PERMALINK` in `index.html` (beide Apps) ist aktuell nur ein Platzhalter (`vokabeltrainer-it` / `vokabeltrainer-en`), ebenso der Kauf-Link `https://gumroad.com/l/...` im Lizenz-Modal. Klaus muss bei Gumroad ein Produkt pro App anlegen (Preis 4,99 €, License-Key-Generierung aktivieren), dann den echten Permalink in beide `index.html` eintragen (Stelle ist mit `// TODO Klaus:` markiert).
+- **Gumroad-Produkt existiert noch nicht!** `GUMROAD_PERMALINK` in `index.html` (beide Apps) ist aktuell nur ein Platzhalter (`vokabeltrainer-it` / `vokabeltrainer-en`), ebenso der Kauf-Link `https://gumroad.com/l/...` im Lizenz-Modal. Klaus muss bei Gumroad ein Produkt pro App anlegen (Preis 9,95 €, License-Key-Generierung aktivieren), dann den echten Permalink in beide `index.html` eintragen (Stelle ist mit `// TODO Klaus:` markiert).
 - Umfang der Sperre ist aktuell nur Konjugation/Verbformen — falls zusätzlich Kategorien gesperrt werden sollen, noch nicht umgesetzt.
 
 ## Schnellzugriff
