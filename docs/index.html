@@ -169,7 +169,7 @@ nav button.active{background:var(--green);color:#fff}
         <div class="radio-opt active" data-dir="it-de">IT &#8594; DE</div>
         <div class="radio-opt" data-dir="de-it">DE &#8594; IT</div>
         <div class="radio-opt" data-dir="mix">Gemischt</div>
-        <div class="radio-opt" data-dir="konjugation">Konjugation</div>
+        <div class="radio-opt" data-dir="konjugation">Konjugation <span id="konj-lock-start" style="display:none">&#128274;</span></div>
       </div>
     </div>
     <div class="card">
@@ -236,7 +236,7 @@ nav button.active{background:var(--green);color:#fff}
     </div>
     <div class="ll-tabs">
       <div class="ll-tab active" data-lltab="vokabeln">Vokabeln</div>
-      <div class="ll-tab" data-lltab="konjugation">Konjugation</div>
+      <div class="ll-tab" data-lltab="konjugation">Konjugation <span id="konj-lock-ll" style="display:none">&#128274;</span></div>
     </div>
     <div class="card" style="flex:1;overflow-y:auto" id="ll-content"></div>
   </div>
@@ -259,6 +259,24 @@ nav button.active{background:var(--green);color:#fff}
   </div>
 
 </div>
+
+<!-- LIZENZ-MODAL -->
+<dialog id="lizenz-modal">
+  <div class="modal-body">
+    <div class="modal-title">&#128274; Vollversion freischalten</div>
+    <p style="font-size:14px;line-height:1.6;margin:0 0 12px">Die Konjugations-Übungen sind Teil der Vollversion — einmalig 4,99&nbsp;€, kein Abo.</p>
+    <div class="modal-actions" style="margin-bottom:14px">
+      <a class="btn btn-primary" href="https://gumroad.com/l/vokabeltrainer-it" target="_blank" rel="noopener" style="width:100%;text-align:center;text-decoration:none;box-sizing:border-box">Jetzt kaufen (4,99&nbsp;€)</a>
+    </div>
+    <div class="form-row">
+      <input type="text" id="lizenz-code-input" placeholder="Freischalt-Code eingeben" autocomplete="off">
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeLizenzModal()">Später</button>
+      <button class="btn btn-primary" onclick="pruefeLizenzCode()">Freischalten</button>
+    </div>
+  </div>
+</dialog>
 
 <!-- HILFE-MODAL -->
 <dialog id="help-modal">
@@ -845,8 +863,77 @@ const SEED_VOKABELN = [
   {"id":548,"kategorie":"Unregelmäßige Verben","it":"ridurre","de":"reduzieren","formen":{"io":"riduco","tu":"riduci","lui":"riduce","noi":"riduciamo","voi":"riducete","loro":"riducono"}}
 ];
 
-const APP_VERSION = '1.3';
+const APP_VERSION = '1.4';
 const LS_KEY = 'vokabeltrainer_it_vokabeln';
+const LS_INSTALL_KEY = 'vokabeltrainer_it_install_datum';
+const LS_LIZENZ_KEY = 'vokabeltrainer_it_lizenz';
+const TESTPHASE_TAGE = 14;
+// TODO Klaus: echten Gumroad-Produkt-Permalink eintragen, sobald das Produkt angelegt ist.
+const GUMROAD_PERMALINK = 'vokabeltrainer-it';
+
+// ── LIZENZ / TESTPHASE ────────────────────────────────────────────────────────
+function pruefeBestandsnutzer() {
+  if (localStorage.getItem(LS_INSTALL_KEY)) return;
+  const hatteSchonDaten = !!localStorage.getItem(LS_KEY);
+  localStorage.setItem(LS_INSTALL_KEY, String(Date.now()));
+  if (hatteSchonDaten) {
+    localStorage.setItem(LS_LIZENZ_KEY, JSON.stringify({ freigeschaltet: true, grund: 'bestandsnutzer' }));
+  }
+}
+
+function istFreigeschaltet() {
+  try { return !!JSON.parse(localStorage.getItem(LS_LIZENZ_KEY) || '{}').freigeschaltet; }
+  catch (e) { return false; }
+}
+
+function tageSeitInstall() {
+  const installDatum = parseInt(localStorage.getItem(LS_INSTALL_KEY), 10) || Date.now();
+  return Math.floor((Date.now() - installDatum) / 86400000);
+}
+
+function updateLizenzUI() {
+  const frei = istFreigeschaltet();
+  document.getElementById('konj-lock-start').style.display = frei ? 'none' : 'inline';
+  document.getElementById('konj-lock-ll').style.display = frei ? 'none' : 'inline';
+}
+
+function openLizenzModal() {
+  document.getElementById('lizenz-modal').showModal();
+}
+
+function closeLizenzModal() {
+  document.getElementById('lizenz-modal').close();
+}
+
+function pruefeTestphase() {
+  if (!istFreigeschaltet() && tageSeitInstall() >= TESTPHASE_TAGE) {
+    openLizenzModal();
+  }
+}
+
+async function pruefeLizenzCode() {
+  const input = document.getElementById('lizenz-code-input');
+  const code = input.value.trim();
+  if (!code) { toast('Bitte Code eingeben'); return; }
+  try {
+    const resp = await fetch('https://api.gumroad.com/v2/licenses/verify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ product_permalink: GUMROAD_PERMALINK, license_key: code })
+    });
+    const data = await resp.json();
+    if (data.success) {
+      localStorage.setItem(LS_LIZENZ_KEY, JSON.stringify({ freigeschaltet: true, code }));
+      toast('Freigeschaltet! Viel Erfolg beim Lernen 🎉', 'ok');
+      closeLizenzModal();
+      updateLizenzUI();
+    } else {
+      toast('Code ungültig — bitte prüfen');
+    }
+  } catch (e) {
+    toast('Prüfung fehlgeschlagen — Internetverbindung nötig');
+  }
+}
 
 const S = { vokabeln: [], kategorien: [], selectedKat: new Set(), richtung: 'it-de', anzahl: 15,
             quizList: [], quizIndex: 0, richtig: 0, falscheListe: [], llTab: 'vokabeln', llRichtung: 'it-de',
@@ -961,16 +1048,20 @@ async function appInit() {
     });
   }
   initSpeech();
+  pruefeBestandsnutzer();
   S.vokabeln = lsLoad();
   S.kategorien = lsKategorien(S.vokabeln);
   S.selectedKat = new Set(S.kategorien);
   renderStart();
+  updateLizenzUI();
+  pruefeTestphase();
 
   document.getElementById('start-anzahl').addEventListener('input', e => {
     document.getElementById('start-anzahl-val').textContent = e.target.value;
   });
   document.querySelectorAll('#start-richtung .radio-opt').forEach(el => {
     el.addEventListener('click', () => {
+      if (el.dataset.dir === 'konjugation' && !istFreigeschaltet()) { openLizenzModal(); return; }
       document.querySelectorAll('#start-richtung .radio-opt').forEach(x => x.classList.remove('active'));
       el.classList.add('active');
       S.richtung = el.dataset.dir;
@@ -981,6 +1072,7 @@ async function appInit() {
   });
   document.querySelectorAll('.ll-tab').forEach(el => {
     el.addEventListener('click', () => {
+      if (el.dataset.lltab === 'konjugation' && !istFreigeschaltet()) { openLizenzModal(); return; }
       document.querySelectorAll('.ll-tab').forEach(x => x.classList.remove('active'));
       el.classList.add('active');
       S.llTab = el.dataset.lltab;
