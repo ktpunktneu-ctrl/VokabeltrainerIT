@@ -952,7 +952,13 @@ function gotoPage(name) {
 async function appInit() {
   document.getElementById('app-version').textContent = 'v' + APP_VERSION;
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').catch(()=>{});
+    navigator.serviceWorker.register('sw.js').then(reg => reg.update()).catch(()=>{});
+    let refreshingNachUpdate = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (refreshingNachUpdate) return;
+      refreshingNachUpdate = true;
+      window.location.reload();
+    });
   }
   initSpeech();
   S.vokabeln = lsLoad();
