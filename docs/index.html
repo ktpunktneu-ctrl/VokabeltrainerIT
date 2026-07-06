@@ -269,7 +269,7 @@ nav button.active{background:var(--green);color:#fff}
       <a class="btn btn-primary" href="https://gumroad.com/l/vokabeltrainer-it" target="_blank" rel="noopener" style="width:100%;text-align:center;text-decoration:none;box-sizing:border-box">Jetzt kaufen (4,99&nbsp;€)</a>
     </div>
     <div class="form-row">
-      <input type="text" id="lizenz-code-input" placeholder="Freischalt-Code eingeben" autocomplete="off">
+      <input type="text" id="lizenz-code-input" placeholder="Freischalt-Code eingeben" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
     </div>
     <div class="modal-actions">
       <button class="btn btn-secondary" onclick="closeLizenzModal()">Später</button>
@@ -917,7 +917,7 @@ async function pruefeLizenzCode() {
   const input = document.getElementById('lizenz-code-input');
   const code = input.value.trim();
   if (!code) { toast('Bitte Code eingeben'); return; }
-  if (code === MASTER_CODE) {
+  if (code.toLowerCase() === MASTER_CODE.toLowerCase()) {
     localStorage.setItem(LS_LIZENZ_KEY, JSON.stringify({ freigeschaltet: true, grund: 'master' }));
     toast('Freigeschaltet! Viel Erfolg beim Lernen 🎉', 'ok');
     closeLizenzModal();
