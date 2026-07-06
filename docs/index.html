@@ -870,6 +870,8 @@ const LS_LIZENZ_KEY = 'vokabeltrainer_it_lizenz';
 const TESTPHASE_TAGE = 14;
 // TODO Klaus: echten Gumroad-Produkt-Permalink eintragen, sobald das Produkt angelegt ist.
 const GUMROAD_PERMALINK = 'vokabeltrainer-it';
+// Master-Code fuer Klaus selbst (Eigennutzung/Tests), umgeht die Gumroad-Pruefung komplett.
+const MASTER_CODE = 'ktpunkt-master-2026';
 
 // ── LIZENZ / TESTPHASE ────────────────────────────────────────────────────────
 function pruefeBestandsnutzer() {
@@ -915,6 +917,13 @@ async function pruefeLizenzCode() {
   const input = document.getElementById('lizenz-code-input');
   const code = input.value.trim();
   if (!code) { toast('Bitte Code eingeben'); return; }
+  if (code === MASTER_CODE) {
+    localStorage.setItem(LS_LIZENZ_KEY, JSON.stringify({ freigeschaltet: true, grund: 'master' }));
+    toast('Freigeschaltet! Viel Erfolg beim Lernen 🎉', 'ok');
+    closeLizenzModal();
+    updateLizenzUI();
+    return;
+  }
   try {
     const resp = await fetch('https://api.gumroad.com/v2/licenses/verify', {
       method: 'POST',
