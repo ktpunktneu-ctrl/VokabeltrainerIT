@@ -219,6 +219,11 @@ nav button.active{background:var(--green);color:#fff}
   <div class="page" id="page-liste">
     <div class="page-hdr"><button class="back-btn" onclick="gotoPage('start')" title="Zurück">&#8249;</button><h2>Lernliste</h2></div>
     <div class="card">
+      <div class="form-row" style="margin-bottom:0">
+        <input type="text" id="ll-suche" placeholder="&#128269; Vokabel suchen …" autocomplete="off" oninput="onLlSucheInput()">
+      </div>
+    </div>
+    <div class="card">
       <div class="card-title">Kategorien</div>
       <div class="chip-grid" id="ll-kategorien"></div>
     </div>
@@ -246,6 +251,9 @@ nav button.active{background:var(--green);color:#fff}
     </div>
     <div class="card" style="flex:1;overflow-y:auto">
       <div class="card-title">Alle Vokabeln (<span id="vk-count">0</span>)</div>
+      <div class="form-row">
+        <input type="text" id="vk-suche" placeholder="&#128269; Vokabel suchen …" autocomplete="off" oninput="onVkSucheInput()">
+      </div>
       <div id="vk-list"></div>
     </div>
   </div>
@@ -841,7 +849,14 @@ const APP_VERSION = '1.3';
 const LS_KEY = 'vokabeltrainer_it_vokabeln';
 
 const S = { vokabeln: [], kategorien: [], selectedKat: new Set(), richtung: 'it-de', anzahl: 15,
-            quizList: [], quizIndex: 0, richtig: 0, falscheListe: [], llTab: 'vokabeln', llRichtung: 'it-de' };
+            quizList: [], quizIndex: 0, richtig: 0, falscheListe: [], llTab: 'vokabeln', llRichtung: 'it-de',
+            llSuche: '', vkSuche: '' };
+
+function sucheTreffer(v, suche) {
+  const s = suche.trim().toLowerCase();
+  if (!s) return true;
+  return v.it.toLowerCase().includes(s) || v.de.toLowerCase().includes(s);
+}
 
 // ── Lokale Speicherung (funktioniert komplett offline, keine Serverabhängigkeit) ──
 function lsRepairFormen(list) {
@@ -1000,16 +1015,26 @@ function renderLernlisteKategorien() {
   });
 }
 
+function onLlSucheInput() {
+  S.llSuche = document.getElementById('ll-suche').value;
+  renderLernliste();
+}
+
 function renderLernliste() {
   renderLernlisteKategorien();
+  const sucheAktiv = !!S.llSuche.trim();
+  document.getElementById('ll-kategorien').parentElement.style.opacity = sucheAktiv ? '0.4' : '1';
+  document.getElementById('ll-richtung').parentElement.style.opacity = sucheAktiv ? '0.4' : '1';
   const content = document.getElementById('ll-content');
-  const gefiltert = S.vokabeln.filter(v => S.selectedKat.has(v.kategorie));
+  const gefiltert = sucheAktiv
+    ? S.vokabeln.filter(v => sucheTreffer(v, S.llSuche))
+    : S.vokabeln.filter(v => S.selectedKat.has(v.kategorie));
   if (S.llTab === 'vokabeln') {
     const byKat = {};
     gefiltert.forEach(v => { (byKat[v.kategorie] = byKat[v.kategorie] || []).push(v); });
     const kats = Object.keys(byKat).sort();
     if (!kats.length) {
-      content.innerHTML = '<p style="color:var(--text-light);font-size:13px;padding:10px 0">Keine Vokabeln in den gewählten Kategorien</p>';
+      content.innerHTML = `<p style="color:var(--text-light);font-size:13px;padding:10px 0">${sucheAktiv ? 'Keine Treffer für die Suche' : 'Keine Vokabeln in den gewählten Kategorien'}</p>`;
       return;
     }
     content.innerHTML = kats.map(k => {
@@ -1023,7 +1048,7 @@ function renderLernliste() {
   } else {
     const verben = gefiltert.filter(v => v.formen).sort((a,b) => a.it.localeCompare(b.it));
     if (!verben.length) {
-      content.innerHTML = '<p style="color:var(--text-light);font-size:13px;padding:10px 0">Keine Verben mit Konjugationsformen in den gewählten Kategorien</p>';
+      content.innerHTML = `<p style="color:var(--text-light);font-size:13px;padding:10px 0">${sucheAktiv ? 'Keine Treffer für die Suche' : 'Keine Verben mit Konjugationsformen in den gewählten Kategorien'}</p>`;
       return;
     }
     content.innerHTML = verben.map(v => `
@@ -1226,12 +1251,18 @@ function wiederholeFalsche() {
 }
 
 // ── VERWALTUNG ──────────────────────────────────────────────────────────────
+function onVkSucheInput() {
+  S.vkSuche = document.getElementById('vk-suche').value;
+  renderVerwaltung();
+}
+
 function renderVerwaltung() {
   renderKategorienListe();
 
   document.getElementById('vk-count').textContent = S.vokabeln.length;
   const list = document.getElementById('vk-list');
-  const sorted = [...S.vokabeln].sort((a,b) => a.kategorie.localeCompare(b.kategorie) || a.it.localeCompare(b.it));
+  const gefiltert = S.vkSuche.trim() ? S.vokabeln.filter(v => sucheTreffer(v, S.vkSuche)) : S.vokabeln;
+  const sorted = [...gefiltert].sort((a,b) => a.kategorie.localeCompare(b.kategorie) || a.it.localeCompare(b.it));
   const katOptions = k => S.kategorien.map(x => `<option value="${x}" ${x===k?'selected':''}>${x}</option>`).join('');
   list.innerHTML = sorted.map(v => `
     <div class="vk-item">
@@ -1239,7 +1270,7 @@ function renderVerwaltung() {
       <span class="vk-it">${v.it}</span>
       <span class="vk-de">${v.de}</span>
       <button class="vk-del" onclick="deleteVokabel(${v.id})" title="Löschen">&#128465;</button>
-    </div>`).join('') || '<p style="color:var(--text-light);font-size:13px;padding:10px 0">Noch keine Vokabeln</p>';
+    </div>`).join('') || `<p style="color:var(--text-light);font-size:13px;padding:10px 0">${S.vkSuche.trim() ? 'Keine Treffer für die Suche' : 'Noch keine Vokabeln'}</p>`;
 }
 
 function renderKategorienListe() {
