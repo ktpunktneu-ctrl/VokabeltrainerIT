@@ -14,7 +14,7 @@ Zwei eigenständige, baugleiche PWA-Vokabeltrainer-Apps von Klaus Tegtmeier:
 | Live-URL | https://ktpunktneu-ctrl.github.io/VokabeltrainerIT/ | https://ktpunktneu-ctrl.github.io/VokabeltrainerEN/ |
 | GitHub-Repo | ktpunktneu-ctrl/VokabeltrainerIT (**öffentlich**) | ktpunktneu-ctrl/VokabeltrainerEN (**öffentlich**) |
 | Vokabelanzahl | 539 (9 Kategorien × ~60) | 539 (9 Kategorien × ~60) |
-| App-Version | v1.3 | v1.3 |
+| App-Version | v1.4 | v1.4 |
 
 ## Technik
 
@@ -38,6 +38,7 @@ Beide Apps sind komplett parallel gepflegt — **jede Code-Änderung muss identi
 - **2026-07-05 vormittags:** Je 50 neue Vokabeln pro Kategorie ergänzt (→ 539 gesamt je Sprache), IT-Repo öffentlich gestellt + GitHub Pages eingerichtet (vorher nur EN live), Remote-Control fürs Handy eingerichtet.
 - **2026-07-05 mittags:** Bug gefunden & behoben — absolute Pfade (`/manifest.json`, `/sw.js`, `/static/...`) verhinderten die PWA-Installation auf GitHub Pages (404), da die Apps dort im Unterpfad laufen. Auf relative Pfade umgestellt, betraf beide Apps gleichermaßen.
 - **2026-07-05 nachmittags:** Lernliste-Kategoriefilter ebenfalls auf "isolieren statt togglen" umgestellt (war inkonsistent zum Quiz-Filter).
+- **2026-07-06:** "Mit PC abgleichen" entfernt, Hilfe-Button (❓) mit Kurzanleitung im Header ergänzt. Suchfunktion in Lernliste + Verwaltung (eigenständig, hat Vorrang vor Kategorie-Filter). Echtes Auto-Update: aktive Update-Prüfung bei App-Start + Auto-Reload bei neuer Version (vorher nur alle ~24h Browser-Standard, brauchte manuelles Neuinstallieren). Feature-Gating für Konjugation/Verbformen implementiert (siehe Vermarktungs-Abschnitt unten).
 
 ## Vermarktung — Feature-Gating implementiert (2026-07-06)
 
@@ -49,6 +50,7 @@ Zielgruppe: Schüler & Interessierte, "schmaler Kurs" (kleiner, günstiger Zugan
 - **Bestandsnutzer-Schutz:** `pruefeBestandsnutzer()` prüft beim allerersten Lauf dieses Codes, ob im Browser schon Vokabeldaten existieren (= App wurde schon vor dem Feature-Gating genutzt) → automatische, dauerhafte Freischaltung ohne Zutun. Betrifft die 3 bereits ausgelieferten EN-Testversionen. Neue Installationen ab jetzt starten normal mit 14-Tage-Test.
 - **Freischaltung:** Code-Eingabefeld im Lizenz-Modal, prüft per Fetch gegen Gumroads kostenlose License-Verification-API (`https://api.gumroad.com/v2/licenses/verify`). Mechanismus getestet und funktionsfähig (Fetch/Response-Handling läuft sauber durch).
 - **Preis:** 4,99 € einmalig, Kauf-Link im Modal.
+- **Master-Code für Eigennutzung:** `ktpunkt-master-2026` — im Freischalt-Code-Feld eingeben, schaltet sofort und dauerhaft frei, ganz ohne Gumroad-Prüfung/Internet. Konstante `MASTER_CODE` in `index.html` (beide Apps), nur für Klaus selbst zum Testen gedacht.
 
 **Noch offen / ACHTUNG — Klaus muss selbst tun:**
 - **Gumroad-Produkt existiert noch nicht!** `GUMROAD_PERMALINK` in `index.html` (beide Apps) ist aktuell nur ein Platzhalter (`vokabeltrainer-it` / `vokabeltrainer-en`), ebenso der Kauf-Link `https://gumroad.com/l/...` im Lizenz-Modal. Klaus muss bei Gumroad ein Produkt pro App anlegen (Preis 4,99 €, License-Key-Generierung aktivieren), dann den echten Permalink in beide `index.html` eintragen (Stelle ist mit `// TODO Klaus:` markiert).
