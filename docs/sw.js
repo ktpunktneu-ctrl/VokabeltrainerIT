@@ -1,4 +1,4 @@
-const CACHE = 'vokabelit-v25';
+const CACHE = 'vokabelit-v26';
 const ASSETS = ['./', './index.html', './manifest.json', './static/icon-192.png', './static/icon-512.png'];
 
 self.addEventListener('install', e => {

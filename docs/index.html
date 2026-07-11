@@ -107,9 +107,10 @@ header .flag{display:inline-block;width:22px;height:16px;background:linear-gradi
 @media (max-width:520px){.fab{right:20px}}
 
 /* Add-Modal */
-dialog{border:none;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.25);padding:0;width:340px;max-width:90vw}
+dialog{border:none;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.25);padding:0;width:340px;max-width:90vw;margin:14vh auto auto auto}
 dialog::backdrop{background:rgba(0,0,0,0.4)}
 .modal-body{padding:20px}
+.m-err{color:var(--danger);font-size:12px;min-height:16px;margin-top:6px;font-weight:600}
 .modal-title{font-size:15px;font-weight:800;margin-bottom:14px;color:var(--text)}
 .modal-actions{display:flex;gap:8px;margin-top:6px}
 
@@ -280,23 +281,67 @@ nav button.active{background:var(--green);color:#fff}
 
 <!-- HILFE-MODAL -->
 <dialog id="help-modal">
-  <div class="modal-body" style="max-height:80vh;overflow-y:auto">
+  <div class="modal-body" style="max-height:74vh;overflow-y:auto">
     <div class="modal-title">👋 So funktioniert's</div>
-    <p style="font-size:14px;line-height:1.6;margin:0 0 12px">
-      <b>🎯 Training starten:</b> Kategorie(n) antippen — ein Tipp zeigt nur diese eine, nochmal tippen zeigt wieder alle. Richtung wählen (Italienisch→Deutsch, Deutsch→Italienisch, Gemischt oder Konjugation), Anzahl der Fragen einstellen, los geht's!
+
+    <p style="font-size:13px;line-height:1.6;margin:0 0 14px;color:var(--text-light)">
+      Diese App funktioniert wie klassische Karteikarten: du siehst ein Wort, versuchst dich an die Übersetzung zu erinnern, tippst sie ein — und lernst so mit der Zeit alle Vokabeln auswendig.
     </p>
-    <p style="font-size:14px;line-height:1.6;margin:0 0 12px">
-      <b>📖 Lernliste:</b> Alle Vokabeln zum Durchlesen, mit dem gleichen Kategorie-Filter und einem Richtungsumschalter. Praktisch zum Wiederholen vor dem Training.
+
+    <p style="font-size:13px;line-height:1.6;margin:0 0 14px;color:var(--text-light)">
+      Du kannst die Antwort auch per Spracheingabe eintippen — einfach den Mikrofon-Button auf der Tastatur deines Handys drücken. Dabei findet allerdings keine Schreibprüfung statt.
     </p>
-    <p style="font-size:14px;line-height:1.6;margin:0 0 12px">
-      <b>🔊 Aussprache:</b> Einfach auf das Lautsprecher-Symbol tippen — funktioniert offline mit den Stimmen deines Handys.
+
+    <p style="font-size:14px;font-weight:800;margin:14px 0 4px">🎯 Training starten</p>
+    <p style="font-size:13px;line-height:1.6;margin:0 0 8px">
+      <b>Kategorien:</b> Auf eine Kategorie tippen wählt <i>nur diese eine</i> aus (alle anderen werden abgewählt). Nochmal draufhalten zeigt wieder alle Kategorien zusammen. So lernst du gezielt einen Themenbereich (z.B. nur "Essen") oder alles gemischt.
     </p>
-    <p style="font-size:14px;line-height:1.6;margin:0 0 12px">
-      <b>⚙ Verwaltung:</b> Hier kannst du eigene Vokabeln und Kategorien hinzufügen, bearbeiten oder löschen.
+    <p style="font-size:13px;line-height:1.6;margin:0 0 8px">
+      <b>Richtung:</b> Vier Modi zur Auswahl —
+      <br>• <b>Italienisch → Deutsch:</b> dir wird das italienische Wort gezeigt, du tippst die deutsche Übersetzung.
+      <br>• <b>Deutsch → Italienisch:</b> umgekehrt, du übersetzt vom Deutschen ins Italienische.
+      <br>• <b>Gemischt:</b> beide Richtungen wechseln sich zufällig ab — gut für fortgeschrittenes Üben.
+      <br>• <b>Konjugation:</b> statt der Übersetzung wird eine Verbform abgefragt (z.B. "parlare — tu" → du tippst "parli"). Nur Verben mit hinterlegten Konjugationsformen kommen hier vor.
     </p>
-    <p style="font-size:14px;line-height:1.6;margin:0">
-      <b>📴 Offline nutzen:</b> Wenn du die App zum Home-Bildschirm hinzugefügt hast, läuft sie auch komplett ohne Internet — ideal für unterwegs.
+    <p style="font-size:13px;line-height:1.6;margin:0 0 8px">
+      <b>Anzahl Fragen:</b> Regler zwischen 5 und 50 Fragen pro Durchgang — je nachdem wie viel Zeit du hast.
     </p>
+
+    <p style="font-size:14px;font-weight:800;margin:14px 0 4px">✏️ Während der Abfrage</p>
+    <p style="font-size:13px;line-height:1.6;margin:0 0 8px">
+      Antwort eintippen und mit <b>Enter</b> oder dem "Prüfen"-Button bestätigen. Groß-/Kleinschreibung spielt keine Rolle. Manche Vokabeln haben mehrere richtige Antworten (z.B. Synonyme) — jede davon wird als richtig erkannt. Nach jeder Antwort siehst du sofort, ob sie stimmt, und bei Verben mit Konjugationsformen zusätzlich alle anderen Formen als Merkhilfe.
+    </p>
+
+    <p style="font-size:14px;font-weight:800;margin:14px 0 4px">🏁 Ergebnis</p>
+    <p style="font-size:13px;line-height:1.6;margin:0 0 8px">
+      Am Ende siehst du deine Trefferquote und eine Liste aller falsch beantworteten Vokabeln. Über <b>"Falsche nochmal üben"</b> startest du direkt eine neue Runde nur mit genau diesen Wörtern — ideal, um Lücken gezielt zu schließen.
+    </p>
+
+    <p style="font-size:14px;font-weight:800;margin:14px 0 4px">📖 Lernliste</p>
+    <p style="font-size:13px;line-height:1.6;margin:0 0 8px">
+      Alle Vokabeln zum reinen Durchlesen (ohne Abfrage), gruppiert nach Kategorie, mit demselben Kategorie-Filter und einem Richtungsumschalter wie beim Training. Der zweite Reiter "Konjugation" zeigt alle Verbformen als Übersicht. Über das <b>Suchfeld</b> oben findest du sofort jede Vokabel, egal in welcher Kategorie — die Suche hat Vorrang vor dem Kategorie-Filter.
+    </p>
+
+    <p style="font-size:14px;font-weight:800;margin:14px 0 4px">🔊 Aussprache</p>
+    <p style="font-size:13px;line-height:1.6;margin:0 0 8px">
+      Lautsprecher-Symbol antippen, um das Wort laut vorlesen zu lassen — nutzt die eingebauten Stimmen deines Handys, funktioniert auch offline.
+    </p>
+
+    <p style="font-size:14px;font-weight:800;margin:14px 0 4px">⚙ Verwaltung</p>
+    <p style="font-size:13px;line-height:1.6;margin:0 0 8px">
+      Eigene Vokabeln über den <b>+</b>-Button hinzufügen (die App warnt, falls das Wort schon existiert). Neue Kategorien kannst du auch ganz ohne Vokabel anlegen — einfach nur den Kategorienamen eingeben und speichern. Jede Vokabel lässt sich per Dropdown einer anderen Kategorie zuordnen. Kategorien selbst lassen sich nur löschen, wenn sie leer sind (keine Vokabeln mehr enthalten) — so geht nichts versehentlich verloren.
+    </p>
+
+    <p style="font-size:14px;font-weight:800;margin:14px 0 4px">🔒 Konjugationstraining</p>
+    <p style="font-size:13px;line-height:1.6;margin:0 0 8px">
+      Der Grundwortschatz und das normale Vokabeltraining sind komplett kostenlos. Das Konjugationstraining ist eine Zusatzfunktion, die nach der ersten 14 Tagen freigeschaltet werden muss — den Freischalt-Code erhältst du beim Kauf.
+    </p>
+
+    <p style="font-size:14px;font-weight:800;margin:14px 0 4px">📴 Offline nutzen / installieren</p>
+    <p style="font-size:13px;line-height:1.6;margin:0">
+      Am besten installierst du die App auf dem Homescreen: in Safari auf das Teilen-Symbol tippen, dann <b>"Zum Home-Bildschirm"</b> auswählen. Danach öffnet sie sich wie eine echte App — ganz ohne Browserleiste — und funktioniert komplett offline, auch unterwegs ohne Internet. Deine Vokabeln und dein Fortschritt bleiben dabei immer auf diesem Gerät gespeichert.
+    </p>
+
     <div class="modal-actions">
       <button class="btn btn-primary" onclick="closeHelpModal()" style="width:100%">Alles klar, los geht's!</button>
     </div>
@@ -313,6 +358,7 @@ nav button.active{background:var(--green);color:#fff}
       <input type="text" id="am-it" placeholder="Italienisch" autocomplete="off" autocapitalize="off">
       <input type="text" id="am-de" placeholder="Deutsch" autocomplete="off">
     </div>
+    <div class="m-err" id="am-err"></div>
     <div class="modal-actions">
       <button class="btn btn-secondary" onclick="closeAddModal()">Abbrechen</button>
       <button class="btn btn-primary" onclick="submitAddModal()">Speichern</button>
@@ -863,7 +909,7 @@ const SEED_VOKABELN = [
   {"id":548,"kategorie":"Unregelmäßige Verben","it":"ridurre","de":"reduzieren","formen":{"io":"riduco","tu":"riduci","lui":"riduce","noi":"riduciamo","voi":"riducete","loro":"riducono"}}
 ];
 
-const APP_VERSION = '1.4';
+const APP_VERSION = '1.5';
 const LS_KEY = 'vokabeltrainer_it_vokabeln';
 const LS_INSTALL_KEY = 'vokabeltrainer_it_install_datum';
 const LS_LIZENZ_KEY = 'vokabeltrainer_it_lizenz';
@@ -1431,6 +1477,7 @@ function openAddModal() {
   document.getElementById('am-kategorie-neu').value = '';
   document.getElementById('am-it').value = '';
   document.getElementById('am-de').value = '';
+  document.getElementById('am-err').textContent = '';
   document.getElementById('add-modal').showModal();
   setTimeout(() => document.getElementById('am-it').focus(), 50);
 }
@@ -1459,6 +1506,8 @@ function onKategorieSelectChange() {
 }
 
 function submitAddModal() {
+  const errEl = document.getElementById('am-err');
+  errEl.textContent = '';
   const sel = document.getElementById('am-kategorie-select');
   const neuInp = document.getElementById('am-kategorie-neu');
   const istNeueKategorie = sel.value === NEUE_KAT_VALUE;
@@ -1466,7 +1515,7 @@ function submitAddModal() {
   const it = document.getElementById('am-it').value.trim();
   const de = document.getElementById('am-de').value.trim();
 
-  if (!kategorie) { toast('Bitte Kategorie angeben'); return; }
+  if (!kategorie) { errEl.textContent = 'Bitte Kategorie angeben'; return; }
 
   // Nur neue Kategorie anlegen, ohne Vokabel
   if (istNeueKategorie && !it && !de) {
@@ -1481,11 +1530,11 @@ function submitAddModal() {
     return;
   }
 
-  if (!it || !de) { toast('Bitte Italienisch und Deutsch ausfüllen'); return; }
+  if (!it || !de) { errEl.textContent = 'Bitte Italienisch und Deutsch ausfüllen'; return; }
 
   const vorhanden = lsLoad().find(v => v.it.trim().toLowerCase() === it.toLowerCase());
   if (vorhanden) {
-    toast(`"${it}" existiert bereits (${vorhanden.kategorie}: ${vorhanden.de})`);
+    errEl.textContent = `"${it}" existiert bereits (${vorhanden.kategorie}: ${vorhanden.de})`;
     return;
   }
 
