@@ -30,6 +30,11 @@ header{display:flex;align-items:center;justify-content:space-between;margin-bott
 header h1{font-size:19px;font-weight:800;color:var(--green)}
 header .flag{display:inline-block;width:22px;height:16px;background:linear-gradient(90deg,var(--green) 33%,var(--white) 33% 66%,var(--red) 66%);border-radius:2px;border:1px solid #ddd;vertical-align:middle;margin-right:6px}
 .icon-btn{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-light);padding:6px}
+.menu-wrap{position:relative;display:inline-block}
+.dropdown-menu{display:none;position:absolute;right:0;top:38px;background:var(--card);border-radius:10px;box-shadow:var(--shadow);padding:6px;min-width:150px;z-index:50}
+.dropdown-menu.open{display:block}
+.dropdown-item{padding:9px 12px;font-size:13px;font-weight:600;border-radius:6px;cursor:pointer;white-space:nowrap;color:var(--text)}
+.dropdown-item:hover{background:var(--bg)}
 
 .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin-bottom:14px}
 .card-title{font-size:12px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
@@ -111,6 +116,10 @@ dialog{border:none;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.25);pad
 dialog::backdrop{background:rgba(0,0,0,0.4)}
 .modal-body{padding:20px}
 .m-err{color:var(--danger);font-size:12px;min-height:16px;margin-top:6px;font-weight:600}
+.m-trial-hint{background:var(--bg);color:var(--text-light);font-size:12px;font-weight:600;padding:8px 10px;border-radius:8px;margin-bottom:12px}
+.ocr-row{display:flex;gap:6px;align-items:center;margin-bottom:6px}
+.ocr-row input{flex:1;padding:8px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;min-width:0}
+.ocr-row button{background:none;border:none;color:var(--danger);font-size:16px;cursor:pointer;padding:4px 6px}
 .modal-title{font-size:15px;font-weight:800;margin-bottom:14px;color:var(--text)}
 .modal-actions{display:flex;gap:8px;margin-top:6px}
 
@@ -152,9 +161,14 @@ nav button.active{background:var(--green);color:#fff}
   <header>
     <h1><span class="flag"></span>Vokabeltrainer <span id="app-version" class="app-version"></span></h1>
     <div>
-      <button class="icon-btn" onclick="openHelpModal()" title="Hilfe">&#10067;</button>
       <button class="icon-btn" onclick="gotoPage('liste')" title="Lernliste">&#128214;</button>
       <button class="icon-btn" onclick="gotoPage('verwaltung')" title="Verwaltung">&#9881;</button>
+      <div class="menu-wrap">
+        <button class="icon-btn" onclick="toggleHeaderMenu()" title="Mehr">&#8942;</button>
+        <div class="dropdown-menu" id="header-menu">
+          <div class="dropdown-item" onclick="closeHeaderMenu(); openHelpModal()">&#10067; Hilfe</div>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -245,7 +259,9 @@ nav button.active{background:var(--green);color:#fff}
   <!-- VERWALTUNG -->
   <div class="page" id="page-verwaltung">
     <div class="page-hdr"><button class="back-btn" onclick="gotoPage('start')" title="Zurück">&#8249;</button><h2>Verwaltung</h2></div>
-    <button class="btn btn-primary" onclick="openAddModal()" style="margin-bottom:14px">&#43; Neue Vokabel hinzufügen</button>
+    <button class="btn btn-primary" onclick="openAddModal()" style="margin-bottom:8px">&#43; Neue Vokabel hinzufügen</button>
+    <button class="btn btn-secondary" onclick="openKatModal()" style="margin-bottom:8px">&#43; Neue Kategorie anlegen</button>
+    <button class="btn btn-secondary" onclick="openOcrModal()" style="margin-bottom:14px">&#128248; Vokabeln aus Foto (OCR)</button>
     <div class="card" style="margin-bottom:14px">
       <div class="card-title">Kategorien</div>
       <div id="kat-list"></div>
@@ -265,7 +281,7 @@ nav button.active{background:var(--green);color:#fff}
 <dialog id="lizenz-modal">
   <div class="modal-body">
     <div class="modal-title">&#128274; Vollversion freischalten</div>
-    <p style="font-size:14px;line-height:1.6;margin:0 0 12px">Die Konjugations-Übungen sind Teil der Vollversion — einmalig 9,95&nbsp;€, kein Abo.</p>
+    <p style="font-size:14px;line-height:1.6;margin:0 0 12px">In der Testversion sind Konjugations-Übungen, Training über 10 Vokabeln je Kategorie hinaus sowie das Speichern eigener Vokabeln/Kategorien gesperrt. Die Vollversion schaltet alles frei — einmalig 9,95&nbsp;€, kein Abo.</p>
     <div class="modal-actions" style="margin-bottom:14px">
       <a class="btn btn-primary" href="https://gumroad.com/l/vokabeltrainer-it" target="_blank" rel="noopener" style="width:100%;text-align:center;text-decoration:none;box-sizing:border-box">Jetzt kaufen (9,95&nbsp;€)</a>
     </div>
@@ -329,12 +345,12 @@ nav button.active{background:var(--green);color:#fff}
 
     <p style="font-size:14px;font-weight:800;margin:14px 0 4px">⚙ Verwaltung</p>
     <p style="font-size:13px;line-height:1.6;margin:0 0 8px">
-      Eigene Vokabeln über den <b>+</b>-Button hinzufügen (die App warnt, falls das Wort schon existiert). Neue Kategorien kannst du auch ganz ohne Vokabel anlegen — einfach nur den Kategorienamen eingeben und speichern. Jede Vokabel lässt sich per Dropdown einer anderen Kategorie zuordnen. Kategorien selbst lassen sich nur löschen, wenn sie leer sind (keine Vokabeln mehr enthalten) — so geht nichts versehentlich verloren.
+      Eigene Vokabeln über den <b>+</b>-Button hinzufügen (die App warnt schon beim Eintippen, falls das Wort bereits existiert). Über <b>"+ Neue Kategorie anlegen"</b> legst du eine leere Kategorie ganz ohne Vokabel an. Mit <b>"📷 Vokabeln aus Foto (OCR)"</b> fotografierst du eine Vokabelseite — die App erkennt den Text automatisch, du korrigierst bei Bedarf und übernimmst alle Wortpaare auf einmal in eine Kategorie. Jede Vokabel lässt sich per Dropdown einer anderen Kategorie zuordnen. Kategorien selbst lassen sich nur löschen, wenn sie leer sind (keine Vokabeln mehr enthalten) — so geht nichts versehentlich verloren.
     </p>
 
-    <p style="font-size:14px;font-weight:800;margin:14px 0 4px">🔒 Konjugationstraining</p>
+    <p style="font-size:14px;font-weight:800;margin:14px 0 4px">🔒 Testversion</p>
     <p style="font-size:13px;line-height:1.6;margin:0 0 8px">
-      Der Grundwortschatz und das normale Vokabeltraining sind komplett kostenlos. Das Konjugationstraining ist eine Zusatzfunktion, die nach der ersten 14 Tagen freigeschaltet werden muss — den Freischalt-Code erhältst du beim Kauf.
+      In der Testversion kannst du dir alle Vokabeln in der Lernliste ansehen, aber im Training werden nur die ersten 10 Vokabeln je Kategorie abgefragt. Konjugationstraining sowie das Speichern eigener Vokabeln und Kategorien sind ebenfalls Teil der Vollversion (einmalig 9,95&nbsp;€, kein Abo) — den Freischalt-Code erhältst du beim Kauf.
     </p>
 
     <p style="font-size:14px;font-weight:800;margin:14px 0 4px">📴 Offline nutzen / installieren</p>
@@ -352,16 +368,67 @@ nav button.active{background:var(--green);color:#fff}
 <dialog id="add-modal">
   <div class="modal-body">
     <div class="modal-title">Neue Vokabel</div>
+    <div class="m-trial-hint" id="am-trial-hint" style="display:none">&#128274; Testversion: Eingabe möglich, Speichern ist Teil der Vollversion</div>
     <div class="form-row">
-      <select id="am-kategorie-select" onchange="onKategorieSelectChange()"></select>
-      <input type="text" id="am-kategorie-neu" placeholder="Name der neuen Kategorie" style="display:none">
-      <input type="text" id="am-it" placeholder="Italienisch" autocomplete="off" autocapitalize="off">
+      <input type="text" id="am-it" placeholder="Italienisch" autocomplete="off" autocapitalize="off" oninput="clearDuplicateHint()" onblur="checkDuplicate()">
+      <div class="m-err" id="am-dup-hint"></div>
       <input type="text" id="am-de" placeholder="Deutsch" autocomplete="off">
+      <select id="am-kategorie-select"></select>
     </div>
     <div class="m-err" id="am-err"></div>
     <div class="modal-actions">
       <button class="btn btn-secondary" onclick="closeAddModal()">Abbrechen</button>
       <button class="btn btn-primary" onclick="submitAddModal()">Speichern</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- KATEGORIE-MODAL -->
+<dialog id="kat-modal">
+  <div class="modal-body">
+    <div class="modal-title">Neue Kategorie</div>
+    <div class="m-trial-hint" id="km-trial-hint" style="display:none">&#128274; Testversion: Eingabe möglich, Speichern ist Teil der Vollversion</div>
+    <div class="form-row">
+      <input type="text" id="km-name" placeholder="Name der Kategorie" autocomplete="off">
+    </div>
+    <div class="m-err" id="km-err"></div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeKatModal()">Abbrechen</button>
+      <button class="btn btn-primary" onclick="submitKatModal()">Speichern</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- OCR-MODAL -->
+<dialog id="ocr-modal" style="width:420px">
+  <div class="modal-body" style="max-height:80vh;overflow-y:auto">
+    <div class="modal-title">&#128248; Vokabeln aus Foto</div>
+    <div class="m-trial-hint" id="ocr-trial-hint" style="display:none">&#128274; Testversion: Ausprobieren möglich, Übernehmen ist Teil der Vollversion</div>
+    <p style="font-size:12px;line-height:1.5;color:var(--text-light);margin:0 0 10px">
+      Foto von der Vokabelseite aufnehmen oder auswählen. Der erkannte Text lässt sich danach korrigieren, bevor du ihn übernimmst.
+    </p>
+    <div class="form-row">
+      <input type="file" id="ocr-file" accept="image/*" capture="environment" onchange="ocrBildGewaehlt()">
+    </div>
+    <div id="ocr-status" style="font-size:12px;color:var(--text-light);margin-bottom:8px"></div>
+    <div id="ocr-rohtext-wrap" style="display:none">
+      <div class="card-title" style="margin-top:6px">Erkannter Text (bei Bedarf korrigieren)</div>
+      <textarea id="ocr-rohtext" rows="6" style="width:100%;box-sizing:border-box;padding:10px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit"></textarea>
+      <div style="font-size:11px;color:var(--text-light);margin:4px 0 10px">Pro Zeile ein Wortpaar, getrennt durch Tab, "-" oder mehrere Leerzeichen — z.B. <i>casa - Haus</i></div>
+      <button class="btn btn-secondary" onclick="ocrParsen()" style="width:100%;margin-bottom:12px">In Wortpaare umwandeln</button>
+    </div>
+    <div id="ocr-kandidaten-wrap" style="display:none">
+      <div class="card-title">Kategorie für alle Wortpaare</div>
+      <div class="form-row">
+        <select id="ocr-kategorie-select"></select>
+      </div>
+      <div class="card-title">Erkannte Wortpaare (<span id="ocr-anzahl">0</span>)</div>
+      <div id="ocr-kandidaten-liste"></div>
+    </div>
+    <div class="m-err" id="ocr-err"></div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeOcrModal()">Schließen</button>
+      <button class="btn btn-primary" id="ocr-uebernehmen-btn" onclick="ocrAlleUebernehmen()" style="display:none">Alle übernehmen</button>
     </div>
   </div>
 </dialog>
@@ -909,11 +976,13 @@ const SEED_VOKABELN = [
   {"id":548,"kategorie":"Unregelmäßige Verben","it":"ridurre","de":"reduzieren","formen":{"io":"riduco","tu":"riduci","lui":"riduce","noi":"riduciamo","voi":"riducete","loro":"riducono"}}
 ];
 
-const APP_VERSION = '1.5';
+const APP_VERSION = '1.9';
 const LS_KEY = 'vokabeltrainer_it_vokabeln';
 const LS_INSTALL_KEY = 'vokabeltrainer_it_install_datum';
 const LS_LIZENZ_KEY = 'vokabeltrainer_it_lizenz';
+const LS_LETZTE_KAT_KEY = 'vokabeltrainer_it_letzte_kategorie';
 const TESTPHASE_TAGE = 14;
+const TRIAL_LIMIT_PRO_KATEGORIE = 10;
 // TODO Klaus: echten Gumroad-Produkt-Permalink eintragen, sobald das Produkt angelegt ist.
 const GUMROAD_PERMALINK = 'vokabeltrainer-it';
 // Master-Code fuer Klaus selbst (Eigennutzung/Tests), umgeht die Gumroad-Pruefung komplett.
@@ -959,6 +1028,14 @@ function pruefeTestphase() {
   }
 }
 
+function trialBegrenzterPool(pool) {
+  const byKat = {};
+  pool.forEach(v => { (byKat[v.kategorie] = byKat[v.kategorie] || []).push(v); });
+  return Object.values(byKat).flatMap(liste =>
+    liste.slice().sort((a, b) => a.id - b.id).slice(0, TRIAL_LIMIT_PRO_KATEGORIE)
+  );
+}
+
 async function pruefeLizenzCode() {
   const input = document.getElementById('lizenz-code-input');
   const code = input.value.trim();
@@ -992,7 +1069,7 @@ async function pruefeLizenzCode() {
 
 const S = { vokabeln: [], kategorien: [], selectedKat: new Set(), richtung: 'it-de', anzahl: 15,
             quizList: [], quizIndex: 0, richtig: 0, falscheListe: [], llTab: 'vokabeln', llRichtung: 'it-de',
-            llSuche: '', vkSuche: '' };
+            llSuche: '', vkSuche: '', ocrKandidaten: [] };
 
 function sucheTreffer(v, suche) {
   const s = suche.trim().toLowerCase();
@@ -1265,6 +1342,14 @@ function startQuiz(liste = null) {
   const anzahl = parseInt(document.getElementById('start-anzahl').value);
   let basisPool = liste || S.vokabeln.filter(v => S.selectedKat.has(v.kategorie));
 
+  if (!liste && !istFreigeschaltet()) {
+    const vorher = basisPool.length;
+    basisPool = trialBegrenzterPool(basisPool);
+    if (basisPool.length < vorher) {
+      toast(`🔒 Testversion: Training auf ${TRIAL_LIMIT_PRO_KATEGORIE} Vokabeln je Kategorie begrenzt`);
+    }
+  }
+
   if (S.richtung === 'konjugation' && !liste) {
     basisPool = basisPool.filter(v => v.formen);
     if (!basisPool.length) { toast('Keine Verben mit Konjugationsformen in dieser Auswahl'); return; }
@@ -1467,18 +1552,18 @@ function changeVokabelKategorie(id, neueKategorie) {
 }
 
 // ── ADD-MODAL (Schnellzugriff per FAB oder aus Verwaltung) ───────────────────
-const NEUE_KAT_VALUE = '__neu__';
-
 function openAddModal() {
   const sel = document.getElementById('am-kategorie-select');
-  sel.innerHTML = S.kategorien.map(k => `<option value="${k}">${k}</option>`).join('')
-    + `<option value="${NEUE_KAT_VALUE}">&#43; Neue Kategorie …</option>`;
-  document.getElementById('am-kategorie-neu').style.display = 'none';
-  document.getElementById('am-kategorie-neu').value = '';
+  sel.innerHTML = S.kategorien.map(k => `<option value="${k}">${k}</option>`).join('');
+  const letzteKat = localStorage.getItem(LS_LETZTE_KAT_KEY);
+  if (letzteKat && S.kategorien.includes(letzteKat)) sel.value = letzteKat;
   document.getElementById('am-it').value = '';
   document.getElementById('am-de').value = '';
   document.getElementById('am-err').textContent = '';
+  document.getElementById('am-dup-hint').textContent = '';
+  document.getElementById('am-trial-hint').style.display = istFreigeschaltet() ? 'none' : 'block';
   document.getElementById('add-modal').showModal();
+  if (!istFreigeschaltet()) { openLizenzModal(); return; }
   setTimeout(() => document.getElementById('am-it').focus(), 50);
 }
 
@@ -1486,50 +1571,27 @@ function closeAddModal() {
   document.getElementById('add-modal').close();
 }
 
-function openHelpModal() {
-  document.getElementById('help-modal').showModal();
+function checkDuplicate() {
+  const it = document.getElementById('am-it').value.trim();
+  const hintEl = document.getElementById('am-dup-hint');
+  if (!it) { hintEl.textContent = ''; return; }
+  const vorhanden = lsLoad().find(v => v.it.trim().toLowerCase() === it.toLowerCase());
+  hintEl.textContent = vorhanden ? `⚠ "${it}" existiert bereits (${vorhanden.kategorie}: ${vorhanden.de})` : '';
 }
 
-function closeHelpModal() {
-  document.getElementById('help-modal').close();
-}
-
-function onKategorieSelectChange() {
-  const sel = document.getElementById('am-kategorie-select');
-  const neuInp = document.getElementById('am-kategorie-neu');
-  if (sel.value === NEUE_KAT_VALUE) {
-    neuInp.style.display = 'block';
-    setTimeout(() => neuInp.focus(), 50);
-  } else {
-    neuInp.style.display = 'none';
-  }
+function clearDuplicateHint() {
+  document.getElementById('am-dup-hint').textContent = '';
 }
 
 function submitAddModal() {
+  if (!istFreigeschaltet()) { closeAddModal(); openLizenzModal(); return; }
   const errEl = document.getElementById('am-err');
   errEl.textContent = '';
-  const sel = document.getElementById('am-kategorie-select');
-  const neuInp = document.getElementById('am-kategorie-neu');
-  const istNeueKategorie = sel.value === NEUE_KAT_VALUE;
-  const kategorie = istNeueKategorie ? neuInp.value.trim() : sel.value;
+  const kategorie = document.getElementById('am-kategorie-select').value;
   const it = document.getElementById('am-it').value.trim();
   const de = document.getElementById('am-de').value.trim();
 
   if (!kategorie) { errEl.textContent = 'Bitte Kategorie angeben'; return; }
-
-  // Nur neue Kategorie anlegen, ohne Vokabel
-  if (istNeueKategorie && !it && !de) {
-    lsKategorienExtraAdd(kategorie);
-    S.kategorien = lsKategorien(S.vokabeln);
-    S.selectedKat.add(kategorie);
-    closeAddModal();
-    toast(`Kategorie "${kategorie}" angelegt`, 'ok');
-    const p = document.querySelector('.page.active').id;
-    if (p === 'page-verwaltung') renderVerwaltung();
-    if (p === 'page-start') renderStart();
-    return;
-  }
-
   if (!it || !de) { errEl.textContent = 'Bitte Italienisch und Deutsch ausfüllen'; return; }
 
   const vorhanden = lsLoad().find(v => v.it.trim().toLowerCase() === it.toLowerCase());
@@ -1542,6 +1604,7 @@ function submitAddModal() {
   S.vokabeln = lsLoad();
   S.kategorien = lsKategorien(S.vokabeln);
   S.selectedKat.add(kategorie);
+  localStorage.setItem(LS_LETZTE_KAT_KEY, kategorie);
   closeAddModal();
   toast(`"${it}" hinzugefügt`, 'ok');
 
@@ -1549,6 +1612,189 @@ function submitAddModal() {
   if (activePage === 'page-verwaltung') renderVerwaltung();
   if (activePage === 'page-start') renderStart();
 }
+
+// ── KATEGORIE-MODAL ───────────────────────────────────────────────────────
+function openKatModal() {
+  document.getElementById('km-name').value = '';
+  document.getElementById('km-err').textContent = '';
+  document.getElementById('km-trial-hint').style.display = istFreigeschaltet() ? 'none' : 'block';
+  document.getElementById('kat-modal').showModal();
+  if (!istFreigeschaltet()) { openLizenzModal(); return; }
+  setTimeout(() => document.getElementById('km-name').focus(), 50);
+}
+
+function closeKatModal() {
+  document.getElementById('kat-modal').close();
+}
+
+function submitKatModal() {
+  if (!istFreigeschaltet()) { closeKatModal(); openLizenzModal(); return; }
+  const errEl = document.getElementById('km-err');
+  const name = document.getElementById('km-name').value.trim();
+  if (!name) { errEl.textContent = 'Bitte Namen angeben'; return; }
+  if (S.kategorien.some(k => k.toLowerCase() === name.toLowerCase())) {
+    errEl.textContent = `Kategorie "${name}" existiert bereits`;
+    return;
+  }
+  lsKategorienExtraAdd(name);
+  S.kategorien = lsKategorien(S.vokabeln);
+  S.selectedKat.add(name);
+  closeKatModal();
+  toast(`Kategorie "${name}" angelegt`, 'ok');
+  const p = document.querySelector('.page.active').id;
+  if (p === 'page-verwaltung') renderVerwaltung();
+  if (p === 'page-start') renderStart();
+}
+
+// ── OCR-MODAL (Vokabeln aus Foto) ─────────────────────────────────────────
+function openOcrModal() {
+  document.getElementById('ocr-file').value = '';
+  document.getElementById('ocr-status').textContent = '';
+  document.getElementById('ocr-err').textContent = '';
+  document.getElementById('ocr-rohtext').value = '';
+  document.getElementById('ocr-rohtext-wrap').style.display = 'none';
+  document.getElementById('ocr-kandidaten-wrap').style.display = 'none';
+  document.getElementById('ocr-uebernehmen-btn').style.display = 'none';
+  document.getElementById('ocr-trial-hint').style.display = istFreigeschaltet() ? 'none' : 'block';
+  S.ocrKandidaten = [];
+  document.getElementById('ocr-modal').showModal();
+  if (!istFreigeschaltet()) openLizenzModal();
+}
+
+function closeOcrModal() {
+  document.getElementById('ocr-modal').close();
+}
+
+function ocrBildGewaehlt() {
+  const fileInp = document.getElementById('ocr-file');
+  const file = fileInp.files[0];
+  if (!file) return;
+  const statusEl = document.getElementById('ocr-status');
+  const errEl = document.getElementById('ocr-err');
+  errEl.textContent = '';
+  document.getElementById('ocr-rohtext-wrap').style.display = 'none';
+  document.getElementById('ocr-kandidaten-wrap').style.display = 'none';
+  document.getElementById('ocr-uebernehmen-btn').style.display = 'none';
+  statusEl.textContent = '⏳ Text wird erkannt …';
+
+  const reader = new FileReader();
+  reader.onload = async () => {
+    try {
+      const res = await fetch('/api/ocr', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: reader.result })
+      });
+      const data = await res.json();
+      if (!res.ok || data.error) throw new Error(data.error || 'OCR fehlgeschlagen');
+      statusEl.textContent = '';
+      document.getElementById('ocr-rohtext').value = data.text.trim();
+      document.getElementById('ocr-rohtext-wrap').style.display = 'block';
+    } catch (e) {
+      statusEl.textContent = '';
+      errEl.textContent = `Fehler bei der Texterkennung: ${e.message}`;
+    }
+  };
+  reader.onerror = () => { statusEl.textContent = ''; errEl.textContent = 'Bild konnte nicht gelesen werden'; };
+  reader.readAsDataURL(file);
+}
+
+function ocrZeileTrennen(zeile) {
+  const trenner = [/\t+/, / - /, / – /, / — /, /\s{2,}/, /:/, /-/, /–/, /—/];
+  for (const t of trenner) {
+    const teile = zeile.split(t).map(s => s.trim()).filter(Boolean);
+    if (teile.length === 2) return { it: teile[0], de: teile[1] };
+  }
+  return { it: zeile.trim(), de: '' };
+}
+
+function ocrParsen() {
+  const zeilen = document.getElementById('ocr-rohtext').value.split('\n').map(z => z.trim()).filter(Boolean);
+  if (!zeilen.length) { document.getElementById('ocr-err').textContent = 'Kein Text zum Umwandeln vorhanden'; return; }
+  S.ocrKandidaten = zeilen.map(ocrZeileTrennen);
+  document.getElementById('ocr-err').textContent = '';
+  ocrRenderKandidaten();
+  document.getElementById('ocr-kandidaten-wrap').style.display = 'block';
+  document.getElementById('ocr-uebernehmen-btn').style.display = istFreigeschaltet() ? 'inline-block' : 'none';
+}
+
+function ocrRenderKandidaten() {
+  const sel = document.getElementById('ocr-kategorie-select');
+  sel.innerHTML = S.kategorien.map(k => `<option value="${k}">${k}</option>`).join('');
+  const letzteKat = localStorage.getItem(LS_LETZTE_KAT_KEY);
+  if (letzteKat && S.kategorien.includes(letzteKat)) sel.value = letzteKat;
+
+  document.getElementById('ocr-anzahl').textContent = S.ocrKandidaten.length;
+  document.getElementById('ocr-kandidaten-liste').innerHTML = S.ocrKandidaten.map((k, i) => `
+    <div class="ocr-row">
+      <input type="text" value="${(k.it || '').replace(/"/g, '&quot;')}" placeholder="Fremdwort" oninput="ocrUpdateKandidat(${i},'it',this.value)">
+      <input type="text" value="${(k.de || '').replace(/"/g, '&quot;')}" placeholder="Deutsch" oninput="ocrUpdateKandidat(${i},'de',this.value)">
+      <button onclick="ocrEntferneKandidat(${i})" title="Entfernen">&#10005;</button>
+    </div>
+  `).join('');
+}
+
+function ocrUpdateKandidat(i, feld, wert) {
+  if (S.ocrKandidaten[i]) S.ocrKandidaten[i][feld] = wert;
+}
+
+function ocrEntferneKandidat(i) {
+  S.ocrKandidaten.splice(i, 1);
+  ocrRenderKandidaten();
+}
+
+function ocrAlleUebernehmen() {
+  if (!istFreigeschaltet()) { closeOcrModal(); openLizenzModal(); return; }
+  const kategorie = document.getElementById('ocr-kategorie-select').value;
+  const errEl = document.getElementById('ocr-err');
+  if (!kategorie) { errEl.textContent = 'Bitte Kategorie wählen'; return; }
+
+  let hinzugefuegt = 0, duplikate = 0, leer = 0;
+  S.ocrKandidaten.forEach(k => {
+    const it = (k.it || '').trim(), de = (k.de || '').trim();
+    if (!it || !de) { leer++; return; }
+    const vorhanden = lsLoad().find(v => v.it.trim().toLowerCase() === it.toLowerCase());
+    if (vorhanden) { duplikate++; return; }
+    lsAdd({ kategorie, it, de });
+    hinzugefuegt++;
+  });
+
+  S.vokabeln = lsLoad();
+  S.kategorien = lsKategorien(S.vokabeln);
+  S.selectedKat.add(kategorie);
+  localStorage.setItem(LS_LETZTE_KAT_KEY, kategorie);
+  closeOcrModal();
+
+  let msg = `${hinzugefuegt} Vokabeln hinzugefügt`;
+  if (duplikate) msg += `, ${duplikate} Duplikate übersprungen`;
+  if (leer) msg += `, ${leer} unvollständige Zeilen übersprungen`;
+  toast(msg, hinzugefuegt ? 'ok' : undefined);
+
+  const p = document.querySelector('.page.active').id;
+  if (p === 'page-verwaltung') renderVerwaltung();
+  if (p === 'page-start') renderStart();
+}
+
+function openHelpModal() {
+  document.getElementById('help-modal').showModal();
+}
+
+function closeHelpModal() {
+  document.getElementById('help-modal').close();
+}
+
+function toggleHeaderMenu() {
+  document.getElementById('header-menu').classList.toggle('open');
+}
+
+function closeHeaderMenu() {
+  document.getElementById('header-menu').classList.remove('open');
+}
+
+document.addEventListener('click', (e) => {
+  const wrap = document.querySelector('.menu-wrap');
+  if (wrap && !wrap.contains(e.target)) closeHeaderMenu();
+});
 
 function vokabelKey(v) {
   return `${v.kategorie}|${v.it}|${v.de}`.toLowerCase().trim();

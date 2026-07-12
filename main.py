@@ -1,4 +1,4 @@
-import sys, os, json, threading, webbrowser, socket
+import sys, os, json, threading, webbrowser, socket, base64, io
 from flask import Flask, request, jsonify, send_file
 
 if getattr(sys, 'frozen', False):
@@ -8,6 +8,8 @@ else:
 
 VOKABELN_PATH = os.path.join(_BASE, 'vokabeln.json')
 _HTML = os.path.join(_BASE, 'index.html')
+_TESSDATA_DIR = os.path.join(_BASE, 'tessdata')
+_TESSERACT_EXE = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 app = Flask(__name__, static_folder=os.path.join(_BASE, 'static'), static_url_path='/static')
 
@@ -97,6 +99,33 @@ def api_vokabeln_delete(vid):
         return jsonify(error='Nicht gefunden'), 404
     speichere_vokabeln(neue)
     return jsonify(ok=True)
+
+
+@app.route('/api/ocr', methods=['POST'])
+def api_ocr():
+    if not os.path.exists(_TESSERACT_EXE):
+        return jsonify(error='Tesseract-OCR ist auf diesem Rechner nicht installiert.'), 500
+    try:
+        import pytesseract
+        from PIL import Image
+    except ImportError:
+        return jsonify(error='pytesseract/Pillow fehlen (pip install pytesseract Pillow).'), 500
+
+    data = request.get_json()
+    b64 = (data.get('image') or '')
+    if ',' in b64:
+        b64 = b64.split(',', 1)[1]
+    if not b64:
+        return jsonify(error='Kein Bild übermittelt'), 400
+
+    try:
+        pytesseract.pytesseract.tesseract_cmd = _TESSERACT_EXE
+        os.environ['TESSDATA_PREFIX'] = _TESSDATA_DIR
+        img = Image.open(io.BytesIO(base64.b64decode(b64)))
+        text = pytesseract.image_to_string(img, lang='ita+deu')
+        return jsonify(text=text)
+    except Exception as e:
+        return jsonify(error=str(e)), 500
 
 
 @app.route('/api/shutdown', methods=['POST'])

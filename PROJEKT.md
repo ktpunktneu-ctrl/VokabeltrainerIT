@@ -14,7 +14,7 @@ Zwei eigenständige, baugleiche PWA-Vokabeltrainer-Apps von Klaus Tegtmeier:
 | Live-URL | https://ktpunktneu-ctrl.github.io/VokabeltrainerIT/ | https://ktpunktneu-ctrl.github.io/VokabeltrainerEN/ |
 | GitHub-Repo | ktpunktneu-ctrl/VokabeltrainerIT (**öffentlich**) | ktpunktneu-ctrl/VokabeltrainerEN (**öffentlich**) |
 | Vokabelanzahl | 539 (9 Kategorien × ~60) | 539 (9 Kategorien × ~60) |
-| App-Version | v1.4 | v1.4 |
+| App-Version | v1.9 | v1.4 |
 
 ## Technik
 
@@ -32,6 +32,8 @@ Zwei eigenständige, baugleiche PWA-Vokabeltrainer-Apps von Klaus Tegtmeier:
 
 Beide Apps sind komplett parallel gepflegt — **jede Code-Änderung muss identisch in IT und EN nachgezogen werden** (bisher immer so gehandhabt).
 
+**Ausnahme aktuell (Stand 2026-07-12):** IT ist auf v1.9, EN bewusst noch auf v1.4 — Klaus wollte die Änderungen vom 11./12.07. (Add-Modal-Umbau, Trial-Modell, OCR-Feature) erst in IT fertig entwickeln/testen, bevor sie nach EN übertragen werden. EN-Portierung steht noch aus.
+
 ## Changelog (Auszug, chronologisch)
 
 - **2026-07-04:** Sprachmodul/TTS ergänzt, Anki-Export entfernt, Konjugationsformen-Sync-Bug behoben (`lsRepairFormen` + Merge-Fix), Kategorie-Filter im Quiz auf "isolieren statt togglen" umgestellt, Kategorie-Löschung inkl. enthaltener Vokabeln, sichtbare Versionsnummer im Header.
@@ -39,6 +41,9 @@ Beide Apps sind komplett parallel gepflegt — **jede Code-Änderung muss identi
 - **2026-07-05 mittags:** Bug gefunden & behoben — absolute Pfade (`/manifest.json`, `/sw.js`, `/static/...`) verhinderten die PWA-Installation auf GitHub Pages (404), da die Apps dort im Unterpfad laufen. Auf relative Pfade umgestellt, betraf beide Apps gleichermaßen.
 - **2026-07-05 nachmittags:** Lernliste-Kategoriefilter ebenfalls auf "isolieren statt togglen" umgestellt (war inkonsistent zum Quiz-Filter).
 - **2026-07-06:** "Mit PC abgleichen" entfernt, Hilfe-Button (❓) mit Kurzanleitung im Header ergänzt. Suchfunktion in Lernliste + Verwaltung (eigenständig, hat Vorrang vor Kategorie-Filter). Echtes Auto-Update: aktive Update-Prüfung bei App-Start + Auto-Reload bei neuer Version (vorher nur alle ~24h Browser-Standard, brauchte manuelles Neuinstallieren). Feature-Gating für Konjugation/Verbformen implementiert (siehe Vermarktungs-Abschnitt unten).
+- **2026-07-11 (nur IT, v1.5):** Hilfe-Modal komplett überarbeitet (klare Abschnitte statt Stichpunkte), Hinweis auf Spracheingabe (Mikrofon-Button) ergänzt, Fehlermeldungen im Add-Modal jetzt inline statt Toast.
+- **2026-07-11/12 (nur IT, v1.6–v1.8):** Add-Modal umgebaut — Reihenfolge jetzt Fremdwort → Live-Duplikat-Warnung → Deutsch → Kategorie (merkt sich letzte Auswahl). "Neue Kategorie" ist kein verstecktes Dropdown-Item mehr, sondern eigenes Modal mit eigenem Button. Header-Icon "❓" durch "⋯"-Overflow-Menü ersetzt. **Neues Trial-Modell:** Training/Quiz im Testmodus auf 10 Vokabeln je Kategorie begrenzt (Lernliste bleibt komplett sichtbar), Neuanlage von Vokabeln/Kategorien im Testmodus nur ansehbar/ausprobierbar, Speichern gesperrt — Lizenz-Modal (Kaufhinweis) öffnet sich sofort beim Öffnen des Formulars, nicht erst beim Speichern-Versuch.
+- **2026-07-12 (nur IT, v1.9):** Neues Feature "📷 Vokabeln aus Foto (OCR)" — Foto/Kamera-Upload, Texterkennung per Tesseract-OCR (`/api/ocr`-Endpoint in `main.py`, Sprachdaten in `tessdata/`), editierbare Kandidaten-Liste mit Duplikat-Check, Bulk-Übernahme in eine Kategorie. Respektiert das Trial-Modell wie Add-/Kat-Modal.
 
 ## Vermarktung — Feature-Gating implementiert (2026-07-06)
 
