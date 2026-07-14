@@ -44,12 +44,12 @@ Alle Apps sind komplett parallel gepflegt — **jede funktionale Code-Änderung 
 Zielgruppe: Schüler & Interessierte (IT/EN/FR/ES), Berufstätige/Manager (BusinessEN). "Schmaler Kurs" (kleiner, günstiger Zugang statt Vollpreis-Produkt).
 
 - **Freischaltung:** Code-Eingabefeld im Lizenz-Modal, prüft per Fetch gegen Gumroads License-Verification-API (`https://api.gumroad.com/v2/licenses/verify`).
-- **Preis:** 9,95 € einmalig, Kauf-Link im Modal.
-- **Master-Code für Eigennutzung:** `ktpunkt-master-2026` — schaltet sofort und dauerhaft frei, ganz ohne Gumroad-Prüfung/Internet. Konstante `MASTER_CODE` in `index.html` (alle Apps).
+- **Preis:** 9,95 € einmalig (IT/EN/FR/ES), 19,95 € (BusinessEN) — Kauf-Link im Modal.
+- **Master-Code für Eigennutzung:** siehe Konstante `MASTER_CODE` in `index.html` (alle Apps) — schaltet sofort und dauerhaft frei, ganz ohne Gumroad-Prüfung/Internet. (Wert bewusst nicht in dieser Doku, IT/EN sind öffentliche Repos.)
 - **Bestandsnutzer-Schutz:** `pruefeBestandsnutzer()` schaltet Nutzer, die vor dem Feature-Gating schon Daten hatten, automatisch dauerhaft frei.
 
 **Noch offen / ACHTUNG — Klaus muss selbst tun:**
-- **Gumroad-Produkte existieren noch nicht!** `GUMROAD_PERMALINK` in `index.html` ist je App nur ein Platzhalter (`vokabeltrainer-{it,en,fr,es,business-en}`), ebenso der Kauf-Link im Lizenz-Modal. Separate Gumroad-Produkte anlegen (Preis 9,95 €, License-Key-Generierung aktivieren), dann echte Permalinks eintragen (Stelle mit `// TODO Klaus:` markiert).
+- **Gumroad-Produkte existieren noch nicht!** `GUMROAD_PERMALINK` in `index.html` ist je App nur ein Platzhalter (`vokabeltrainer-{it,en,fr,es,business-en}`), ebenso der Kauf-Link im Lizenz-Modal. Separate Gumroad-Produkte anlegen (Preis 9,95 €, License-Key-Generierung aktivieren), dann echte Permalinks eintragen (Stelle mit `// TODO Klaus:` markiert). Preis je Produkt: 9,95 € (IT/EN/FR/ES), 19,95 € (BusinessEN).
 
 ## Schnellzugriff
 
