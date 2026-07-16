@@ -151,11 +151,21 @@ nav button.active{background:var(--green);color:#fff}
 .toast{padding:10px 18px;border-radius:20px;color:#fff;font-size:13px;font-weight:600;box-shadow:0 4px 12px rgba(0,0,0,0.2);margin-bottom:6px;background:var(--danger)}
 .toast.ok{background:var(--success)}
 .app-version{font-size:11px;font-weight:400;color:var(--text-light);vertical-align:middle;margin-left:4px}
+#install-banner{display:none;position:fixed;top:0;left:0;right:0;z-index:10000;background:#111827;color:#fff;padding:10px 14px;padding-top:calc(env(safe-area-inset-top) + 10px);font-size:13px;font-weight:600;line-height:1.4;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+#install-banner.show{display:flex;align-items:center;gap:10px}
+#install-banner .ib-text{flex:1}
+#install-banner .ib-btn{display:none;background:#fff;color:#111827;border:none;padding:7px 14px;border-radius:8px;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap;flex-shrink:0}
+#install-banner .ib-close{background:rgba(255,255,255,0.2);border:none;color:#fff;width:26px;height:26px;border-radius:50%;font-size:14px;cursor:pointer;flex-shrink:0}
 </style>
 </head>
 <body>
 
 <div id="toast-container"></div>
+<div id="install-banner">
+  <span class="ib-text"></span>
+  <button class="ib-btn"></button>
+  <button class="ib-close" title="Schließen">&#10005;</button>
+</div>
 <div id="app">
 
   <header>
@@ -1809,6 +1819,65 @@ function deleteVokabel(id) {
 }
 
 appInit().catch(e => console.error(e));
+
+(function () {
+  var LS_KEY = 'vokabeltrainer_installbanner_dismissed_v1';
+  if (localStorage.getItem(LS_KEY)) return;
+  if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) return;
+
+  var ua = navigator.userAgent || '';
+  var isInApp = /Instagram|FBAN|FBAV|FB_IAB|Messenger|TikTok|BytedanceWebview|musical_ly/i.test(ua);
+  var isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+
+  var banner = document.getElementById('install-banner');
+  var textEl = banner.querySelector('.ib-text');
+  var btnEl = banner.querySelector('.ib-btn');
+  var closeEl = banner.querySelector('.ib-close');
+  var deferredPrompt = null;
+
+  function dismiss() {
+    banner.classList.remove('show');
+    localStorage.setItem(LS_KEY, '1');
+  }
+  closeEl.onclick = dismiss;
+
+  function zeigeBanner() {
+    if (isInApp) {
+      textEl.textContent = '📲 Für die Installation: oben rechts ⋯ (bzw. •••) antippen und "Im Browser öffnen" wählen';
+      btnEl.style.display = 'none';
+    } else if (deferredPrompt) {
+      textEl.textContent = '📲 Diese App aufs Handy holen — offline nutzbar, ganz ohne App Store';
+      btnEl.textContent = 'Installieren';
+      btnEl.style.display = 'block';
+      btnEl.onclick = function () {
+        banner.classList.remove('show');
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.finally(function () {
+          deferredPrompt = null;
+          localStorage.setItem(LS_KEY, '1');
+        });
+      };
+    } else if (isIOS) {
+      textEl.textContent = '📲 Zum Home-Bildschirm hinzufügen: Teilen-Symbol ⬆️ antippen, dann "Zum Home-Bildschirm"';
+      btnEl.style.display = 'none';
+    } else {
+      return;
+    }
+    banner.classList.add('show');
+  }
+
+  window.addEventListener('beforeinstallprompt', function (e) {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (!isInApp) zeigeBanner();
+  });
+
+  if (isInApp) {
+    zeigeBanner();
+  } else if (isIOS) {
+    setTimeout(zeigeBanner, 800);
+  }
+})();
 </script>
 </body>
 </html>
