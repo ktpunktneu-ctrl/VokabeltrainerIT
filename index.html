@@ -27,7 +27,9 @@ body{
 .page.active{display:flex}
 
 header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.header-title{display:flex;flex-direction:column}
 header h1{font-size:19px;font-weight:800;color:var(--green)}
+.header-tagline{font-size:10px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:1px;margin-top:1px}
 header .flag{display:inline-block;width:22px;height:16px;background:linear-gradient(90deg,var(--green) 33%,var(--white) 33% 66%,var(--red) 66%);border-radius:2px;border:1px solid #ddd;vertical-align:middle;margin-right:6px}
 .icon-btn{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-light);padding:6px}
 .menu-wrap{position:relative;display:inline-block}
@@ -169,7 +171,10 @@ nav button.active{background:var(--green);color:#fff}
 <div id="app">
 
   <header>
-    <h1><span class="flag"></span>Vokabeltrainer <span id="app-version" class="app-version"></span></h1>
+    <div class="header-title">
+      <h1><span class="flag"></span>Vokabeltrainer <span id="app-version" class="app-version"></span></h1>
+      <div class="header-tagline">Italienisch</div>
+    </div>
     <div>
       <button class="icon-btn" onclick="gotoPage('liste')" title="Lernliste">&#128214;</button>
       <button class="icon-btn" onclick="gotoPage('verwaltung')" title="Verwaltung">&#9881;</button>
