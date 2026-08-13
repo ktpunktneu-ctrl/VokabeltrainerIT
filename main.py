@@ -150,13 +150,13 @@ def _lan_ip():
 
 def _open_browser():
     import time; time.sleep(1.0)
-    webbrowser.open('http://127.0.0.1:5052')
+    webbrowser.open('http://127.0.0.1:5252')
 
 
 if __name__ == '__main__':
     ip = _lan_ip()
-    print(f"Vokabeltrainer laeuft.")
-    print(f"  Am PC:      http://127.0.0.1:5052")
-    print(f"  Am iPhone:  http://{ip}:5052  (gleiches WLAN erforderlich)")
+    print(f"Vokabeltrainer (ENTWURF Lernbox-Start) laeuft.")
+    print(f"  Am PC:      http://127.0.0.1:5252")
+    print(f"  Am iPhone:  http://{ip}:5252  (gleiches WLAN erforderlich)")
     threading.Thread(target=_open_browser, daemon=True).start()
-    app.run(host='0.0.0.0', port=5052, debug=False, use_reloader=False)
+    app.run(host='0.0.0.0', port=5252, debug=False, use_reloader=False)
