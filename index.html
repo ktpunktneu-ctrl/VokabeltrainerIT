@@ -1392,7 +1392,7 @@ function renderLernliste() {
       return;
     }
     content.innerHTML = kats.map(k => {
-      const items = [...byKat[k]].sort((a,b) => a.it.localeCompare(b.it));
+      const items = [...byKat[k]].sort((a,b) => S.llRichtung === 'de-it' ? a.de.localeCompare(b.de) : a.it.localeCompare(b.it));
       return `<div class="ll-kat-title">${k}</div>` + items.map(v => {
         const itSpan = `<span class="ll-it">${v.it}<button class="ll-speak-btn" onclick="speak('${escJs(v.it)}','it-IT')" title="Aussprache anhören">&#128266;</button></span>`;
         const deSpan = `<span class="ll-de">${v.de}</span>`;
