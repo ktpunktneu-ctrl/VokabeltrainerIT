@@ -11,6 +11,13 @@
 <meta name="apple-mobile-web-app-title" content="VokabelIT">
 <meta name="theme-color" content="#008C45">
 <style>
+@font-face{
+  font-family:'Designer';
+  font-style:normal;
+  font-weight:400;
+  font-display:swap;
+  src:url('static/fonts/designer.woff2') format('woff2');
+}
 :root {
   --green:#008C45; --white:#fff; --red:#CD212A;
   --bg:#f0f2f6; --card:#fff; --text:#1e293b; --text-light:#64748b;
@@ -125,9 +132,50 @@ dialog::backdrop{background:rgba(0,0,0,0.4)}
 .modal-title{font-size:15px;font-weight:800;margin-bottom:14px;color:var(--text)}
 .modal-actions{display:flex;gap:8px;margin-top:6px}
 
-.page-hdr{display:flex;align-items:center;gap:8px;margin-bottom:14px}
-.page-hdr .back-btn{background:none;border:none;font-size:24px;cursor:pointer;color:var(--text);padding:0 4px 0 0;line-height:1}
-.page-hdr h2{font-size:18px;font-weight:800;color:var(--text)}
+.page-hdr{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.page-hdr .back-btn{background:#fff;border:none;font-size:20px;cursor:pointer;color:var(--text);padding:0;width:34px;height:34px;border-radius:50%;box-shadow:var(--shadow);line-height:1;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.page-hdr h2{font-size:19px;font-weight:900;color:var(--text)}
+
+/* ── STARTSEITE / HOME-SPLASH ─────────────────────────────────────────── */
+#page-home{justify-content:center}
+.home-hero{text-align:center;padding:8px 4px 4px}
+.home-flag{width:150px;height:108px;margin:0 auto 14px;filter:drop-shadow(0 10px 18px rgba(0,0,0,.25))}
+.flag-cloth{transform-origin:34px 90px;animation:flagWave 2.4s ease-in-out infinite}
+.home-title{font-family:'Designer',cursive;font-weight:400;font-size:34px;line-height:1.25;color:var(--text)}
+.home-title-accent{display:block;font-size:46px;background:linear-gradient(90deg,var(--green),#00a651 45%,var(--red));-webkit-background-clip:text;background-clip:text;color:transparent}
+.home-tagline{font-size:13.5px;font-weight:700;color:var(--text-light);margin-top:10px}
+
+/* 3D-Kugel-Buttons, nebeneinander, Beschriftung als Text darunter */
+.home-spheres{display:flex;gap:18px;justify-content:center;margin-top:30px}
+.home-sphere-col{display:flex;flex-direction:column;align-items:center;flex:1;max-width:170px}
+.home-sphere{width:132px;height:132px;max-width:38vw;max-height:38vw;border-radius:50%;border:none;cursor:pointer;position:relative;display:flex;align-items:center;justify-content:center;animation:homeFloat 3s ease-in-out infinite;transition:transform .15s cubic-bezier(.34,1.56,.64,1)}
+.home-sphere:active{transform:scale(.92)}
+.home-sphere-liste{background:radial-gradient(circle at 32% 26%, #7fe8ab, #00b85c 48%, #004d25 100%);box-shadow:inset -11px -14px 22px rgba(0,0,0,.3), inset 9px 12px 18px rgba(255,255,255,.42), 0 16px 28px rgba(0,98,47,.4)}
+.home-sphere-quiz{background:radial-gradient(circle at 32% 26%, #ffd0a8, #ff8a5c 48%, #7a0f14 100%);box-shadow:inset -11px -14px 22px rgba(0,0,0,.3), inset 9px 12px 18px rgba(255,255,255,.42), 0 16px 28px rgba(122,15,20,.4);animation-delay:.35s}
+.home-sphere::after{content:'';position:absolute;top:11%;left:19%;width:30%;height:20%;background:radial-gradient(ellipse at center, rgba(255,255,255,.92), rgba(255,255,255,0) 72%);border-radius:50%;transform:rotate(-25deg)}
+.home-sphere svg{width:44%;height:44%;position:relative;z-index:1}
+.home-sphere-caption{font-family:'Designer',cursive;font-weight:400;font-size:26px;color:var(--text);margin-top:12px}
+.home-sphere-sub{font-size:11.5px;font-weight:600;color:var(--text-light);text-align:center;margin-top:2px;line-height:1.35}
+
+@keyframes homeFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes flagWave{
+  0%,100%{transform:skewY(-3deg) scaleX(1)}
+  25%{transform:skewY(1.5deg) scaleX(.985)}
+  50%{transform:skewY(3deg) scaleX(1)}
+  75%{transform:skewY(-1.5deg) scaleX(.985)}
+}
+
+/* Quiz-Hero (prägnante Optik für die Quiz-Seite) */
+.quiz-hero{background:linear-gradient(135deg,var(--red) 0%,#e0454d 55%,#ff8a65 100%);border-radius:18px;padding:22px 20px;text-align:center;color:#fff;margin-bottom:16px;box-shadow:0 6px 20px rgba(205,33,42,.3);position:relative;overflow:hidden}
+.quiz-hero-icon{font-size:32px;line-height:1;margin-bottom:4px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.15))}
+.quiz-hero-sub{font-size:12.5px;font-weight:700;opacity:.95}
+#page-start .card-title{color:var(--red)}
+#page-start .chip.active{background:var(--red);border-color:var(--red)}
+#page-start .radio-opt.active{background:var(--red);border-color:var(--red)}
+#page-start .slider-val{color:var(--red)}
+#page-start input[type=range]{accent-color:var(--red)}
+.btn-quiz-start{background:linear-gradient(135deg,var(--red),#ff6b6b);color:#fff;box-shadow:0 4px 14px rgba(205,33,42,.4);font-size:17px;letter-spacing:.3px}
+.btn-quiz-start:active{background:#b21b23}
 
 nav{display:flex;gap:6px;margin-top:14px}
 nav button{flex:1;padding:10px;border-radius:10px;border:none;background:#fff;box-shadow:var(--shadow);font-size:12px;font-weight:700;color:var(--text-light);cursor:pointer}
@@ -176,7 +224,7 @@ nav button.active{background:var(--green);color:#fff}
       <div class="header-tagline">Italienisch</div>
     </div>
     <div>
-      <button class="icon-btn" onclick="gotoPage('liste')" title="Lernliste">&#128214;</button>
+      <button class="icon-btn" onclick="gotoPage('liste')" title="Lernbox">&#128214;</button>
       <button class="icon-btn" onclick="gotoPage('verwaltung')" title="Verwaltung">&#9881;</button>
       <div class="menu-wrap">
         <button class="icon-btn" onclick="toggleHeaderMenu()" title="Mehr">&#8942;</button>
@@ -187,8 +235,67 @@ nav button.active{background:var(--green);color:#fff}
     </div>
   </header>
 
-  <!-- STARTSEITE -->
-  <div class="page active" id="page-start">
+  <!-- STARTSEITE (Home-Splash mit 2 Startbuttons) -->
+  <div class="page active" id="page-home">
+    <div class="home-hero">
+      <svg class="home-flag" viewBox="0 0 150 108" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="poleGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#8a8f98"/>
+            <stop offset="45%" stop-color="#e8ebef"/>
+            <stop offset="100%" stop-color="#6b7078"/>
+          </linearGradient>
+          <clipPath id="flagClip">
+            <path d="M34,18 C58,10 76,24 100,17 C114,13 122,20 132,15 L132,66 C122,71 114,64 100,68 C76,75 58,61 34,69 Z"/>
+          </clipPath>
+        </defs>
+        <rect x="26" y="8" width="7" height="96" rx="3.5" fill="url(#poleGrad)"/>
+        <circle cx="29.5" cy="8" r="7" fill="url(#poleGrad)"/>
+        <g class="flag-cloth">
+          <g clip-path="url(#flagClip)">
+            <rect x="34" y="8" width="34" height="70" fill="#008C45"/>
+            <rect x="68" y="8" width="32" height="70" fill="#ffffff"/>
+            <rect x="100" y="8" width="34" height="70" fill="#CD212A"/>
+            <rect x="34" y="8" width="98" height="70" fill="#ffffff" opacity=".08"/>
+          </g>
+          <path d="M34,18 C58,10 76,24 100,17 C114,13 122,20 132,15 L132,66 C122,71 114,64 100,68 C76,75 58,61 34,69 Z" fill="none" stroke="rgba(0,0,0,.12)" stroke-width="1"/>
+        </g>
+      </svg>
+      <div class="home-title">Vokabeltrainer<span class="home-title-accent">Italienisch</span></div>
+      <div class="home-tagline">Vokabeln lernen, die hängen bleiben &#10024;</div>
+    </div>
+    <div class="home-spheres">
+      <div class="home-sphere-col">
+        <button class="home-sphere home-sphere-liste" onclick="gotoPage('liste')">
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="20" width="34" height="24" rx="4" fill="#ffffff" opacity=".55" transform="rotate(-8 27 32)"/>
+            <rect x="18" y="20" width="34" height="24" rx="4" fill="#ffffff"/>
+            <line x1="24" y1="30" x2="46" y2="30" stroke="#00b85c" stroke-width="3" stroke-linecap="round"/>
+            <line x1="24" y1="37" x2="40" y2="37" stroke="#bfe9d2" stroke-width="3" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <div class="home-sphere-caption">Lernbox</div>
+        <div class="home-sphere-sub">Vokabeln entdecken &amp; pauken</div>
+      </div>
+      <div class="home-sphere-col">
+        <button class="home-sphere home-sphere-quiz" onclick="gotoPage('start')">
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="38,8 20,34 30,34 24,56 46,26 34,26" fill="#ffffff" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="home-sphere-caption">Quiz</div>
+        <div class="home-sphere-sub">Dein Wissen auf die Probe stellen</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ-SETUP (Folgeseite) -->
+  <div class="page" id="page-start">
+    <div class="page-hdr"><button class="back-btn" onclick="gotoPage('home')" title="Zurück">&#8249;</button><h2>Quiz</h2></div>
+    <div class="quiz-hero">
+      <div class="quiz-hero-icon">&#127919;</div>
+      <div class="quiz-hero-sub">Vokabeln abfragen &amp; Fortschritt testen</div>
+    </div>
     <div class="card">
       <div class="card-title">Kategorien</div>
       <div class="chip-grid" id="start-kategorien"></div>
@@ -209,7 +316,7 @@ nav button.active{background:var(--green);color:#fff}
         <div class="slider-val" id="start-anzahl-val">15</div>
       </div>
     </div>
-    <button class="btn btn-primary" onclick="startQuiz()">Training starten</button>
+    <button class="btn btn-quiz-start" onclick="startQuiz()">&#127919; Training starten</button>
   </div>
 
   <button class="fab" id="fab-add" onclick="openAddModal()" title="Vokabel hinzufügen">&#43;</button>
@@ -245,9 +352,9 @@ nav button.active{background:var(--green);color:#fff}
     <button class="btn btn-primary" onclick="wiederholeFalsche()" id="btn-wiederholen" style="display:none">Falsche nochmal üben</button>
   </div>
 
-  <!-- LERNLISTE -->
+  <!-- LERNBOX (Folgeseite) -->
   <div class="page" id="page-liste">
-    <div class="page-hdr"><button class="back-btn" onclick="gotoPage('start')" title="Zurück">&#8249;</button><h2>Lernliste</h2></div>
+    <div class="page-hdr"><button class="back-btn" onclick="gotoPage('home')" title="Zurück">&#8249;</button><h2>&#128214; Lernbox</h2></div>
     <div class="card">
       <div class="form-row" style="margin-bottom:0">
         <input type="text" id="ll-suche" placeholder="&#128269; Vokabel suchen …" autocomplete="off" oninput="onLlSucheInput()">
@@ -273,7 +380,7 @@ nav button.active{background:var(--green);color:#fff}
 
   <!-- VERWALTUNG -->
   <div class="page" id="page-verwaltung">
-    <div class="page-hdr"><button class="back-btn" onclick="gotoPage('start')" title="Zurück">&#8249;</button><h2>Verwaltung</h2></div>
+    <div class="page-hdr"><button class="back-btn" onclick="gotoPage('home')" title="Zurück">&#8249;</button><h2>Verwaltung</h2></div>
     <button class="btn btn-primary" onclick="openAddModal()" style="margin-bottom:8px">&#43; Neue Vokabel hinzufügen</button>
     <button class="btn btn-secondary" onclick="openKatModal()" style="margin-bottom:8px">&#43; Neue Kategorie anlegen</button>
     <button class="btn btn-secondary" onclick="openOcrModal()" style="margin-bottom:14px">&#128248; Vokabeln aus Foto (OCR)</button>
@@ -1177,7 +1284,7 @@ function toast(msg, type='err') {
 function gotoPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
-  document.getElementById('fab-add').style.display = (name === 'start' || name === 'verwaltung') ? 'flex' : 'none';
+  document.getElementById('fab-add').style.display = (name === 'start' || name === 'liste' || name === 'verwaltung') ? 'flex' : 'none';
   if (name === 'verwaltung') renderVerwaltung();
   if (name === 'start') renderStart();
   if (name === 'liste') renderLernliste();
@@ -1200,6 +1307,8 @@ async function appInit() {
   S.kategorien = lsKategorien(S.vokabeln);
   S.selectedKat = new Set(S.kategorien);
   renderStart();
+  renderLernliste();
+  document.getElementById('fab-add').style.display = 'none';
   updateLizenzUI();
   pruefeTestphase();
 

@@ -1,5 +1,5 @@
-const CACHE = 'vokabelit-v32';
-const ASSETS = ['/', '/static/icon-192.png', '/static/icon-512.png', '/manifest.json'];
+const CACHE = 'vokabelit-v33';
+const ASSETS = ['/', '/static/icon-192.png', '/static/icon-512.png', '/manifest.json', '/static/fonts/designer.woff2'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
