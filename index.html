@@ -38,12 +38,11 @@ header{display:flex;align-items:center;justify-content:space-between;margin-bott
 header h1{font-size:19px;font-weight:800;color:var(--green)}
 .header-tagline{font-size:10px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:1px;margin-top:1px}
 header .flag{display:inline-block;width:22px;height:16px;background:linear-gradient(90deg,var(--green) 33%,var(--white) 33% 66%,var(--red) 66%);border-radius:2px;border:1px solid #ddd;vertical-align:middle;margin-right:6px}
-.icon-btn{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-light);padding:6px}
-.menu-wrap{position:relative;display:inline-block}
-.dropdown-menu{display:none;position:absolute;right:0;top:38px;background:var(--card);border-radius:10px;box-shadow:var(--shadow);padding:6px;min-width:150px;z-index:50}
-.dropdown-menu.open{display:block}
-.dropdown-item{padding:9px 12px;font-size:13px;font-weight:600;border-radius:6px;cursor:pointer;white-space:nowrap;color:var(--text)}
-.dropdown-item:hover{background:var(--bg)}
+.icon-btn{width:40px;height:40px;border-radius:50%;border:none;position:relative;display:inline-flex;align-items:center;justify-content:center;font-size:18px;color:#fff;cursor:pointer;flex-shrink:0;box-shadow:inset -5px -6px 10px rgba(0,0,0,.28), inset 4px 5px 8px rgba(255,255,255,.4), 0 5px 12px rgba(0,0,0,.22);transition:transform .12s}
+.icon-btn:active{transform:scale(.92)}
+.icon-btn::after{content:'';position:absolute;top:13%;left:21%;width:28%;height:20%;background:radial-gradient(ellipse,rgba(255,255,255,.9),transparent 72%);border-radius:50%}
+.icon-btn-verwaltung{background:radial-gradient(circle at 32% 26%,#93a0b8,#525a72 55%,#2b3044);margin-right:8px}
+.icon-btn-hilfe{background:radial-gradient(circle at 32% 26%,#ffe08a,#f4b942 55%,#a9740a)}
 
 .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin-bottom:14px}
 .card-title{font-size:12px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
@@ -86,6 +85,12 @@ header .flag{display:inline-block;width:22px;height:16px;background:linear-gradi
 .quiz-feedback{font-size:14px;font-weight:600;min-height:20px}
 .quiz-feedback.correct{color:var(--success)}
 .quiz-feedback.wrong{color:var(--danger)}
+.quiz-reaction{display:none;text-align:center;font-size:30px;font-weight:900;line-height:1.2;margin-bottom:4px}
+.quiz-reaction.show{display:block;animation:reactionPop .45s cubic-bezier(.34,1.56,.64,1)}
+.quiz-reaction.big{font-size:56px}
+.quiz-reaction.correct{color:var(--success)}
+.quiz-reaction.wrong{color:var(--danger)}
+@keyframes reactionPop{0%{transform:scale(.35);opacity:0}55%{transform:scale(1.18);opacity:1}100%{transform:scale(1)}}
 .quiz-forms{display:none;flex-wrap:wrap;justify-content:center;gap:6px;font-size:12px}
 .quiz-forms.show{display:flex}
 .quiz-forms span{background:var(--bg);padding:4px 9px;border-radius:8px;color:var(--text-light)}
@@ -112,6 +117,7 @@ header .flag{display:inline-block;width:22px;height:16px;background:linear-gradi
 .vk-item .vk-it{font-weight:700;flex:1}
 .vk-item .vk-de{color:var(--text-light);flex:1}
 .vk-del{background:none;border:none;color:var(--danger);font-size:16px;cursor:pointer}
+.vk-edit{background:none;border:none;color:var(--text-light);font-size:14px;cursor:pointer}
 .form-row{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
 .form-row input,.form-row select{padding:10px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;outline:none;font-family:inherit;background:#fff;width:100%}
 .form-row input:focus,.form-row select:focus{border-color:var(--green)}
@@ -186,9 +192,14 @@ nav button.active{background:var(--green);color:#fff}
 .ll-tab{flex:1;padding:10px;border-radius:10px;border:1.5px solid var(--border);text-align:center;font-size:13px;font-weight:700;cursor:pointer;color:var(--text-light);background:#fff}
 .ll-tab.active{background:var(--green);border-color:var(--green);color:#fff}
 .ll-kat-title{font-size:11px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.5px;margin:0 0 6px;padding-bottom:4px;border-bottom:1px solid var(--border)}
-.ll-row{display:flex;justify-content:space-between;gap:10px;padding:5px 0;font-size:13px}
+.ll-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:5px 0;font-size:13px}
 .ll-row .ll-it{font-weight:700;flex:1}
 .ll-row .ll-de{color:var(--text-light);flex:1;text-align:right}
+.ll-row-actions{display:flex;gap:2px;flex-shrink:0}
+.ll-edit-btn,.ll-del-btn{background:none;border:none;font-size:14px;cursor:pointer;padding:3px 5px;line-height:1;border-radius:6px}
+.ll-edit-btn{color:var(--text-light)}
+.ll-del-btn{color:var(--danger)}
+.ll-edit-btn:active,.ll-del-btn:active{background:var(--bg)}
 .ll-verb-card{border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:10px}
 .ll-verb-hdr{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
 .ll-verb-hdr .ll-inf{font-size:16px;font-weight:800;color:var(--text)}
@@ -224,14 +235,8 @@ nav button.active{background:var(--green);color:#fff}
       <div class="header-tagline">Italienisch</div>
     </div>
     <div>
-      <button class="icon-btn" onclick="gotoPage('liste')" title="Lernbox">&#128214;</button>
-      <button class="icon-btn" onclick="gotoPage('verwaltung')" title="Verwaltung">&#9881;</button>
-      <div class="menu-wrap">
-        <button class="icon-btn" onclick="toggleHeaderMenu()" title="Mehr">&#8942;</button>
-        <div class="dropdown-menu" id="header-menu">
-          <div class="dropdown-item" onclick="closeHeaderMenu(); openHelpModal()">&#10067; Hilfe</div>
-        </div>
-      </div>
+      <button class="icon-btn icon-btn-verwaltung" onclick="gotoPage('verwaltung')" title="Verwaltung">&#9881;</button>
+      <button class="icon-btn icon-btn-hilfe" onclick="openHelpModal()" title="Hilfe">?</button>
     </div>
   </header>
 
@@ -329,6 +334,7 @@ nav button.active{background:var(--green);color:#fff}
       <div class="quiz-lang-badge" id="quiz-badge">Italienisch</div>
       <div class="quiz-word-row"><div class="quiz-word" id="quiz-word">–</div><button class="speak-btn" id="quiz-speak-btn" onclick="speakQuizWord()" title="Aussprache anhören">&#128266;</button></div>
       <input type="text" class="quiz-input" id="quiz-input" placeholder="Übersetzung eingeben …" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+      <div class="quiz-reaction" id="quiz-reaction"></div>
       <div class="quiz-feedback" id="quiz-feedback"></div>
       <div class="quiz-forms" id="quiz-forms"></div>
       <div class="quiz-actions">
@@ -427,6 +433,10 @@ nav button.active{background:var(--green);color:#fff}
     </p>
 
     <p style="font-size:13px;line-height:1.6;margin:0 0 14px;color:var(--text-light)">
+      Auf der Startseite hast du zwei große Buttons: <b>📖 Lernbox</b> zum Durchstöbern und Bearbeiten deiner Vokabeln, und <b>🎯 Quiz</b> zum Abfragen. Über den Zurück-Pfeil oben links kommst du von beiden Seiten jederzeit zur Startseite zurück.
+    </p>
+
+    <p style="font-size:13px;line-height:1.6;margin:0 0 14px;color:var(--text-light)">
       Du kannst die Antwort auch per Spracheingabe eintippen — einfach den Mikrofon-Button auf der Tastatur deines Handys drücken. Dabei findet allerdings keine Schreibprüfung statt.
     </p>
 
@@ -447,7 +457,7 @@ nav button.active{background:var(--green);color:#fff}
 
     <p style="font-size:14px;font-weight:800;margin:14px 0 4px">✏️ Während der Abfrage</p>
     <p style="font-size:13px;line-height:1.6;margin:0 0 8px">
-      Antwort eintippen und mit <b>Enter</b> oder dem "Prüfen"-Button bestätigen. Groß-/Kleinschreibung spielt keine Rolle. Manche Vokabeln haben mehrere richtige Antworten (z.B. Synonyme) — jede davon wird als richtig erkannt. Nach jeder Antwort siehst du sofort, ob sie stimmt, und bei Verben mit Konjugationsformen zusätzlich alle anderen Formen als Merkhilfe.
+      Antwort eintippen und mit <b>Enter</b> oder dem "Prüfen"-Button bestätigen. Groß-/Kleinschreibung spielt keine Rolle. Manche Vokabeln haben mehrere richtige Antworten (z.B. Synonyme) — jede davon wird als richtig erkannt. Nach jeder Antwort siehst du sofort eine große Rückmeldung (z.B. "Wooow!" oder "Oooohhh…", mit kurzem Ton) sowie bei falschen Antworten die richtige Lösung, und bei Verben mit Konjugationsformen zusätzlich alle anderen Formen als Merkhilfe.
     </p>
 
     <p style="font-size:14px;font-weight:800;margin:14px 0 4px">🏁 Ergebnis</p>
@@ -455,9 +465,9 @@ nav button.active{background:var(--green);color:#fff}
       Am Ende siehst du deine Trefferquote und eine Liste aller falsch beantworteten Vokabeln. Über <b>"Falsche nochmal üben"</b> startest du direkt eine neue Runde nur mit genau diesen Wörtern — ideal, um Lücken gezielt zu schließen.
     </p>
 
-    <p style="font-size:14px;font-weight:800;margin:14px 0 4px">📖 Lernliste</p>
+    <p style="font-size:14px;font-weight:800;margin:14px 0 4px">📖 Lernbox</p>
     <p style="font-size:13px;line-height:1.6;margin:0 0 8px">
-      Alle Vokabeln zum reinen Durchlesen (ohne Abfrage), gruppiert nach Kategorie, mit demselben Kategorie-Filter und einem Richtungsumschalter wie beim Training. Der zweite Reiter "Konjugation" zeigt alle Verbformen als Übersicht. Über das <b>Suchfeld</b> oben findest du sofort jede Vokabel, egal in welcher Kategorie — die Suche hat Vorrang vor dem Kategorie-Filter.
+      Alle Vokabeln zum Durchstöbern (ohne Abfrage), gruppiert nach Kategorie, mit demselben Kategorie-Filter und einem Richtungsumschalter wie beim Training. Der zweite Reiter "Konjugation" zeigt alle Verbformen als Übersicht. Über das <b>Suchfeld</b> oben findest du sofort jede Vokabel, egal in welcher Kategorie — die Suche hat Vorrang vor dem Kategorie-Filter. Bei jeder Vokabel kannst du direkt <b>✏️ tippen, um einen Fehler zu korrigieren</b>, oder <b>🗑, um sie zu löschen</b> — praktisch, wenn dir beim Lernen ein Tippfehler auffällt.
     </p>
 
     <p style="font-size:14px;font-weight:800;margin:14px 0 4px">🔊 Aussprache</p>
@@ -467,7 +477,7 @@ nav button.active{background:var(--green);color:#fff}
 
     <p style="font-size:14px;font-weight:800;margin:14px 0 4px">⚙ Verwaltung</p>
     <p style="font-size:13px;line-height:1.6;margin:0 0 8px">
-      Eigene Vokabeln über den <b>+</b>-Button hinzufügen (die App warnt schon beim Eintippen, falls das Wort bereits existiert). Über <b>"+ Neue Kategorie anlegen"</b> legst du eine leere Kategorie ganz ohne Vokabel an. Mit <b>"📷 Vokabeln aus Foto (OCR)"</b> fotografierst du eine Vokabelseite — die App erkennt den Text automatisch, du korrigierst bei Bedarf und übernimmst alle Wortpaare auf einmal in eine Kategorie. Jede Vokabel lässt sich per Dropdown einer anderen Kategorie zuordnen. Kategorien selbst lassen sich nur löschen, wenn sie leer sind (keine Vokabeln mehr enthalten) — so geht nichts versehentlich verloren.
+      Eigene Vokabeln über den <b>+</b>-Button hinzufügen (die App warnt schon beim Eintippen, falls das Wort bereits existiert). Über <b>"+ Neue Kategorie anlegen"</b> legst du eine leere Kategorie ganz ohne Vokabel an. Mit <b>"📷 Vokabeln aus Foto (OCR)"</b> fotografierst du eine Vokabelseite — die App erkennt den Text automatisch, du korrigierst bei Bedarf und übernimmst alle Wortpaare auf einmal in eine Kategorie. Jede Vokabel lässt sich per Dropdown einer anderen Kategorie zuordnen, per <b>✏️</b> inhaltlich korrigieren und per <b>🗑</b> löschen. Kategorien selbst lassen sich nur löschen, wenn sie leer sind (keine Vokabeln mehr enthalten) — so geht nichts versehentlich verloren.
     </p>
 
     <p style="font-size:14px;font-weight:800;margin:14px 0 4px">🔒 Testversion</p>
@@ -501,6 +511,22 @@ nav button.active{background:var(--green);color:#fff}
     <div class="modal-actions">
       <button class="btn btn-secondary" onclick="closeAddModal()">Abbrechen</button>
       <button class="btn btn-primary" onclick="submitAddModal()">Speichern</button>
+    </div>
+  </div>
+</dialog>
+
+<!-- EDIT-MODAL (Korrektur bestehender Vokabel) -->
+<dialog id="edit-modal">
+  <div class="modal-body">
+    <div class="modal-title">Vokabel korrigieren</div>
+    <div class="form-row">
+      <input type="text" id="em-it" placeholder="Italienisch" autocomplete="off" autocapitalize="off">
+      <input type="text" id="em-de" placeholder="Deutsch" autocomplete="off">
+    </div>
+    <div class="m-err" id="em-err"></div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeEditModal()">Abbrechen</button>
+      <button class="btn btn-primary" onclick="submitEditModal()">Speichern</button>
     </div>
   </div>
 </dialog>
@@ -1191,7 +1217,7 @@ async function pruefeLizenzCode() {
 
 const S = { vokabeln: [], kategorien: [], selectedKat: new Set(), richtung: 'it-de', anzahl: 15,
             quizList: [], quizIndex: 0, richtig: 0, falscheListe: [], llTab: 'vokabeln', llRichtung: 'it-de',
-            llSuche: '', vkSuche: '', ocrKandidaten: [] };
+            llSuche: '', vkSuche: '', ocrKandidaten: [], editId: null };
 
 function sucheTreffer(v, suche) {
   const s = suche.trim().toLowerCase();
@@ -1249,6 +1275,11 @@ function lsAdd({kategorie, it, de}) {
 function lsDelete(id) {
   const list = lsLoad().filter(v => v.id !== id);
   lsSave(list);
+}
+function lsUpdateWort(id, it, de) {
+  const list = lsLoad();
+  const v = list.find(x => x.id === id);
+  if (v) { v.it = it; v.de = de; lsSave(list); }
 }
 
 // ── SPRACHAUSGABE (Web Speech API, kostenlos, funktioniert offline mit Handy-eigenen Stimmen) ──
@@ -1396,7 +1427,11 @@ function renderLernliste() {
       return `<div class="ll-kat-title">${k}</div>` + items.map(v => {
         const itSpan = `<span class="ll-it">${v.it}<button class="ll-speak-btn" onclick="speak('${escJs(v.it)}','it-IT')" title="Aussprache anhören">&#128266;</button></span>`;
         const deSpan = `<span class="ll-de">${v.de}</span>`;
-        return `<div class="ll-row">${S.llRichtung === 'de-it' ? deSpan + itSpan : itSpan + deSpan}</div>`;
+        const actions = `<div class="ll-row-actions">
+          <button class="ll-edit-btn" onclick="openEditModal(${v.id})" title="Korrigieren">&#9999;&#65039;</button>
+          <button class="ll-del-btn" onclick="deleteVokabel(${v.id})" title="Löschen">&#128465;</button>
+        </div>`;
+        return `<div class="ll-row">${S.llRichtung === 'de-it' ? deSpan + itSpan : itSpan + deSpan}${actions}</div>`;
       }).join('');
     }).join('');
   } else {
@@ -1507,6 +1542,61 @@ function formenText(formen) {
   return PERSONEN.map(p => `<span><b>${PERSON_LABEL[p]}</b> ${formen[p]}</span>`).join('');
 }
 
+// ── QUIZ-REAKTIONEN (abwechslungsreiches Feedback + optionaler Ton) ─────────
+const REAKTIONEN_RICHTIG = [
+  { text: '&#10003;', big: true },
+  { text: 'Wooow! &#127881;' },
+  { text: 'Perfekt!' },
+  { text: 'Genau richtig!' },
+  { text: 'Stark! &#128170;' },
+  { text: 'Yes!' },
+];
+const REAKTIONEN_FALSCH = [
+  { text: 'Oooohhh&hellip;' },
+  { text: 'Knapp daneben' },
+  { text: 'Fast!' },
+  { text: 'Nicht ganz&hellip;' },
+  { text: '&#10007;', big: true },
+];
+
+function zeigeQuizReaktion(ok) {
+  const pool = ok ? REAKTIONEN_RICHTIG : REAKTIONEN_FALSCH;
+  const reaktion = pool[Math.floor(Math.random() * pool.length)];
+  const el = document.getElementById('quiz-reaction');
+  el.innerHTML = reaktion.text;
+  el.className = 'quiz-reaction show ' + (ok ? 'correct' : 'wrong') + (reaktion.big ? ' big' : '');
+}
+
+let _audioCtx;
+function spieleQuizSound(ok) {
+  try {
+    _audioCtx = _audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    const ctx = _audioCtx;
+    const t0 = ctx.currentTime;
+    if (ok) {
+      [523.25, 659.25].forEach((freq, i) => {
+        const osc = ctx.createOscillator(), gain = ctx.createGain();
+        osc.type = 'sine'; osc.frequency.value = freq;
+        const start = t0 + i * 0.09;
+        gain.gain.setValueAtTime(0, start);
+        gain.gain.linearRampToValueAtTime(0.18, start + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, start + 0.28);
+        osc.connect(gain).connect(ctx.destination);
+        osc.start(start); osc.stop(start + 0.3);
+      });
+    } else {
+      const osc = ctx.createOscillator(), gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(300, t0);
+      osc.frequency.exponentialRampToValueAtTime(140, t0 + 0.28);
+      gain.gain.setValueAtTime(0.16, t0);
+      gain.gain.exponentialRampToValueAtTime(0.001, t0 + 0.3);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(t0); osc.stop(t0 + 0.32);
+    }
+  } catch (e) { /* Web Audio evtl. nicht verfügbar - Feedback bleibt visuell */ }
+}
+
 function zeigeQuizFrage() {
   const item = S.quizList[S.quizIndex];
   let frage, badge;
@@ -1526,6 +1616,8 @@ function zeigeQuizFrage() {
   inp.value = ''; inp.className = 'quiz-input'; inp.disabled = false;
   document.getElementById('quiz-feedback').textContent = '';
   document.getElementById('quiz-feedback').className = 'quiz-feedback';
+  const reactionEl = document.getElementById('quiz-reaction');
+  reactionEl.textContent = ''; reactionEl.className = 'quiz-reaction';
   const formsEl = document.getElementById('quiz-forms');
   formsEl.className = 'quiz-forms'; formsEl.innerHTML = '';
   document.getElementById('quiz-check-btn').textContent = 'Prüfen';
@@ -1552,13 +1644,15 @@ function quizCheck() {
   const fb = document.getElementById('quiz-feedback');
   if (ok) {
     S.richtig++;
-    fb.textContent = '✓ Richtig!';
-    fb.className = 'quiz-feedback correct';
+    fb.textContent = '';
+    fb.className = 'quiz-feedback';
   } else {
-    fb.textContent = `✗ Richtig wäre: ${loesung}`;
+    fb.textContent = `Richtig wäre: ${loesung}`;
     fb.className = 'quiz-feedback wrong';
     S.falscheListe.push(item);
   }
+  zeigeQuizReaktion(ok);
+  spieleQuizSound(ok);
 
   // Alle Formen als Zusatzinfo zeigen (nicht im Konjugations-Modus, da redundant)
   if (item.dir !== 'konjugation' && item.formen) {
@@ -1631,6 +1725,7 @@ function renderVerwaltung() {
       <select class="vk-kat-select" onchange="changeVokabelKategorie(${v.id}, this.value)">${katOptions(v.kategorie)}</select>
       <span class="vk-it">${v.it}</span>
       <span class="vk-de">${v.de}</span>
+      <button class="vk-edit" onclick="openEditModal(${v.id})" title="Korrigieren">&#9999;&#65039;</button>
       <button class="vk-del" onclick="deleteVokabel(${v.id})" title="Löschen">&#128465;</button>
     </div>`).join('') || `<p style="color:var(--text-light);font-size:13px;padding:10px 0">${S.vkSuche.trim() ? 'Keine Treffer für die Suche' : 'Noch keine Vokabeln'}</p>`;
 }
@@ -1907,17 +2002,12 @@ function closeHelpModal() {
   document.getElementById('help-modal').close();
 }
 
-function toggleHeaderMenu() {
-  document.getElementById('header-menu').classList.toggle('open');
-}
-
-function closeHeaderMenu() {
-  document.getElementById('header-menu').classList.remove('open');
-}
-
-document.addEventListener('click', (e) => {
-  const wrap = document.querySelector('.menu-wrap');
-  if (wrap && !wrap.contains(e.target)) closeHeaderMenu();
+// Klick auf die abgedunkelte Fläche außerhalb der Modal-Box schließt das Hilfe-Modal
+document.getElementById('help-modal').addEventListener('click', (e) => {
+  const dialog = e.currentTarget;
+  const rect = dialog.getBoundingClientRect();
+  const inDialog = e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
+  if (!inDialog) closeHelpModal();
 });
 
 function vokabelKey(v) {
@@ -1929,7 +2019,40 @@ function deleteVokabel(id) {
   lsDelete(id);
   S.vokabeln = lsLoad();
   S.kategorien = lsKategorien(S.vokabeln);
-  renderVerwaltung();
+  const activePage = document.querySelector('.page.active').id;
+  if (activePage === 'page-verwaltung') renderVerwaltung();
+  if (activePage === 'page-liste') renderLernliste();
+  toast('Vokabel gelöscht', 'ok');
+}
+
+// ── EDIT-MODAL (Korrektur bei Tippfehlern, aus Lernbox oder Verwaltung) ──────
+function openEditModal(id) {
+  const v = S.vokabeln.find(x => x.id === id);
+  if (!v) return;
+  S.editId = id;
+  document.getElementById('em-it').value = v.it;
+  document.getElementById('em-de').value = v.de;
+  document.getElementById('em-err').textContent = '';
+  document.getElementById('edit-modal').showModal();
+  setTimeout(() => document.getElementById('em-it').focus(), 50);
+}
+
+function closeEditModal() {
+  document.getElementById('edit-modal').close();
+}
+
+function submitEditModal() {
+  const errEl = document.getElementById('em-err');
+  const it = document.getElementById('em-it').value.trim();
+  const de = document.getElementById('em-de').value.trim();
+  if (!it || !de) { errEl.textContent = 'Bitte beide Felder ausfüllen'; return; }
+  lsUpdateWort(S.editId, it, de);
+  S.vokabeln = lsLoad();
+  closeEditModal();
+  toast(`"${it}" aktualisiert`, 'ok');
+  const activePage = document.querySelector('.page.active').id;
+  if (activePage === 'page-verwaltung') renderVerwaltung();
+  if (activePage === 'page-liste') renderLernliste();
 }
 
 appInit().catch(e => console.error(e));
