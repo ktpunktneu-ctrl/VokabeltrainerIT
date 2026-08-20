@@ -34,8 +34,30 @@ Fünf eigenständige, baugleiche PWA-Vokabeltrainer-Apps von Klaus Tegtmeier:
 
 Alle Apps sind komplett parallel gepflegt — **jede funktionale Code-Änderung muss identisch in allen Projekten nachgezogen werden.** Ausnahme: das visuelle Design von VokabeltrainerBusinessEN ist bewusst eigenständig (Premium-Optik für Manager-Zielgruppe) und muss bei reinen Farb-/Typografie-Änderungen NICHT an die anderen Apps angeglichen werden.
 
+### Feature-Parität IT vs. Schwesterprojekte (Stand 2026-08-20, per Git-Abgleich geprüft — korrigiert)
+
+**Wichtiger Befund:** In EN/FR/ES/BusinessEN ist aktuell **nicht `main` ausgecheckt, sondern der nie gemergte Branch `feature-srs-leitner`.** Nur bei IT ist Spaced Repetition bereits in `main`. Die erste Version dieser Tabelle (Stand vormittags) hatte nur die Dateien auf der Platte geprüft, nicht den Branch — dadurch war sie an zwei Stellen falsch: dem Splash-Redesign von BusinessEN (steht seit `bf46e21`/13.08. in `main`, nur mit eigenen CSS-Klassen für das Premium-Design statt `home-sphere`) und der Spaced-Repetition-Zeile (nur auf dem Feature-Branch, nicht in `main`).
+
+| Änderung in IT | EN | FR | ES | BusinessEN |
+|---|---|---|---|---|
+| Install-Banner (In-App-Browser-Erkennung) | ✓ (main) | ✓ (main) | ✓ (main) | ✓ (main) |
+| Lernbox-Start-Redesign (Splash) | ✓ (main) | ✓ (main) | ✓ (main) | ✓ (main, eigenes Premium-Design: BE-Monogramm, rechteckige Karten statt Kugeln) |
+| Lernliste-Sortierfix bei DE→IT | ✓ (main) | ✓ (main) | ✓ (main) | ✓ (main) |
+| Löschen/Korrigieren-Icons, Quiz-Reaktionen, Header-Icons | ✓ (main) | ✓ (main) | ✓ (main) | ✓ (main) |
+| Spaced Repetition (Leitner-System) | ✓ (main) | ✗ nur auf Branch `feature-srs-leitner`, nicht gemergt | ✗ nur auf Branch `feature-srs-leitner`, nicht gemergt | ✗ nur auf Branch `feature-srs-leitner`, nicht gemergt (dort zusätzlich ein Selbsteinschätzungs-Modus für lange Umgangssprache-Einträge, den IT so noch nicht hat) |
+| Lernbox-Zeilenversatz-Fix (2026-08-20) | ✗ | ✗ | ✗ | ✗ |
+
+Praktische Folge: die Live-Version von EN auf GitHub Pages (öffentliches Repo, `main`-Branch) hat aktuell **kein** Spaced Repetition, obwohl der lokale Arbeitsstand es zeigt.
+
+### Offene Nachzieharbeiten in Schwesterprojekte
+
+- [ ] **`feature-srs-leitner` nach `main` mergen** in EN/FR/ES/BusinessEN, inkl. Bereinigung der CRLF/LF-Zeilenumbruch-Diffs (aktuell in allen Repos als "uncommitted changes" sichtbar, aber inhaltlich nur Zeilenumbrüche, keine echten Inhaltsänderungen — geprüft 2026-08-20). BusinessEN-Branch enthält zusätzlich einen Selbsteinschätzungs-Modus für lange Umgangssprache-Einträge (mehrere Wörter/kleine Sätze), der ursprünglich aus IT stammt und für Suche/Quiz-Bewertung relevant ist — beim Merge prüfen, ob das nach IT zurückübernommen werden soll.
+- [ ] **Lernbox-Zeilenversatz-Fix** (`.ll-row{align-items:flex-start}` statt `center`, siehe Changelog 2026-08-20) — bisher **nur in VokabeltrainerIT** umgesetzt, danach in allen vier Schwester-Apps nachziehen (Root-`index.html` + `docs/index.html`, `CACHE`-Version in beiden `sw.js`-Kopien hochzählen).
+- **Empfehlung zur Ausführung:** Diese Git-Merges sollten von Terminal-Claude-Code (oder Klaus direkt) gemacht werden, nicht über die Cloud-Session — die Cloud-Session kann zwar Dateien direkt schreiben, hat aber keinen vollwertigen Git-Zugriff auf dem Windows-Rechner (kann z.B. `.git/index.lock`-Dateien nicht löschen, was echte Commits/Merges unzuverlässig macht). Klaus-Entscheidung (2026-08-20): erst IT fertigstellen/testen, danach nachziehen.
+
 ## Changelog (Auszug, chronologisch)
 
+- **2026-08-20:** Layout-Bug in der Lernbox behoben: Bei Einträgen mit langem/mehrzeilig umbrechendem Text (z.B. Synonym-Paare wie „cambio di casa, trascolo") wurde das kurze Gegenstück (z.B. „umzug") vertikal versetzt dargestellt, statt an der ersten Textzeile ausgerichtet zu sein. Ursache: `.ll-row{align-items:center}` zentrierte die Spalte vertikal zur gesamten (mehrzeiligen) Höhe. Fix: `align-items:flex-start` in `.ll-row` (`index.html` und `docs/index.html`), `CACHE`-Version in `static/sw.js`/`docs/sw.js` von `v46` auf `v47` erhöht, damit der Service Worker die neue Version ausliefert. **Nur in VokabeltrainerIT umgesetzt** — siehe „Offene Nachzieharbeiten" oben für die Schwesterprojekte.
 - **2026-07-04 bis 07-12:** Sprachmodul/TTS, Feature-Gating, Trial-Modell, Add-/Kategorie-Modal, OCR-Feature — siehe Git-Historie von VokabeltrainerIT für Details (zuerst dort entwickelt).
 - **2026-07-14:** EN auf v1.9 nachgezogen (Feature-Parität mit IT). VokabeltrainerFR und VokabeltrainerES neu angelegt (v1.9 von Anfang an), Vokabular übersetzt, `fra.traineddata`/`spa.traineddata` ergänzt, Repos privat gehalten (Klaus-Entscheidung). VokabeltrainerBusinessEN neu angelegt: 394 Business-Vokabeln (9 Kategorien: Grundlagen & Umgangsformen, Meetings, Verhandlungen, Finanzen & Kennzahlen, Präsentationen, E-Mail & Korrespondenz, Management & Führung, Projektmanagement, Verben), eigenständiges elegantes Design (Navy/Gold, Serifen-Header, Monogramm-Badge statt Flagge) für Manager-Zielgruppe, Repo privat.
 
@@ -51,9 +73,9 @@ Zielgruppe: Schüler & Interessierte (IT/EN/FR/ES), Berufstätige/Manager (Busin
 **Noch offen / ACHTUNG — Klaus muss selbst tun:**
 - **Gumroad-Produkte existieren noch nicht!** `GUMROAD_PERMALINK` in `index.html` ist je App nur ein Platzhalter (`vokabeltrainer-{it,en,fr,es,business-en}`), ebenso der Kauf-Link im Lizenz-Modal. Separate Gumroad-Produkte anlegen (Preis 9,95 €, License-Key-Generierung aktivieren), dann echte Permalinks eintragen (Stelle mit `// TODO Klaus:` markiert). Preis je Produkt: 9,95 € (IT/EN/FR/ES), 19,95 € (BusinessEN).
 
-## Geplant: Spaced Repetition (Stand 2026-08-17)
+## Spaced Repetition (Leitner) — umgesetzt (seit 2026-08-20)
 
-Mit Coding-Agent besprochen: Nachrüstung eines Spaced-Repetition-Systems (Wiedervorlage nach Erinnerungsleistung, Leitner-artiges Prinzip statt reinem Karteikarten-Durchlauf) für Lernbox/Quiz. Geschätzter Aufwand ca. 1,5 Tage. Klaus tendiert zur Umsetzung, noch nicht begonnen. Betrifft laut Änderungswarnung oben alle sechs Apps identisch, sobald umgesetzt in allen Projekten nachziehen. Hintergrund: größte inhaltliche Lücke gegenüber Anki (siehe Marketingkonzept_Vokabeltrainer.docx), rechtfertigt für sich genommen keine Preiserhöhung, da Anki dieses Feature kostenlos anbietet.
+Nachrüstung eines Spaced-Repetition-Systems (Wiedervorlage nach Erinnerungsleistung, Leitner-artiges Prinzip mit Boxen 1-5, fällige Karten zuerst, Hinweis auf der Startseite) ist umgesetzt — Commit `5b7e71d` (2026-08-20). Laut Code-Abgleich vom selben Tag ist das Feature bereits identisch in allen fünf Apps (IT/EN/FR/ES/BusinessEN) vorhanden. Hintergrund: größte inhaltliche Lücke gegenüber Anki (siehe Marketingkonzept_Vokabeltrainer.docx), rechtfertigt für sich genommen keine Preiserhöhung, da Anki dieses Feature kostenlos anbietet.
 
 ## Schnellzugriff
 
