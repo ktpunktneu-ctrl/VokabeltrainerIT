@@ -51,6 +51,10 @@ Zielgruppe: Schüler & Interessierte (IT/EN/FR/ES), Berufstätige/Manager (Busin
 **Noch offen / ACHTUNG — Klaus muss selbst tun:**
 - **Gumroad-Produkte existieren noch nicht!** `GUMROAD_PERMALINK` in `index.html` ist je App nur ein Platzhalter (`vokabeltrainer-{it,en,fr,es,business-en}`), ebenso der Kauf-Link im Lizenz-Modal. Separate Gumroad-Produkte anlegen (Preis 9,95 €, License-Key-Generierung aktivieren), dann echte Permalinks eintragen (Stelle mit `// TODO Klaus:` markiert). Preis je Produkt: 9,95 € (IT/EN/FR/ES), 19,95 € (BusinessEN).
 
+## Geplant: Spaced Repetition (Stand 2026-08-17)
+
+Mit Coding-Agent besprochen: Nachrüstung eines Spaced-Repetition-Systems (Wiedervorlage nach Erinnerungsleistung, Leitner-artiges Prinzip statt reinem Karteikarten-Durchlauf) für Lernbox/Quiz. Geschätzter Aufwand ca. 1,5 Tage. Klaus tendiert zur Umsetzung, noch nicht begonnen. Betrifft laut Änderungswarnung oben alle sechs Apps identisch, sobald umgesetzt in allen Projekten nachziehen. Hintergrund: größte inhaltliche Lücke gegenüber Anki (siehe Marketingkonzept_Vokabeltrainer.docx), rechtfertigt für sich genommen keine Preiserhöhung, da Anki dieses Feature kostenlos anbietet.
+
 ## Schnellzugriff
 
 - IT lokal starten: `start_vokabeltrainer.bat` (Port 5052)

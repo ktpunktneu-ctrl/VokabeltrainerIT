@@ -121,6 +121,10 @@ header .flag{display:inline-block;width:22px;height:16px;background:linear-gradi
 .form-row{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
 .form-row input,.form-row select{padding:10px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;outline:none;font-family:inherit;background:#fff;width:100%}
 .form-row input:focus,.form-row select:focus{border-color:var(--green)}
+#add-modal.dir-de-it #am-de{order:1}
+#add-modal.dir-de-it #am-it{order:2}
+#add-modal.dir-de-it #am-dup-hint{order:3}
+#add-modal.dir-de-it #am-kategorie-select{order:4}
 
 /* FAB */
 .fab{position:fixed;bottom:calc(env(safe-area-inset-bottom) + 20px);right:calc(50% - 240px + 20px);width:56px;height:56px;border-radius:50%;background:var(--green);color:#fff;font-size:28px;border:none;box-shadow:0 4px 14px rgba(0,140,69,0.4);cursor:pointer;z-index:500;display:flex;align-items:center;justify-content:center}
@@ -321,10 +325,11 @@ nav button.active{background:var(--green);color:#fff}
         <div class="slider-val" id="start-anzahl-val">15</div>
       </div>
     </div>
+    <div class="m-trial-hint" id="srs-faellig-hinweis"></div>
     <button class="btn btn-quiz-start" onclick="startQuiz()">&#127919; Training starten</button>
   </div>
 
-  <button class="fab" id="fab-add" onclick="openAddModal()" title="Vokabel hinzufügen">&#43;</button>
+  <button class="fab" id="fab-add" onclick="handleFabAdd()" title="Vokabel hinzufügen">&#43;</button>
 
   <!-- QUIZ -->
   <div class="page" id="page-quiz">
@@ -522,6 +527,7 @@ nav button.active{background:var(--green);color:#fff}
     <div class="form-row">
       <input type="text" id="em-it" placeholder="Italienisch" autocomplete="off" autocapitalize="off">
       <input type="text" id="em-de" placeholder="Deutsch" autocomplete="off">
+      <select id="em-kategorie-select"></select>
     </div>
     <div class="m-err" id="em-err"></div>
     <div class="modal-actions">
@@ -1219,10 +1225,15 @@ const S = { vokabeln: [], kategorien: [], selectedKat: new Set(), richtung: 'it-
             quizList: [], quizIndex: 0, richtig: 0, falscheListe: [], llTab: 'vokabeln', llRichtung: 'it-de',
             llSuche: '', vkSuche: '', ocrKandidaten: [], editId: null };
 
+const SUCHE_ARTIKEL = new Set(['il', 'lo', 'la', 'i', 'gli', 'le', 'un', 'uno', 'una', 'der', 'die', 'das', 'den', 'dem', 'des']);
 function sucheTreffer(v, suche) {
   const s = suche.trim().toLowerCase();
   if (!s) return true;
-  return v.it.toLowerCase().includes(s) || v.de.toLowerCase().includes(s);
+  const it = v.it.toLowerCase(), de = v.de.toLowerCase();
+  const alleWorte = s.split(/\s+/).filter(Boolean);
+  const worte = alleWorte.filter(w => !SUCHE_ARTIKEL.has(w));
+  const suchworte = worte.length ? worte : alleWorte;
+  return suchworte.every(w => it.includes(w) || de.includes(w));
 }
 
 // ── Lokale Speicherung (funktioniert komplett offline, keine Serverabhängigkeit) ──
@@ -1237,13 +1248,118 @@ function lsRepairFormen(list) {
   return repariert;
 }
 
+// ── SPACED REPETITION (Leitner-System) ──────────────────────────────────────
+// box 1-5, je höher desto seltener fällig. Falsch beantwortet -> zurück auf Box 1.
+const SRS_MAX_BOX = 5;
+const SRS_INTERVALL_TAGE = { 1: 1, 2: 2, 3: 4, 4: 7, 5: 14 };
+
+function heutigesDatumIso() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+function datumPlusTageIso(basisIso, tage) {
+  const [y, m, tag] = basisIso.split('-').map(Number);
+  const d = new Date(y, m - 1, tag);
+  d.setDate(d.getDate() + tage);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+function lsRepairSrs(list) {
+  const heute = heutigesDatumIso();
+  let geaendert = false;
+  const repariert = list.map(v => {
+    if (v.box === undefined || v.faelligAm === undefined) {
+      geaendert = true;
+      return { ...v, box: v.box || 1, faelligAm: v.faelligAm || heute };
+    }
+    return v;
+  });
+  if (geaendert) lsSave(repariert);
+  return repariert;
+}
+function lsUpdateSrs(id, ok) {
+  const list = lsLoad();
+  const v = list.find(x => x.id === id);
+  if (!v) return;
+  v.box = ok ? Math.min((v.box || 1) + 1, SRS_MAX_BOX) : 1;
+  v.faelligAm = datumPlusTageIso(heutigesDatumIso(), SRS_INTERVALL_TAGE[v.box]);
+  lsSave(list);
+}
+function anzahlFaellig(liste) {
+  const heute = heutigesDatumIso();
+  return liste.filter(v => (v.faelligAm || heute) <= heute).length;
+}
+
+// ── SPACED REPETITION PRO KONJUGATIONSFORM ──────────────────────────────────
+// Im Konjugationsmodus wird nicht mehr das ganze Wort gemeinsam getrackt,
+// sondern jede Person einzeln (formenSrs: { io:{box,faelligAm}, tu:{...}, ... }),
+// damit eine falsch beantwortete Form gezielt wiederkommt statt zufällig irgendeine.
+function lsRepairFormenSrs(list) {
+  const heute = heutigesDatumIso();
+  let geaendert = false;
+  const repariert = list.map(v => {
+    if (!v.formen) return v;
+    const formKeys = Object.keys(v.formen);
+    const neu = { ...(v.formenSrs || {}) };
+    let lokalGeaendert = !v.formenSrs;
+    formKeys.forEach(k => {
+      if (!neu[k] || neu[k].box === undefined || neu[k].faelligAm === undefined) {
+        neu[k] = { box: (neu[k] && neu[k].box) || 1, faelligAm: (neu[k] && neu[k].faelligAm) || heute };
+        lokalGeaendert = true;
+      }
+    });
+    if (lokalGeaendert) { geaendert = true; return { ...v, formenSrs: neu }; }
+    return v;
+  });
+  if (geaendert) lsSave(repariert);
+  return repariert;
+}
+function formSrsEintrag(v, formKey) {
+  const heute = heutigesDatumIso();
+  return (v.formenSrs && v.formenSrs[formKey]) || { box: 1, faelligAm: heute };
+}
+function lsUpdateFormSrs(id, formKey, ok) {
+  const list = lsLoad();
+  const v = list.find(x => x.id === id);
+  if (!v) return;
+  if (!v.formenSrs) v.formenSrs = {};
+  const bisher = v.formenSrs[formKey] || { box: 1 };
+  const neueBox = ok ? Math.min((bisher.box || 1) + 1, SRS_MAX_BOX) : 1;
+  v.formenSrs[formKey] = { box: neueBox, faelligAm: datumPlusTageIso(heutigesDatumIso(), SRS_INTERVALL_TAGE[neueBox]) };
+  lsSave(list);
+}
+// Löst einen Wort-Pool in einzelne (Wort,Form)-Paare auf und sortiert fällige zuerst.
+// formKeysFn(v) liefert die abfragbaren Formenschlüssel für ein Wort (z.B. PERSONEN).
+function faelligeFormenZuerst(basisPool, formKeysFn) {
+  const heute = heutigesDatumIso();
+  const paare = [];
+  basisPool.forEach(v => formKeysFn(v).forEach(formKey => {
+    const eintrag = formSrsEintrag(v, formKey);
+    paare.push({ v, formKey, faelligAm: eintrag.faelligAm || heute });
+  }));
+  const faellig = shuffle(paare.filter(p => p.faelligAm <= heute));
+  const nichtFaellig = shuffle(paare.filter(p => p.faelligAm > heute))
+    .sort((a, b) => a.faelligAm.localeCompare(b.faelligAm));
+  return [...faellig, ...nichtFaellig];
+}
+function anzahlFaelligFormen(basisPool, formKeysFn) {
+  const heute = heutigesDatumIso();
+  let n = 0;
+  basisPool.forEach(v => formKeysFn(v).forEach(formKey => {
+    if ((formSrsEintrag(v, formKey).faelligAm || heute) <= heute) n++;
+  }));
+  return n;
+}
+
 function lsLoad() {
   const raw = localStorage.getItem(LS_KEY);
+  let list;
   if (!raw) {
-    localStorage.setItem(LS_KEY, JSON.stringify(SEED_VOKABELN));
-    return JSON.parse(JSON.stringify(SEED_VOKABELN));
+    list = JSON.parse(JSON.stringify(SEED_VOKABELN));
+    localStorage.setItem(LS_KEY, JSON.stringify(list));
+  } else {
+    try { list = lsRepairFormen(JSON.parse(raw)); } catch(e) { list = JSON.parse(JSON.stringify(SEED_VOKABELN)); }
   }
-  try { return lsRepairFormen(JSON.parse(raw)); } catch(e) { return JSON.parse(JSON.stringify(SEED_VOKABELN)); }
+  return lsRepairFormenSrs(lsRepairSrs(list));
 }
 function lsSave(list) { localStorage.setItem(LS_KEY, JSON.stringify(list)); }
 
@@ -1276,10 +1392,10 @@ function lsDelete(id) {
   const list = lsLoad().filter(v => v.id !== id);
   lsSave(list);
 }
-function lsUpdateWort(id, it, de) {
+function lsUpdateWort(id, it, de, kategorie) {
   const list = lsLoad();
   const v = list.find(x => x.id === id);
-  if (v) { v.it = it; v.de = de; lsSave(list); }
+  if (v) { v.it = it; v.de = de; if (kategorie) v.kategorie = kategorie; lsSave(list); }
 }
 
 // ── SPRACHAUSGABE (Web Speech API, kostenlos, funktioniert offline mit Handy-eigenen Stimmen) ──
@@ -1352,10 +1468,20 @@ async function appInit() {
       document.querySelectorAll('#start-richtung .radio-opt').forEach(x => x.classList.remove('active'));
       el.classList.add('active');
       S.richtung = el.dataset.dir;
+      aktualisiereFaelligHinweis();
     });
   });
   document.getElementById('quiz-input').addEventListener('keydown', e => {
     if (e.key === 'Enter') quizCheck();
+  });
+  document.getElementById('am-it').addEventListener('keydown', e => {
+    if (e.key === 'Enter') submitAddModal();
+  });
+  document.getElementById('am-de').addEventListener('keydown', e => {
+    if (e.key === 'Enter') submitAddModal();
+  });
+  document.getElementById('km-name').addEventListener('keydown', e => {
+    if (e.key === 'Enter') submitKatModal();
   });
   document.querySelectorAll('.ll-tab').forEach(el => {
     el.addEventListener('click', () => {
@@ -1419,7 +1545,9 @@ function renderLernliste() {
     gefiltert.forEach(v => { (byKat[v.kategorie] = byKat[v.kategorie] || []).push(v); });
     const kats = Object.keys(byKat).sort();
     if (!kats.length) {
-      content.innerHTML = `<p style="color:var(--text-light);font-size:13px;padding:10px 0">${sucheAktiv ? 'Keine Treffer für die Suche' : 'Keine Vokabeln in den gewählten Kategorien'}</p>`;
+      content.innerHTML = sucheAktiv
+        ? `<p style="color:var(--text-light);font-size:13px;padding:10px 0">Keine Treffer für "${S.llSuche.trim()}" — <a href="#" onclick="openAddModalMitSuche();return false" style="color:var(--green);font-weight:600">neu anlegen &#43;</a></p>`
+        : `<p style="color:var(--text-light);font-size:13px;padding:10px 0">Keine Vokabeln in den gewählten Kategorien</p>`;
       return;
     }
     content.innerHTML = kats.map(k => {
@@ -1448,7 +1576,18 @@ function renderLernliste() {
   }
 }
 
+function aktualisiereFaelligHinweis() {
+  const pool = S.vokabeln.filter(v => S.selectedKat.has(v.kategorie));
+  const faellig = S.richtung === 'konjugation'
+    ? anzahlFaelligFormen(pool.filter(v => v.formen), () => PERSONEN)
+    : anzahlFaellig(pool);
+  document.getElementById('srs-faellig-hinweis').textContent = faellig > 0
+    ? `📅 ${faellig} Karte${faellig === 1 ? '' : 'n'} heute zur Wiederholung fällig`
+    : '✓ Keine Wiederholung fällig — alle Karten aktuell';
+}
+
 function renderStart() {
+  aktualisiereFaelligHinweis();
   const wrap = document.getElementById('start-kategorien');
   wrap.innerHTML = S.kategorien.map(k =>
     `<div class="chip ${S.selectedKat.has(k)?'active':''}" data-kat="${k}">${k}</div>`
@@ -1482,6 +1621,16 @@ function shuffle(arr) {
   return a;
 }
 
+// Fällige/überfällige Karten zuerst (zufällig untereinander gemischt), danach
+// die noch nicht fälligen, sortiert nach frühester Fälligkeit zuerst.
+function faelligeZuerst(pool) {
+  const heute = heutigesDatumIso();
+  const faellig = shuffle(pool.filter(v => (v.faelligAm || heute) <= heute));
+  const nichtFaellig = shuffle(pool.filter(v => (v.faelligAm || heute) > heute))
+    .sort((a, b) => (a.faelligAm || '').localeCompare(b.faelligAm || ''));
+  return [...faellig, ...nichtFaellig];
+}
+
 function normalize(s) {
   return (s || '').toLowerCase().trim()
     .replace(/[àá]/g,'a').replace(/[èé]/g,'e').replace(/[ìí]/g,'i')
@@ -1512,17 +1661,16 @@ function startQuiz(liste = null) {
   if (S.richtung === 'konjugation' && !liste) {
     basisPool = basisPool.filter(v => v.formen);
     if (!basisPool.length) { toast('Keine Verben mit Konjugationsformen in dieser Auswahl'); return; }
-    let pool = shuffle(basisPool).slice(0, anzahl);
-    // ggf. mit Wiederholung auffüllen, falls weniger Verben als gewünschte Fragenzahl
-    while (pool.length < anzahl && basisPool.length) {
-      pool.push(basisPool[Math.floor(Math.random() * basisPool.length)]);
+    // Pool auf einzelne (Wort,Person)-Paare auflösen, fällige Paare zuerst — dieselbe
+    // Vokabel kann dadurch mit mehreren fälligen Formen im selben Durchlauf mehrfach vorkommen.
+    let paare = faelligeFormenZuerst(basisPool, () => PERSONEN).slice(0, anzahl);
+    while (paare.length < anzahl && basisPool.length) {
+      const v = basisPool[Math.floor(Math.random() * basisPool.length)];
+      paare.push({ v, formKey: PERSONEN[Math.floor(Math.random() * PERSONEN.length)] });
     }
-    S.quizList = pool.map(v => {
-      const person = PERSONEN[Math.floor(Math.random() * PERSONEN.length)];
-      return { ...v, dir: 'konjugation', person, correctForm: v.formen[person] };
-    });
+    S.quizList = paare.map(p => ({ ...p.v, dir: 'konjugation', person: p.formKey, correctForm: p.v.formen[p.formKey] }));
   } else {
-    let pool = shuffle(basisPool).slice(0, liste ? basisPool.length : anzahl);
+    let pool = (liste ? shuffle(basisPool) : faelligeZuerst(basisPool)).slice(0, liste ? basisPool.length : anzahl);
     S.quizList = pool.map(v => {
       let dir = S.richtung === 'konjugation' ? 'it-de' : S.richtung;
       if (dir === 'mix') dir = Math.random() < 0.5 ? 'it-de' : 'de-it';
@@ -1651,6 +1799,12 @@ function quizCheck() {
     fb.className = 'quiz-feedback wrong';
     S.falscheListe.push(item);
   }
+  if (item.dir === 'konjugation') {
+    lsUpdateFormSrs(item.id, item.person, ok);
+  } else {
+    lsUpdateSrs(item.id, ok);
+  }
+  S.vokabeln = lsLoad();
   zeigeQuizReaktion(ok);
   spieleQuizSound(ok);
 
@@ -1771,6 +1925,27 @@ function changeVokabelKategorie(id, neueKategorie) {
 }
 
 // ── ADD-MODAL (Schnellzugriff per FAB oder aus Verwaltung) ───────────────────
+function handleFabAdd() {
+  const aufLernbox = document.querySelector('.page.active').id === 'page-liste';
+  if (aufLernbox && S.llSuche.trim()) openAddModalMitSuche();
+  else openAddModal();
+}
+
+function openAddModalMitSuche() {
+  const suche = S.llSuche.trim();
+  const deIt = S.llRichtung === 'de-it';
+  openAddModal();
+  document.getElementById('add-modal').classList.toggle('dir-de-it', deIt);
+  if (deIt) {
+    document.getElementById('am-de').value = suche;
+    setTimeout(() => document.getElementById('am-it').focus(), 60);
+  } else {
+    document.getElementById('am-it').value = suche;
+    checkDuplicate();
+    setTimeout(() => document.getElementById('am-de').focus(), 60);
+  }
+}
+
 function openAddModal() {
   const sel = document.getElementById('am-kategorie-select');
   sel.innerHTML = S.kategorien.map(k => `<option value="${k}">${k}</option>`).join('');
@@ -1780,6 +1955,7 @@ function openAddModal() {
   document.getElementById('am-de').value = '';
   document.getElementById('am-err').textContent = '';
   document.getElementById('am-dup-hint').textContent = '';
+  document.getElementById('add-modal').classList.remove('dir-de-it');
   document.getElementById('am-trial-hint').style.display = istFreigeschaltet() ? 'none' : 'block';
   document.getElementById('add-modal').showModal();
   if (!istFreigeschaltet()) { openLizenzModal(); return; }
@@ -1788,6 +1964,7 @@ function openAddModal() {
 
 function closeAddModal() {
   document.getElementById('add-modal').close();
+  document.activeElement.blur();
 }
 
 function checkDuplicate() {
@@ -1830,6 +2007,11 @@ function submitAddModal() {
   const activePage = document.querySelector('.page.active').id;
   if (activePage === 'page-verwaltung') renderVerwaltung();
   if (activePage === 'page-start') renderStart();
+  if (activePage === 'page-liste') {
+    S.llSuche = '';
+    document.getElementById('ll-suche').value = '';
+    renderLernliste();
+  }
 }
 
 // ── KATEGORIE-MODAL ───────────────────────────────────────────────────────
@@ -1844,6 +2026,7 @@ function openKatModal() {
 
 function closeKatModal() {
   document.getElementById('kat-modal').close();
+  document.activeElement.blur();
 }
 
 function submitKatModal() {
@@ -2032,6 +2215,9 @@ function openEditModal(id) {
   S.editId = id;
   document.getElementById('em-it').value = v.it;
   document.getElementById('em-de').value = v.de;
+  const sel = document.getElementById('em-kategorie-select');
+  sel.innerHTML = S.kategorien.map(k => `<option value="${k}">${k}</option>`).join('');
+  sel.value = v.kategorie;
   document.getElementById('em-err').textContent = '';
   document.getElementById('edit-modal').showModal();
   setTimeout(() => document.getElementById('em-it').focus(), 50);
@@ -2039,14 +2225,17 @@ function openEditModal(id) {
 
 function closeEditModal() {
   document.getElementById('edit-modal').close();
+  document.activeElement.blur();
 }
 
 function submitEditModal() {
   const errEl = document.getElementById('em-err');
   const it = document.getElementById('em-it').value.trim();
   const de = document.getElementById('em-de').value.trim();
+  const kategorie = document.getElementById('em-kategorie-select').value;
   if (!it || !de) { errEl.textContent = 'Bitte beide Felder ausfüllen'; return; }
-  lsUpdateWort(S.editId, it, de);
+  if (!kategorie) { errEl.textContent = 'Bitte Kategorie angeben'; return; }
+  lsUpdateWort(S.editId, it, de, kategorie);
   S.vokabeln = lsLoad();
   closeEditModal();
   toast(`"${it}" aktualisiert`, 'ok');
