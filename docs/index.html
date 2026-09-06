@@ -222,6 +222,7 @@ nav button.active{background:var(--green);color:#fff}
 #install-banner .ib-btn{display:none;background:#fff;color:#111827;border:none;padding:7px 14px;border-radius:8px;font-size:12px;font-weight:800;cursor:pointer;white-space:nowrap;flex-shrink:0}
 #install-banner .ib-close{background:rgba(255,255,255,0.2);border:none;color:#fff;width:26px;height:26px;border-radius:50%;font-size:14px;cursor:pointer;flex-shrink:0}
 </style>
+<script src="static/tesseract.min.js"></script>
 </head>
 <body>
 
@@ -2077,28 +2078,22 @@ function ocrBildGewaehlt() {
   document.getElementById('ocr-rohtext-wrap').style.display = 'none';
   document.getElementById('ocr-kandidaten-wrap').style.display = 'none';
   document.getElementById('ocr-uebernehmen-btn').style.display = 'none';
-  statusEl.textContent = '⏳ Text wird erkannt …';
+  statusEl.textContent = '⏳ Text wird erkannt … (kann beim ersten Mal etwas dauern)';
 
-  const reader = new FileReader();
-  reader.onload = async () => {
-    try {
-      const res = await fetch('/api/ocr', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ image: reader.result })
-      });
-      const data = await res.json();
-      if (!res.ok || data.error) throw new Error(data.error || 'OCR fehlgeschlagen');
-      statusEl.textContent = '';
-      document.getElementById('ocr-rohtext').value = data.text.trim();
-      document.getElementById('ocr-rohtext-wrap').style.display = 'block';
-    } catch (e) {
-      statusEl.textContent = '';
-      errEl.textContent = `Fehler bei der Texterkennung: ${e.message}`;
-    }
-  };
-  reader.onerror = () => { statusEl.textContent = ''; errEl.textContent = 'Bild konnte nicht gelesen werden'; };
-  reader.readAsDataURL(file);
+  const abs = p => new URL(p, document.baseURI).href;
+  Tesseract.recognize(file, 'ita+deu', {
+    corePath: abs('static/tesseract-core-lstm.wasm.js'),
+    workerPath: abs('static/worker.min.js'),
+    langPath: abs('static/tessdata'),
+    gzip: false
+  }).then(({ data: { text } }) => {
+    statusEl.textContent = '';
+    document.getElementById('ocr-rohtext').value = text.trim();
+    document.getElementById('ocr-rohtext-wrap').style.display = 'block';
+  }).catch(e => {
+    statusEl.textContent = '';
+    errEl.textContent = `Fehler bei der Texterkennung: ${e.message}`;
+  });
 }
 
 function ocrZeileTrennen(zeile) {

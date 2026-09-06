@@ -90,3 +90,18 @@ Nachrüstung eines Spaced-Repetition-Systems (Wiedervorlage nach Erinnerungsleis
 - IT live: https://ktpunktneu-ctrl.github.io/VokabeltrainerIT/
 - EN live: https://ktpunktneu-ctrl.github.io/VokabeltrainerEN/
 - FR/ES/BusinessEN: kein Live-Deployment (Repos privat)
+
+## OCR clientseitig auf Tesseract.js umgestellt (2026-09-06)
+
+**Problem:** Das OCR-Feature ("Foto -> Vokabelpaare") rief bisher `fetch('/api/ocr', ...)` auf, ein Flask-Endpoint, der nur laeuft, wenn Klaus' lokaler Server aktiv ist. Auf der live gehosteten GitHub-Pages-Version (rein statisch) lieferte das 404 -- OCR war fuer jeden echten Kunden kaputt.
+
+**Loesung:** OCR laeuft jetzt komplett im Browser via **Tesseract.js v5.1.1** (WASM-Port derselben Tesseract-Engine, gleiche Erkennungsqualitaet wie vorher per pytesseract). Kein Backend mehr noetig, funktioniert auch offline nach der Erstinstallation.
+
+**Umgesetzt:**
+- Neue Dateien in `static/` und `docs/static/`: `tesseract.min.js`, `worker.min.js`, `tesseract-core-lstm.wasm.js` + `.wasm` (nur die LSTM-Core-Variante, passend zu den bereits vorhandenen `tessdata_fast`-Sprachdaten), `tessdata/deu.traineddata` + `tessdata/ita.traineddata` (wiederverwendet aus dem bereits vorhandenen `tessdata/`-Ordner, kein Neu-Download noetig).
+- `ocrBildGewaehlt()` ruft jetzt `Tesseract.recognize(file, 'ita+deu', {...})` statt `fetch('/api/ocr')`. `corePath`/`workerPath`/`langPath` werden zur Laufzeit als **absolute URLs** ueber `new URL(p, document.baseURI).href` aufgeloest -- wichtig, weil ein Web Worker relative Pfade sonst relativ zu seiner eigenen Script-URL aufloest (nicht relativ zur Seite), was auf GitHub Pages' Unterpfaden sonst ins Leere gelaufen waere.
+- `sw.js` (`static/` + `docs/`, Version -> `vokabelit-v48`): die 6 neuen Assets in `ASSETS` aufgenommen, damit sie beim ersten Besuch vorgecacht werden (echte Offline-Faehigkeit ab dem ersten App-Start, nicht erst nach dem ersten Online-OCR-Versuch).
+- `main.py`/`/api/ocr` bewusst nicht angefasst -- bleibt als lokaler Fallback/Dev-Tool bestehen, wird vom Frontend aber nicht mehr aufgerufen.
+Zusaetzlich behoben: `docs/sw.js` nutzte bisher absolute Pfade (`/...`) statt relativer (`./...`) wie alle anderen 5 Apps -- auf GitHub Pages (Unterpfad `/VokabeltrainerIT/`) fuehrte das dazu, dass `caches.addAll()` beim Install fehlschlug (404 auf `/`, `/static/...`), wodurch vermutlich **gar keine** Offline-Vorcachung griff, nicht nur OCR. Jetzt wie die anderen Apps auf relative Pfade umgestellt.
+
+**Getestet:** Kompletter OCR-Durchlauf (corePath/langPath/gzip:false exakt wie im Frontend-Code) in Node.js mit den echten `tessdata_fast`-Dateien nachgebaut und verifiziert -- Text wird korrekt erkannt. Alle geaenderten `sw.js`/inline `<script>`-Bloecke mit `node --check` auf Syntaxfehler geprueft. Alle neuen Asset-Pfade per HTTP-Server-Test (docs/-Ordner wie GitHub Pages ausgeliefert) auf 200 OK verifiziert. **Nicht moeglich in dieser Session:** ein echter Klick-Test im Browser (Chrome-Erweiterung war nicht verbunden) -- vor dem naechsten Marketing-Push einmal auf einem echten Handy/Browser gegentesten.

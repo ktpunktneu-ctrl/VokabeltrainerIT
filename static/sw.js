@@ -1,5 +1,5 @@
-const CACHE = 'vokabelit-v47';
-const ASSETS = ['/', '/static/icon-192.png', '/static/icon-512.png', '/manifest.json', '/static/fonts/designer.woff2'];
+const CACHE = 'vokabelit-v48';
+const ASSETS = ['/', '/static/icon-192.png', '/static/icon-512.png', '/manifest.json', '/static/fonts/designer.woff2', '/static/tesseract.min.js', '/static/worker.min.js', '/static/tesseract-core-lstm.wasm.js', '/static/tesseract-core-lstm.wasm', '/static/tessdata/deu.traineddata', '/static/tessdata/ita.traineddata'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
